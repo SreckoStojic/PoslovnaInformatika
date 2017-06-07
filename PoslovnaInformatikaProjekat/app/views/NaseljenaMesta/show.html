@@ -1,0 +1,151 @@
+#{extends 'standardForm.html' /}
+#{set title:'Naseljena mesta' /}
+
+<script>
+
+$(document).ready(function(){
+	$("#drzavaPickup").click(function(){
+		id = $(".highlighted").find(".dr_id").html();
+		$("#nMesto_drzava_id").val(id);
+		$('#drzaveModal').modal('toggle');
+	});
+});
+
+function sync(item){
+	//oznaka = item.find(".oznaka").html()
+    var naziv = item.find(".naziv").html();
+    var postanskiBroj = item.find(".postanskiBroj").html();
+    var id = item.find(".id").html();
+    var drzavaId = item.find(".drzava_id").html();
+    //$("#oznaka").val(oznaka);
+    $("#nMesto_naziv").val(naziv);
+    $("#nMesto_postanskiBroj").val(postanskiBroj);
+    $("#nMesto_id").val(id);
+    $("#nMesto_drzava_id").val(drzavaId);
+}
+
+</script>
+
+<p>
+<ul>
+  <li><a href="@{NaseljenaMesta.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+  <li><a href="@{NaseljenaMesta.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+  <li><a href="@{NaseljenaMesta.show("remove")}" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+</ul>
+</p>
+
+<div class = "container-fluid">
+<h1>Naseljena mesta</h1>
+
+<table>
+	<tr class = "header"> 
+	   <th>Naziv</th>
+	   <th width="20%">Postanski broj</th>
+	   <th>Drzava</th>
+	</tr>
+#{list items:nMesta, as:'naseljenoMesto'}
+	<tr>
+		<td class = "naziv">${naseljenoMesto.naziv}</td>
+		<td class = "postanskiBroj">${naseljenoMesto.postanskiBroj}</td>
+		<td class = "drzava">${naseljenoMesto.drzava.naziv}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "id">${naseljenoMesto.id}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "drzava_id">${naseljenoMesto.drzava.id}</td>
+	</tr>
+#{/list}
+</table>
+
+
+#{set 'action'}
+    #{if mode == 'add'}
+        @{NaseljenaMesta.create()}
+    #{/if}
+    #{elseif mode == 'edit'}
+        @{NaseljenaMesta.edit()}
+    #{/elseif}
+    #{elseif mode == 'remove'}
+		@{NaseljenaMesta.remove()}
+	#{/elseif}
+    #{else}
+       @{NaseljenaMesta.filter()}
+    #{/else}
+  #{/set}
+  
+<div class = "panel">
+	<p>
+	
+		<form action = "${action}" method="post">
+		
+				#{field 'nMesto.id'}
+					<input type = "hidden" name = "${field.name}" id = "nMesto_id"/>
+				#{/}
+				<p>
+				#{field 'nMesto.naziv'}
+					<label for = "${field.id}">Naziv</label>
+					<input type = "text" name = "${field.name}" id = "nMesto_naziv"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'nMesto.postanskiBroj'}
+					<label for = "${field.id}">Postanski broj</label>
+					<input type = "text" name = "${field.name}" id = "nMesto_postanskiBroj"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'nMesto.drzava.id'}
+					<label for = "nMesto_drzava_id">Drzava</label>
+					<select name = "${field.name}" id = "nMesto_drzava_id"/>
+					#{list items:drzave, as:'drzava'}
+					<option value = "${drzava.id}">${drzava.naziv}</option>
+					#{/list}
+					</select>
+					
+					 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#drzaveModal">...	</button>
+				#{/}
+				</p>
+				<div id = "formActions">
+					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
+					<a href = "@{NaseljenaMesta.show("edit")}" style="margin-left:1em">Rollback</a>
+				</div>			
+				
+		</form>
+	</p>
+</div>
+
+ <!-- Modal -->
+  <div class="modal fade" id="drzaveModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+      <div class="modal-header">
+      	Drzave
+      </div>
+      <div class="modal-body">
+	    <table style = "padding:2em">
+		<tr class = "header">
+		   <th>Oznaka</th> 
+		   <th>Naziv</th>
+		</tr>
+		#{list items:drzave, as:'drzava'}
+		<tr>
+			<td class = "dr_oznaka">${drzava.oznaka}</td>
+			<td class = "dr_naziv">${drzava.naziv}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "dr_id">${drzava.id}</td>
+		</tr>
+		#{/list}
+		</table>
+		<div class="modal-footer">
+			<input id = "drzavaPickup" type = "button" value = "izbor"/>
+		</div>
+		</div>
+      </div>
+    </div>
+   </div>
+</div>

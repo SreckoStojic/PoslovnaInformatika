@@ -17,5 +17,25 @@ public class VrstePlacanja extends Model {
 	public String naziv;
 	@OneToMany(mappedBy = "vrstaPlacanja")
 	public List<AnalitikaIzvoda> analitikeIzvoda;
+	public Number getOznaka() {
+		return oznaka;
+	}
+	public void setOznaka(Number oznaka) {
+		this.oznaka = oznaka;
+	}
+	public String getNaziv() {
+		return naziv;
+	}
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+	public List<AnalitikaIzvoda> getAnalitikeIzvoda() {
+		return analitikeIzvoda;
+	}
+	public void setAnalitikeIzvoda(List<AnalitikaIzvoda> analitikeIzvoda) {
+		this.analitikeIzvoda = analitikeIzvoda;
+	}
+	
+	
 
 }

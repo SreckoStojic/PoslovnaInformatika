@@ -22,4 +22,36 @@ public class NaseljenoMesto extends Model {
 	public Drzava drzava;
 	@OneToMany(mappedBy = "mestoPrijema")
 	public List<AnalitikaIzvoda> analitikeIzvoda;
+	public int getOznaka() {
+		return oznaka;
+	}
+	public void setOznaka(int oznaka) {
+		this.oznaka = oznaka;
+	}
+	public String getNaziv() {
+		return naziv;
+	}
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+	public String getPostanskiBroj() {
+		return postanskiBroj;
+	}
+	public void setPostanskiBroj(String postanskiBroj) {
+		this.postanskiBroj = postanskiBroj;
+	}
+	public Drzava getDrzava() {
+		return drzava;
+	}
+	public void setDrzava(Drzava drzava) {
+		this.drzava = drzava;
+	}
+	public List<AnalitikaIzvoda> getAnalitikeIzvoda() {
+		return analitikeIzvoda;
+	}
+	public void setAnalitikeIzvoda(List<AnalitikaIzvoda> analitikeIzvoda) {
+		this.analitikeIzvoda = analitikeIzvoda;
+	}
+	
+	
 }

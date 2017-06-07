@@ -19,6 +19,32 @@ public class Drzava extends Model {
 	@OneToMany(mappedBy = "drzava")
 	public List<NaseljenoMesto> naseljenaMesta;
 	@OneToMany(mappedBy = "drzava")
-	public List<Valute> drzavnaValuta;
+	public List<Valuta> drzavneValute;
+	public Number getOznaka() {
+		return oznaka;
+	}
+	public void setOznaka(Number oznaka) {
+		this.oznaka = oznaka;
+	}
+	public String getNaziv() {
+		return naziv;
+	}
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+	public List<NaseljenoMesto> getNaseljenaMesta() {
+		return naseljenaMesta;
+	}
+	public void setNaseljenaMesta(List<NaseljenoMesto> naseljenaMesta) {
+		this.naseljenaMesta = naseljenaMesta;
+	}
+	public List<Valuta> getDrzavneValute() {
+		return drzavneValute;
+	}
+	public void setDrzavneValute(List<Valuta> drzavneValute) {
+		this.drzavneValute = drzavneValute;
+	}
+	
+	
 
 }

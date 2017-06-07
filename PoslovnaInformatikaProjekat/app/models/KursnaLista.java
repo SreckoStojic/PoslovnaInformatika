@@ -25,4 +25,42 @@ public class KursnaLista extends Model {
 	public Banka banka;
 	@OneToMany (mappedBy="kursnaLista")
 	public java.util.List<KursUValuti> valuteUListi;
+	public Integer getOznaka() {
+		return oznaka;
+	}
+	public void setOznaka(Integer oznaka) {
+		this.oznaka = oznaka;
+	}
+	public Date getDatum() {
+		return datum;
+	}
+	public void setDatum(Date datum) {
+		this.datum = datum;
+	}
+	public Number getBrojKursneListe() {
+		return brojKursneListe;
+	}
+	public void setBrojKursneListe(Number brojKursneListe) {
+		this.brojKursneListe = brojKursneListe;
+	}
+	public Date getPrimenjujeSeOd() {
+		return primenjujeSeOd;
+	}
+	public void setPrimenjujeSeOd(Date primenjujeSeOd) {
+		this.primenjujeSeOd = primenjujeSeOd;
+	}
+	public Banka getBanka() {
+		return banka;
+	}
+	public void setBanka(Banka banka) {
+		this.banka = banka;
+	}
+	public java.util.List<KursUValuti> getValuteUListi() {
+		return valuteUListi;
+	}
+	public void setValuteUListi(java.util.List<KursUValuti> valuteUListi) {
+		this.valuteUListi = valuteUListi;
+	}
+	
+	
 }
