@@ -12,18 +12,19 @@ import play.db.jpa.Model;
 @Entity
 public class Drzava extends Model {
 
-	@Column(nullable = false, precision = 3, scale = 0)
-	public Number oznaka;
+	@Column(nullable = false, length = 3)
+	public String oznaka;
 	@Column(nullable = false, length = 40)
 	public String naziv;
 	@OneToMany(mappedBy = "drzava")
 	public List<NaseljenoMesto> naseljenaMesta;
 	@OneToMany(mappedBy = "drzava")
 	public List<Valuta> drzavneValute;
-	public Number getOznaka() {
+	
+	public String getOznaka() {
 		return oznaka;
 	}
-	public void setOznaka(Number oznaka) {
+	public void setOznaka(String oznaka) {
 		this.oznaka = oznaka;
 	}
 	public String getNaziv() {

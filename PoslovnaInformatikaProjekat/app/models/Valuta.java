@@ -12,8 +12,6 @@ import play.db.jpa.Model;
 @Entity
 public class Valuta extends Model {
 
-	@Column(nullable = false)
-	public int sifra;
 	@Column(nullable = false, length = 3)
 	public String zvanicnaSifra;
 	@Column(nullable = false, length = 30)
@@ -30,12 +28,8 @@ public class Valuta extends Model {
 	public List<RacunPravnihLica> racuni;
 	@OneToMany(mappedBy="valuta")
 	public List<AnalitikaIzvoda> analitikeIzvoda;
-	public int getSifra() {
-		return sifra;
-	}
-	public void setSifra(int sifra) {
-		this.sifra = sifra;
-	}
+	
+	
 	public String getZvanicnaSifra() {
 		return zvanicnaSifra;
 	}

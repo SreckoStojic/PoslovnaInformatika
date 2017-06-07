@@ -12,8 +12,8 @@ import play.db.jpa.Model;
 @Entity
 public class NaseljenoMesto extends Model {
 
-	@Column(nullable = false)
-	public int oznaka;
+	@Column(nullable = false, length = 2)
+	public String oznaka;
 	@Column(nullable = false, length = 60)
 	public String naziv;
 	@Column(nullable = false, length = 12)
@@ -22,10 +22,11 @@ public class NaseljenoMesto extends Model {
 	public Drzava drzava;
 	@OneToMany(mappedBy = "mestoPrijema")
 	public List<AnalitikaIzvoda> analitikeIzvoda;
-	public int getOznaka() {
+	
+	public String getOznaka() {
 		return oznaka;
 	}
-	public void setOznaka(int oznaka) {
+	public void setOznaka(String oznaka) {
 		this.oznaka = oznaka;
 	}
 	public String getNaziv() {

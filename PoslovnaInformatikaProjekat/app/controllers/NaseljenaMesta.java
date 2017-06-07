@@ -28,6 +28,7 @@ public class NaseljenaMesta extends Controller{
 	
 	public static void edit(NaseljenoMesto nMesto){
 		NaseljenoMesto nm = NaseljenoMesto.findById(nMesto.id);
+		nm.setOznaka(nMesto.oznaka);
 		nm.setNaziv(nMesto.naziv);
 		nm.setPostanskiBroj(nMesto.postanskiBroj);
 		nm.setDrzava(nMesto.drzava);
@@ -35,7 +36,7 @@ public class NaseljenaMesta extends Controller{
 		show("edit");
 		
 	}
-	
+	/*
 	public static void remove(NaseljenoMesto nMesto){
 		NaseljenoMesto nm = NaseljenoMesto.findById(nMesto.id);
 		nm.delete();
@@ -43,9 +44,9 @@ public class NaseljenaMesta extends Controller{
 	
 		show("edit");
 		
-	}
+	}*/
 	
-	public static void remove(String id){
+	public static void remove(Long id){
 		NaseljenoMesto nm = NaseljenoMesto.findById(id);
 		nm.delete();
 		
@@ -56,7 +57,7 @@ public class NaseljenaMesta extends Controller{
 	
 	public static void filter(NaseljenoMesto nMesto){
 		//List<NaseljenoMesto> nMesta = NaseljenoMesto.find("byNazivLikeAndPostanskiBrojLikeAndDrzava", "%"+nMesto.naziv+"%", "%"+nMesto.postanskiBroj+"%", nMesto.drzava).fetch();
-		List<NaseljenoMesto> nMesta = NaseljenoMesto.find("naziv like ? AND postanskiBroj like ? AND drzava_id = ?", "%"+nMesto.naziv+"%", "%"+nMesto.postanskiBroj+"%", nMesto.drzava.id).fetch();
+		List<NaseljenoMesto> nMesta = NaseljenoMesto.find("oznaka like ? AND naziv like ? AND postanskiBroj like ? AND drzava_id = ?",  "%"+nMesto.oznaka+"%", "%"+nMesto.naziv+"%", "%"+nMesto.postanskiBroj+"%", nMesto.drzava.id).fetch();
 		
 		renderTemplate("NaseljenaMesta/show.html", nMesta, "edit" );
 	}

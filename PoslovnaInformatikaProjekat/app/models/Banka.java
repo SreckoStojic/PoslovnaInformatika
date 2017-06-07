@@ -11,8 +11,6 @@ import play.db.jpa.Model;
 @Entity
 public class Banka extends Model {
 
-	@Column(nullable = false)
-	public Integer oznaka;
 	@Column(nullable = false, length = 3)
 	public String sifra;
 	@Column(nullable = false, length = 10)
@@ -35,12 +33,8 @@ public class Banka extends Model {
 	public List<KursnaLista> kursnaLista;
 	@OneToMany(mappedBy = "banka")
 	public List<RacunPravnihLica> racuni;
-	public Integer getOznaka() {
-		return oznaka;
-	}
-	public void setOznaka(Integer oznaka) {
-		this.oznaka = oznaka;
-	}
+	
+	
 	public String getSifra() {
 		return sifra;
 	}

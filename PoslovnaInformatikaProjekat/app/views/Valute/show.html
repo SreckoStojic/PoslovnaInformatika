@@ -1,5 +1,5 @@
 #{extends 'standardForm.html' /}
-#{set title:'Naseljena mesta' /}
+#{set title:'Valute' /}
 
 <script>
 
@@ -12,27 +12,27 @@ $(document).ready(function(){
 });
 
 function remove(id){
-	$(location).attr('href','/NaseljenaMesta/remove?id='+id);
+	$(location).attr('href','/Valute/remove?id='+id);
 }
 
 function sync(item){
-	var oznaka = item.find(".oznaka").html();
+	var zvanicnaSifra = item.find(".zvanicnaSifra").html();
     var naziv = item.find(".naziv").html();
-    var postanskiBroj = item.find(".postanskiBroj").html();
+    var domicilna = item.find(".domicilna").html();
     var id = item.find(".id").html();
     var drzavaId = item.find(".drzava_id").html();
-    $("#nMesto_oznaka").val(oznaka);
-    $("#nMesto_naziv").val(naziv);
-    $("#nMesto_postanskiBroj").val(postanskiBroj);
-    $("#nMesto_id").val(id);
-    $("#nMesto_drzava_id").val(drzavaId);
+    $("#valuta_zvanicnaSifra").val(zvanicnaSifra);
+    $("#valuta_id").val(id);
+   	$("#valuta_domicilna").val(domicilna);
+    $("#valuta_naziv").val(naziv);
+    $("#valuta_drzava_id").val(drzavaId);
 }
 
 </script>
 
 <p>
 <ul>
-  <li><a href="@{NaseljenaMesta.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+  <li><a href="@{Valute.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
   <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
   <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
   <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
@@ -40,30 +40,30 @@ function sync(item){
   <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
   <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
   <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
-  <li><a href="@{NaseljenaMesta.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+  <li><a href="@{Valute.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
   <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
   <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
 </ul>
 </p>
 
 <div class = "container-fluid">
-<h1>Naseljena mesta</h1>
+<h1>Valute</h1>
 
 <table>
 	<tr class = "header"> 
-	   <th>Oznaka</th>
+	   <th width="20%">Zvanicna Sifra</th>
 	   <th>Naziv</th>
-	   <th width="20%">Postanski broj</th>
+	   <th>Domicilna</th>
 	   <th>Drzava</th>
 	</tr>
-#{list items:nMesta, as:'naseljenoMesto'}
+#{list items:valute, as:'valuta'}
 	<tr>
-		<td class = "oznaka">${naseljenoMesto.oznaka}</td>
-		<td class = "naziv">${naseljenoMesto.naziv}</td>
-		<td class = "postanskiBroj">${naseljenoMesto.postanskiBroj}</td>
-		<td class = "drzava">${naseljenoMesto.drzava.naziv}</td>
-		<td style = "visibility: hidden; max-width: 0px" class = "id">${naseljenoMesto.id}</td>
-		<td style = "visibility: hidden; max-width: 0px" class = "drzava_id">${naseljenoMesto.drzava.id}</td>
+		<td class = "zvanicnaSifra">${valuta.zvanicnaSifra}</td>
+		<td class = "naziv">${valuta.naziv}</td>
+		<td class = "domicilna">${valuta.domicilna}</td>
+		<td class = "drzava">${valuta.drzava.naziv}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "id">${valuta.id}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "drzava_id">${valuta.drzava.id}</td>
 	</tr>
 #{/list}
 </table>
@@ -71,13 +71,13 @@ function sync(item){
 
 #{set 'action'}
     #{if mode == 'add'}
-        @{NaseljenaMesta.create()}
+        @{Valute.create()}
     #{/if}
     #{elseif mode == 'edit'}
-        @{NaseljenaMesta.edit()}
+        @{Valute.edit()}
     #{/elseif}
     #{else}
-       @{NaseljenaMesta.filter()}
+       @{Valute.filter()}
     #{/else}
   #{/set}
   
@@ -86,31 +86,31 @@ function sync(item){
 	
 		<form action = "${action}" method="post">
 		
-				#{field 'nMesto.id'}
-					<input type = "hidden" name = "${field.name}" id = "nMesto_id"/>
+				#{field 'valuta.id'}
+					<input type = "hidden" name = "${field.name}" id = "valuta_id"/>
 				#{/}
 				<p>
-				#{field 'nMesto.oznaka'}
-					<label for = "${field.id}">Oznaka</label>
-					<input type = "text" name = "${field.name}" id = "nMesto_oznaka"/>
+				#{field 'valuta.zvanicnaSifra'}
+					<label for = "${field.id}">Zvanicna Sifra</label>
+					<input type = "text" name = "${field.name}" id = "valuta_zvanicnaSifra"/>
 				#{/}
 				</p>
 				<p>
-				#{field 'nMesto.naziv'}
+				#{field 'valuta.domicilna'}
+					<label for = "${field.id}">Domicilna</label>
+					<input type = "text" name = "${field.name}" id = "valuta_domicilna"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'valuta.naziv'}
 					<label for = "${field.id}">Naziv</label>
-					<input type = "text" name = "${field.name}" id = "nMesto_naziv"/>
+					<input type = "text" name = "${field.name}" id = "valuta_naziv"/>
 				#{/}
 				</p>
 				<p>
-				#{field 'nMesto.postanskiBroj'}
-					<label for = "${field.id}">Postanski broj</label>
-					<input type = "text" name = "${field.name}" id = "nMesto_postanskiBroj"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'nMesto.drzava.id'}
-					<label for = "nMesto_drzava_id">Drzava</label>
-					<select name = "${field.name}" id = "nMesto_drzava_id"/>
+				#{field 'valuta.drzava.id'}
+					<label for = "valuta_drzava_id">Drzava</label>
+					<select name = "${field.name}" id = "valuta_drzava_id"/>
 					#{list items:drzave, as:'drzava'}
 					<option value = "${drzava.id}">${drzava.naziv}</option>
 					#{/list}
