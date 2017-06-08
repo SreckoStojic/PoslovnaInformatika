@@ -6,7 +6,7 @@
 $(document).ready(function(){
 	$("#drzavaPickup").click(function(){
 		id = $(".highlighted").find(".dr_id").html();
-		$("#nMesto_drzava_id").val(id);
+		$("#valuta_drzava_id").val(id);
 		$('#drzaveModal').modal('toggle');
 	});
 });
@@ -32,6 +32,7 @@ function sync(item){
 
 <p>
 <ul>
+  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
   <li><a href="@{Valute.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
   <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
   <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>

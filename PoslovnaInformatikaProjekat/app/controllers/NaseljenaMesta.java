@@ -23,7 +23,7 @@ public class NaseljenaMesta extends Controller{
 		nMesto.setDrzava(Drzava.findById(nMesto.drzava.id));
 		nMesto.save();
 		
-		show("add");
+		show("edit");
 	}
 	
 	public static void edit(NaseljenoMesto nMesto){

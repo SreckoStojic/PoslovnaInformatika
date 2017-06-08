@@ -1,0 +1,168 @@
+#{extends 'standardForm.html' /}
+#{set title:'Klijenti' /}
+
+<script>
+
+$(document).ready(function(){
+	$("#nMestoPickup").click(function(){
+		id = $(".highlighted").find(".nm_id").html();
+		$("#klijent_nMesto_id").val(id);
+		$('#nMestaModal').modal('toggle');
+	});
+});
+
+
+function remove(id){
+	$(location).attr('href','/Klijenti/remove?id='+id);
+}
+
+function sync(item){
+	var ime = item.find(".ime").html();
+    var prezime = item.find(".prezime").html();
+    var pravnoLice = item.find(".pravnoLice").html();
+    var id = item.find(".id").html();
+    var drzavaId = item.find(".nMesto_drzava_id").html();
+    var nMestoId = item.find("nMesto_id").html();
+    $("#klijent_ime").val(ime);
+    $("#klijent_prezime").val(prezime);
+    $("#klijent_pravnoLice").val(pravnoLice);
+    $("#klijent_id").val(id);
+    $("#klijent_nMesto_drzava_id").val(drzavaId);
+    $("#klijent_nMesto_id").val(nMestoId);
+}
+
+</script>
+
+<p>
+<ul>
+  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
+  <li><a href="@{Klijenti.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+  <li><a href="@{Klijenti.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+</ul>
+</p>
+
+<div class = "container-fluid">
+<h1>Klijenti</h1>
+
+<table>
+	<tr class = "header"> 
+	   <th>Ime</th>
+	   <th>Prezime</th>
+	   <th>Naseljeno Mesto</th>
+	   <th>Drzava</th>
+	   <th>Pravno Lice</th>
+	</tr>
+#{list items:klijenti, as:'klijent'}
+	<tr>
+		<td class = "ime">${klijent.ime}</td>
+		<td class = "prezime">${klijent.prezime}</td>
+		<td class = "nMesto">${klijent.naseljenoMesto.naziv}</td>
+		<td class = "drzava">${klijent.naseljenoMesto.drzava.naziv}</td>
+		<td class = "pravnoLice">${klijent.pravnoLice}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "klijent_id">${klijent.id}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "nMesto_id">${klijent.naseljenoMesto.id}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "drzava_id">${klijent.naseljenoMesto.drzava.id}</td>
+	</tr>
+#{/list}
+</table>
+
+
+#{set 'action'}
+    #{if mode == 'add'}
+        @{Klijenti.create()}
+    #{/if}
+    #{elseif mode == 'edit'}
+        @{Klijenti.edit()}
+    #{/elseif}
+    #{else}
+       @{Klijenti.filter()}
+    #{/else}
+  #{/set}
+  
+<div class = "panel">
+	<p>
+	
+		<form action = "${action}" method="post">
+		
+				#{field 'klijent.id'}
+					<input type = "hidden" name = "${field.name}" id = "klijent_id"/>
+				#{/}
+				<p>
+				#{field 'klijent.ime'}
+					<label for = "${field.id}">Ime</label>
+					<input type = "text" name = "${field.name}" id = "klijent_ime"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'klijent.prezime'}
+					<label for = "${field.id}">Prezime</label>
+					<input type = "text" name = "${field.name}" id = "klijent_prezime"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'klijent.pravnoLice'}
+					<label for = "${field.id}">Pravno Lice</label>
+					<input type = "text" name = "${field.name}" id = "klijent_pravnoLice"/>
+				#{/}
+				</p>
+				<p>
+				#{field 'klijent.naseljenoMesto.id'}
+					<label for = "klijent_nMesto_id">Naseljeno Mesto</label>
+					<select name = "${field.name}" id = "klijent_nMesto_id"/>
+					#{list items:nMesta, as:'nMesto'}
+					<option value = "${nMesto.id}">${nMesto.naziv}</option>
+					#{/list}
+					</select>
+					
+					 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#nMestaModal">...	</button>
+				#{/}
+				</p>
+				<div id = "formActions">
+					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
+					<a href = "#" style="margin-left:1em">Rollback</a>
+				</div>			
+				
+		</form>
+	</p>
+</div>
+
+ <!-- Modal -->
+  <div class="modal fade" id="nMestaModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+      <div class="modal-header">
+      	Naseljena Mesta
+      </div>
+      <div class="modal-body">
+	    <table style = "padding:2em">
+		<tr class = "header">
+		   <th>Oznaka</th> 
+		   <th>Naziv</th>
+		</tr>
+		#{list items:nMesta, as:'nMesto'}
+		<tr>
+			<td class = "dr_oznaka">${nMesto.oznaka}</td>
+			<td class = "dr_naziv">${nMesto.naziv}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "nm_id">${nMesto.id}</td>
+		</tr>
+		#{/list}
+		</table>
+		<div class="modal-footer">
+			<input id = "nMestoPickup" type = "button" value = "izbor"/>
+		</div>
+		</div>
+      </div>
+    </div>
+   </div>
+</div>
+

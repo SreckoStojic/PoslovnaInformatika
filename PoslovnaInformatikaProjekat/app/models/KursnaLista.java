@@ -14,8 +14,6 @@ import play.db.jpa.Model;
 public class KursnaLista extends Model {
 
 	@Column(nullable = false)
-	public Integer oznaka;
-	@Column(nullable = false)
 	public Date datum;
 	@Column(nullable = false, precision = 3, scale=0)
 	public Number brojKursneListe;
@@ -25,12 +23,7 @@ public class KursnaLista extends Model {
 	public Banka banka;
 	@OneToMany (mappedBy="kursnaLista")
 	public java.util.List<KursUValuti> valuteUListi;
-	public Integer getOznaka() {
-		return oznaka;
-	}
-	public void setOznaka(Integer oznaka) {
-		this.oznaka = oznaka;
-	}
+	
 	public Date getDatum() {
 		return datum;
 	}
