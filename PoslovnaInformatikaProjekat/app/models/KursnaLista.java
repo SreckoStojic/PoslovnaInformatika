@@ -1,5 +1,6 @@
 package models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,8 +16,6 @@ public class KursnaLista extends Model {
 
 	@Column(nullable = false)
 	public Date datum;
-	@Column(nullable = false, precision = 3, scale=0)
-	public Number brojKursneListe;
 	@Column(nullable = false)
 	public Date primenjujeSeOd;
 	@ManyToOne
@@ -29,12 +28,6 @@ public class KursnaLista extends Model {
 	}
 	public void setDatum(Date datum) {
 		this.datum = datum;
-	}
-	public Number getBrojKursneListe() {
-		return brojKursneListe;
-	}
-	public void setBrojKursneListe(Number brojKursneListe) {
-		this.brojKursneListe = brojKursneListe;
 	}
 	public Date getPrimenjujeSeOd() {
 		return primenjujeSeOd;
@@ -54,6 +47,9 @@ public class KursnaLista extends Model {
 	public void setValuteUListi(java.util.List<KursUValuti> valuteUListi) {
 		this.valuteUListi = valuteUListi;
 	}
-	
+	public String formatDate(Date datum){
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		return formatter.format(datum);
+	}
 	
 }

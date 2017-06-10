@@ -28,7 +28,7 @@ public class Banka extends Model {
 	@Column(nullable = true, length = 20)
 	public String fax;
 	@Column(nullable = false)
-	public Boolean banka;
+	public Boolean banka = false;
 	@OneToMany(mappedBy = "banka")
 	public List<KursnaLista> kursnaLista;
 	@OneToMany(mappedBy = "banka")

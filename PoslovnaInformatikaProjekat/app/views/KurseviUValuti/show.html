@@ -1,0 +1,235 @@
+#{extends 'standardForm.html' /}
+#{set title:'Kursevi u Valuti' /}
+
+<script>
+
+$(document).ready(function(){
+	$("#premaValutiPickup").click(function(){
+		id = $(".highlighted").find(".val_id").html();
+		$("#kurs_premaValuti_id").val(id);
+		$('#premaValutiModal').modal('toggle');
+	});
+});
+
+$(document).ready(function(){
+	$("#osnovnaValutaPickup").click(function(){
+		id = $(".highlighted").find(".val_id").html();
+		$("#kurs_osnovnaValuta_id").val(id);
+		$('#osnovnaValutaModal').modal('toggle');
+	});
+});
+
+
+function remove(id){
+	$(location).attr('href','/KurseviUValuti/remove?id='+id);
+}
+
+function sync(item){
+	var kupovni = item.find(".kupovni").html();
+    var srednji = item.find(".srednji").html();
+    var prodajni = item.find(".prodajni").html();
+    var osnovnaValuta = item.find(".osnovnaValuta").html();
+    var premaValuti = item.find(".premaValuti").html();
+    var id = item.find(".id").html();
+    $("#kurs_osnovnaValuta").val(osnovnaValuta);
+    $("#kurs_premaValuti").val(premaValuti);
+    $("#kurs_kupovni").val(kupovni);
+    $("#kurs_srednji").val(srednji);
+    $("#kurs_prodajni").val(prodajni);
+}
+
+</script>
+
+<div>
+	<ul>
+	  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
+	  <li><a href="@{KurseviUValuti.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+	  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+	  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+	  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+	  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+	  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+	  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+	  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+	  <li><a href="@{KurseviUValuti.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+	  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+	  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+	</ul>
+</div>
+
+<div class = "container-fluid">
+	<h1>Kursevi U Valuti</h1>
+	
+	<table class="table table-bordered">
+		<tr class = "header"> 
+		   <th>Osnovna Valuta</th>
+		   <th>Prema Valuti</th>
+		   <th>Kupovni</th>
+		   <th>Srednji</th>
+		   <th>Prodajni</th>
+		</tr>
+	#{list items:kursevi, as:'kurs'}
+		<tr>
+			<td class = "osnovnaValuta">${kurs.osnovnaValuta.naziv}</td>
+			<td class = "premaValuti">${kurs.premaValuti.naziv}</td>
+			<td class = "kupovni">${kurs.kupovni}</td>
+			<td class = "srednji">${kurs.srednji}</td>
+			<td class = "prodajni">${kurs.prodajni}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "kurs_id">${kurs.id}</td>
+		</tr>
+	#{/list}
+	</table>
+</div>
+
+#{set 'action'}
+    #{if mode == 'add'}
+        @{KurseviUValuti.create()}
+    #{/if}
+    #{elseif mode == 'edit'}
+        @{KurseviUValuti.edit()}
+    #{/elseif}
+    #{else}
+       @{KurseviUValuti.filter()}
+    #{/else}
+  #{/set}
+  
+<div class = "container-fluid">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="form-wrapper row">
+				<form action = "${action}" method="post" class="form-horizontal">
+					#{field 'kurs.id'}
+						<input type = "hidden" name = "${field.name}" id = "kurs_id"/>
+					#{/}
+					<div class="form-group">
+					#{field 'kurs.kursnaLista.id'}
+						<label for = "kurs_kursnaLista_id" class="col-sm-3 control-label">Kursna Lista</label>
+						<div class="col-sm-9">
+							<select name = "${field.name}" id = "kurs_kursnaLista_id" class="form-control"/>
+							#{list items:kursneListe, as:'kl'}
+							<option value = "${kl.id}">${kl.formatDate(kl.datum)} (${kl.banka.naziv})</option>
+							#{/list}
+							</select>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'kurs.osnovnaValuta.id'}
+						<label for = "kurs_osnovnaValuta_id" class="col-sm-3 control-label">Osnovna Valuta</label>
+						<div class="col-sm-7">
+							<select name = "${field.name}" id = "kurs_osnovnaValuta_id" class="form-control"/>
+							#{list items:valute, as:'valuta'}
+							<option value = "${valuta.id}">${valuta.naziv}</option>
+							#{/list}
+							</select>
+						</div>
+						<div class="col-sm-2">
+						 	<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#osnovnaValutaModal">...	</button>
+					 	</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'kurs.premaValuti.id'}
+						<label for = "kurs_premaValuti_id" class="col-sm-3 control-label">Prema Valuti</label>
+						<div class="col-sm-7">
+							<select name = "${field.name}" id = "kurs_premaValuti_id" class="form-control"/>
+							#{list items:valute, as:'valuta'}
+							<option value = "${valuta.id}">${valuta.naziv}</option>
+							#{/list}
+							</select>
+						</div>
+						<div class="col-sm-2">
+						 	<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#premaValutiModal">...	</button>
+					 	</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'kurs.kupovni'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Kupovni</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "kurs_kupovni" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'kurs.prodajni'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Prodajni</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "kurs_prodajni" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+						<div id = "formActions" class="col-sm-offset-3 col-sm-9">
+							<input type = "submit" value = "Potvrda" class="btn btn-default"/>
+							<a href = "#">Rollback</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+ <!-- Modal -->
+  <div class="modal fade" id="premaValutiModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+      <div class="modal-header">
+      	Valute
+      </div>
+      <div class="modal-body">
+	    <table class="table table-bordered">
+		<tr class = "header">
+		   <th>Zvanicna Sifra</th> 
+		   <th>Naziv</th>
+		</tr>
+		#{list items:valute, as:'valuta'}
+		<tr>
+			<td class = "valuta_zvanicnaSifra">${valuta.zvanicnaSifra}</td>
+			<td class = "valuta_naziv">${valuta.naziv}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "val_id">${valuta.id}</td>
+		</tr>
+		#{/list}
+		</table>
+		<div class="modal-footer">
+			<input id = "premaValutiPickup" type = "button" value = "izbor"/>
+		</div>
+		</div>
+      </div>
+    </div>
+   </div>
+</div>
+<!-- Modal -->
+  <div class="modal fade" id="osnovnaValutaModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+      <div class="modal-header">
+      	Valute
+      </div>
+      <div class="modal-body">
+	    <table class="table table-bordered">
+		<tr class = "header">
+		   <th>Zvanicna Sifra</th> 
+		   <th>Naziv</th>
+		</tr>
+		#{list items:valute, as:'valuta'}
+		<tr>
+			<td class = "valuta_zvanicnaSifra">${valuta.zvanicnaSifra}</td>
+			<td class = "valuta_naziv">${valuta.naziv}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "val_id">${valuta.id}</td>
+		</tr>
+		#{/list}
+		</table>
+		<div class="modal-footer">
+			<input id = "osnovnaValutaPickup" type = "button" value = "izbor"/>
+		</div>
+		</div>
+      </div>
+    </div>
+   </div>
+</div>
+

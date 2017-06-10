@@ -1,0 +1,173 @@
+#{extends 'standardForm.html' /}
+#{set title:'Kursne Liste' /}
+
+<script>
+
+$(document).ready(function(){
+	$("#bankaPickup").click(function(){
+		id = $(".highlighted").find(".banka_id").html();
+		$("#kursnaLista_banka_id").val(id);
+		$('#bankeModal').modal('toggle');
+	});
+});
+
+function remove(id){
+	$(location).attr('href','/KursneListe/remove?id='+id);
+}
+
+function sync(item){
+    var id = item.find(".id").html();
+    var bankaId = item.find(".drzava_id").html();
+   	var primenjujeSeOd = item.find(".primenjujeSeOd").html();
+   	$("#kursnaLista_id").val(id);
+    $("#kursnaLista_primenjujeSeOd").val(primenjujeSeOd);
+    $("#kursnaLista_banka_id").val(bankaId);
+}
+
+</script>
+
+<div>
+	<ul>
+	  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
+	  <li><a href="@{KursneListe.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+	  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+	  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+	  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+	  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+	  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+	  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+	  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+	  <li><a href="@{KursneListe.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+	  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+	  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+	</ul>
+</div>
+
+<div class = "container-fluid">
+	<h1>Kursne Liste</h1>
+
+	<table class="table table-bordered">
+		<tr class = "header"> 
+		   <th>Datum</th>
+		   <th>Primenjuje se od</th>
+		   <th>Banka</th>
+		   <th width="50"></th>
+		</tr>
+	#{list items:kursneListe, as:'kursnaLista'}
+		<tr>
+			<td class = "datum">${kursnaLista.formatDate(kursnaLista.datum)}</td>
+			<td class = "primenjujeSeOd">${kursnaLista.formatDate(kursnaLista.primenjujeSeOd)}</td>
+			<td class = "banka">${kursnaLista.banka.naziv}</td>
+			<td class = "vidiDetalje" align="center">
+				<a href="@{KursneListe.view(kursnaLista.id)}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#kursnaListaModal">Detalji</a>
+			</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "id">${kursnaLista.id}</td>
+		</tr>
+	#{/list}
+	</table>
+</div>
+
+#{set 'action'}
+    #{if mode == 'add'}
+        @{KursneListe.create()}
+    #{/if}
+    #{elseif mode == 'edit'}
+        @{KursneListe.edit()}
+    #{/elseif}
+    #{else}
+       @{KursneListe.filter()}
+    #{/else}
+  #{/set}
+  
+<div class = "container-fluid">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="form-wrapper row">
+				<form action = "${action}" method="post" class="form-horizontal">
+					#{field 'kursnaLista.id'}
+						<input type = "hidden" name = "${field.name}" id = "kursnaLista_id"/>
+					#{/}
+					<div class="form-group">
+					#{field 'kursnaLista.primenjujeSeOd'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Primenjuje se od</label>
+						<div class="col-sm-9">
+							<input type = "date" name = "${field.name}" id = "kursnaLista_primenjujeSeOd" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'kursnaLista.banka.id'}
+						<label for = "kursnaLista_banka_id" class="col-sm-3 control-label">Banka</label>
+						<div class="col-sm-7">
+							<select name = "${field.name}" id = "kursnaLista_banka_id" class="form-control"/>
+							#{list items:banke, as:'banka'}
+							<option value = "${banka.id}">${banka.naziv}</option>
+							#{/list}
+							</select>
+						</div>
+						<div class="col-sm-2">
+						 	<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#bankeModal">...	</button>
+					 	</div>
+					#{/}
+					</div>
+					<div class="form-group">
+						<div id = "formActions" class="col-sm-offset-3 col-sm-9">
+							<input type = "submit" value = "Potvrda" class="btn btn-default"/>
+							<a href = "#">Rollback</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="bankeModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+    <div class="modal-header">
+    	Banke
+    </div>
+    <div class="modal-body">
+   <table class="table table-bordered">
+	<tr class = "header">
+	   <th>Sifra</th>
+	   <th>Pib</th> 
+	   <th>Naziv</th>
+	   <th>Adresa</th>
+	   <th>Email</th>
+	   <th>Web</th>
+	   <th>Telefon</th>
+	   <th>Faks</th>
+	</tr>
+	#{list items:banke, as:'banka'}
+	<tr>
+		<td class = "banka_oznaka">${banka.sifra}</td>
+		<td class = "banka_pib">${banka.pib}</td>
+		<td class = "banka_naziv">${banka.naziv}</td>
+		<td class = "banka_adresa">${banka.adresa}</td>
+		<td class = "banka_email">${banka.email}</td>
+		<td class = "banka_web">${banka.web}</td>
+		<td class = "banka_telefon">${banka.telefon}</td>
+		<td class = "banka_fax">${banka.fax}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "banka_id">${banka.id}</td>
+	</tr>
+	#{/list}
+	</table>
+	<div class="modal-footer">
+		<input id = "bankaPickup" type = "button" value = "izbor"/>
+	</div>
+	</div>
+    </div>
+  </div>
+</div>
+<!-- Modal Detalji -->
+<div class="modal fade" id="kursnaListaModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+	    
+    </div>
+  </div>
+</div>

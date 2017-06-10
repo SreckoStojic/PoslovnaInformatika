@@ -10,11 +10,11 @@ table, th, td {
 table tr.highlighted{
 	background: yellow;	
 }
-
+/*
 div.panel{
 	margin-top:2em;
 	border:solid 1px;
-}
+}*/
 
 ul {
     list-style-type: none;
@@ -40,11 +40,17 @@ li a:hover {
     background-color: #111;
 }
 
-form label, form input{
-	margin-left:1em;
+.form-wrapper{
+	width:500px;
+}
+#main-container{
+	margin-top: 65px;
 }
 
-form label{
-	width:3em;
-	display:inline-block
+#bankeModal .modal-dialog {
+	width: 800px;
+}
+
+#kursnaListaModal .modal-dialog {
+	width: 1000px;
 }

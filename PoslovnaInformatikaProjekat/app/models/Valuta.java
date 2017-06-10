@@ -11,13 +11,15 @@ import play.db.jpa.Model;
 
 @Entity
 public class Valuta extends Model {
-
+	
 	@Column(nullable = false, length = 3)
-	public String zvanicnaSifra;
+	public String oznaka;
+	@Column(nullable = false)
+	public Integer zvanicnaSifra;
 	@Column(nullable = false, length = 30)
 	public String naziv;
 	@Column(nullable = false)
-	public Boolean domicilna;
+	public Boolean domicilna = false;
 	@ManyToOne
 	public Drzava drzava;
 	@OneToMany(mappedBy = "osnovnaValuta")
@@ -30,10 +32,22 @@ public class Valuta extends Model {
 	public List<AnalitikaIzvoda> analitikeIzvoda;
 	
 	
-	public String getZvanicnaSifra() {
+	public String getOznaka() {
+		return oznaka;
+	}
+	public void setOznaka(String oznaka) {
+		this.oznaka = oznaka;
+	}
+	public List<KursUValuti> getPremaValuti() {
+		return premaValuti;
+	}
+	public void setPremaValuti(List<KursUValuti> premaValuti) {
+		this.premaValuti = premaValuti;
+	}
+	public Integer getZvanicnaSifra() {
 		return zvanicnaSifra;
 	}
-	public void setZvanicnaSifra(String zvanicnaSifra) {
+	public void setZvanicnaSifra(Integer zvanicnaSifra) {
 		this.zvanicnaSifra = zvanicnaSifra;
 	}
 	public String getNaziv() {

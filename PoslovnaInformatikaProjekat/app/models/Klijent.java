@@ -17,7 +17,7 @@ public class Klijent extends Model {
 	@Column(nullable = false, length = 30)
 	public String prezime;
 	@Column(nullable = false)
-	public Boolean pravnoLice;
+	public Boolean pravnoLice = false;
 	@ManyToOne
 	public NaseljenoMesto naseljenoMesto;
 	@OneToMany(mappedBy = "klijent")

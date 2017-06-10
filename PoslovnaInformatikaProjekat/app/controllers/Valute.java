@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import models.Drzava;
+import models.KursUValuti;
 import models.Valuta;
 import play.mvc.Controller;
 
@@ -20,7 +21,6 @@ public class Valute extends Controller{
 	
 	
 	public static void create(Valuta valuta){
-		
 		valuta.save();
 		
 		show("add");
@@ -28,6 +28,7 @@ public class Valute extends Controller{
 	
 	public static void edit(Valuta valuta){
 		Valuta v = Valuta.findById(valuta.id);
+		v.setOznaka(valuta.oznaka);
 		v.setZvanicnaSifra(valuta.zvanicnaSifra);
 		v.setDomicilna(valuta.domicilna);
 		v.setNaziv(valuta.naziv);

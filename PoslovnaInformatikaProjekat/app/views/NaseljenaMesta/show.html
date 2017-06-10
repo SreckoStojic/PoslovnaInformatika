@@ -30,45 +30,45 @@ function sync(item){
 
 </script>
 
-<p>
-<ul>
-  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
-  <li><a href="@{NaseljenaMesta.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
-  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
-  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
-  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
-  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
-  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
-  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
-  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
-  <li><a href="@{NaseljenaMesta.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
-  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
-  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
-</ul>
-</p>
+<div>
+	<ul>
+	  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
+	  <li><a href="@{NaseljenaMesta.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+	  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+	  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+	  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+	  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+	  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+	  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+	  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+	  <li><a href="@{NaseljenaMesta.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+	  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+	  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+	</ul>
+</div>
 
 <div class = "container-fluid">
-<h1>Naseljena mesta</h1>
+	<h1>Naseljena Mesta</h1>
 
-<table>
-	<tr class = "header"> 
-	   <th>Oznaka</th>
-	   <th>Naziv</th>
-	   <th width="20%">Postanski broj</th>
-	   <th>Drzava</th>
-	</tr>
-#{list items:nMesta, as:'naseljenoMesto'}
-	<tr>
-		<td class = "oznaka">${naseljenoMesto.oznaka}</td>
-		<td class = "naziv">${naseljenoMesto.naziv}</td>
-		<td class = "postanskiBroj">${naseljenoMesto.postanskiBroj}</td>
-		<td class = "drzava">${naseljenoMesto.drzava.naziv}</td>
-		<td style = "visibility: hidden; max-width: 0px" class = "id">${naseljenoMesto.id}</td>
-		<td style = "visibility: hidden; max-width: 0px" class = "drzava_id">${naseljenoMesto.drzava.id}</td>
-	</tr>
-#{/list}
-</table>
-
+	<table class="table table-bordered">
+		<tr class = "header"> 
+		   <th>Oznaka</th>
+		   <th>Naziv</th>
+		   <th width="20%">Postanski broj</th>
+		   <th>Drzava</th>
+		</tr>
+	#{list items:nMesta, as:'naseljenoMesto'}
+		<tr>
+			<td class = "oznaka">${naseljenoMesto.oznaka}</td>
+			<td class = "naziv">${naseljenoMesto.naziv}</td>
+			<td class = "postanskiBroj">${naseljenoMesto.postanskiBroj}</td>
+			<td class = "drzava">${naseljenoMesto.drzava.naziv}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "id">${naseljenoMesto.id}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "drzava_id">${naseljenoMesto.drzava.id}</td>
+		</tr>
+	#{/list}
+	</table>
+</div>
 
 #{set 'action'}
     #{if mode == 'add'}
@@ -82,81 +82,91 @@ function sync(item){
     #{/else}
   #{/set}
   
-<div class = "panel">
-	<p>
-	
-		<form action = "${action}" method="post">
-		
-				#{field 'nMesto.id'}
-					<input type = "hidden" name = "${field.name}" id = "nMesto_id"/>
-				#{/}
-				<p>
-				#{field 'nMesto.oznaka'}
-					<label for = "${field.id}">Oznaka</label>
-					<input type = "text" name = "${field.name}" id = "nMesto_oznaka"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'nMesto.naziv'}
-					<label for = "${field.id}">Naziv</label>
-					<input type = "text" name = "${field.name}" id = "nMesto_naziv"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'nMesto.postanskiBroj'}
-					<label for = "${field.id}">Postanski broj</label>
-					<input type = "text" name = "${field.name}" id = "nMesto_postanskiBroj"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'nMesto.drzava.id'}
-					<label for = "nMesto_drzava_id">Drzava</label>
-					<select name = "${field.name}" id = "nMesto_drzava_id"/>
-					#{list items:drzave, as:'drzava'}
-					<option value = "${drzava.id}">${drzava.naziv}</option>
-					#{/list}
-					</select>
-					
-					 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#drzaveModal">...	</button>
-				#{/}
-				</p>
-				<div id = "formActions">
-					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
-					<a href = "#" style="margin-left:1em">Rollback</a>
-				</div>			
-				
-		</form>
-	</p>
+<div class = "container-fluid">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="form-wrapper row">
+				<form action = "${action}" method="post" class="form-horizontal">
+					#{field 'nMesto.id'}
+						<input type = "hidden" name = "${field.name}" id = "nMesto_id"/>
+					#{/}
+					<div class="form-group">
+					#{field 'nMesto.oznaka'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Oznaka</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "nMesto_oznaka" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'nMesto.naziv'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Naziv</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "nMesto_naziv" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'nMesto.postanskiBroj'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Postanski Broj</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "nMesto_postanskiBroj" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'nMesto.drzava.id'}
+						<label for = "nMesto_drzava_id" class="col-sm-3 control-label">Drzava</label>
+						<div class="col-sm-7">
+							<select name = "${field.name}" id = "nMesto_drzava_id" class="form-control"/>
+							#{list items:drzave, as:'drzava'}
+							<option value = "${drzava.id}">${drzava.naziv}</option>
+							#{/list}
+							</select>
+						</div>
+						<div class="col-sm-2">
+						 	<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#drzaveModal">...	</button>
+					 	</div>
+					#{/}
+					</div>
+					<div class="form-group">
+						<div id = "formActions" class="col-sm-offset-3 col-sm-9">
+							<input type = "submit" value = "Potvrda" class="btn btn-default"/>
+							<a href = "#">Rollback</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
-
- <!-- Modal -->
-  <div class="modal fade" id="drzaveModal" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-      <div class="modal-header">
-      	Drzave
-      </div>
-      <div class="modal-body">
-	    <table style = "padding:2em">
-		<tr class = "header">
-		   <th>Oznaka</th> 
-		   <th>Naziv</th>
-		</tr>
-		#{list items:drzave, as:'drzava'}
-		<tr>
-			<td class = "dr_oznaka">${drzava.oznaka}</td>
-			<td class = "dr_naziv">${drzava.naziv}</td>
-			<td style = "visibility: hidden; max-width: 0px" class = "dr_id">${drzava.id}</td>
-		</tr>
-		#{/list}
+<!-- Modal -->
+<div class="modal fade" id="drzaveModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+    <div class="modal-header">
+    	Drzave
+    </div>
+    <div class="modal-body">
+	   <table class="table table-bordered">
+			<tr class = "header">
+			   <th>Oznaka</th> 
+			   <th>Naziv</th>
+			</tr>
+			#{list items:drzave, as:'drzava'}
+			<tr>
+				<td class = "dr_oznaka">${drzava.oznaka}</td>
+				<td class = "dr_naziv">${drzava.naziv}</td>
+				<td style = "visibility: hidden; max-width: 0px" class = "dr_id">${drzava.id}</td>
+			</tr>
+			#{/list}
 		</table>
 		<div class="modal-footer">
 			<input id = "drzavaPickup" type = "button" value = "izbor"/>
 		</div>
-		</div>
-      </div>
+	</div>
     </div>
-   </div>
+  </div>
 </div>
 

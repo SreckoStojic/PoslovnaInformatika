@@ -1,0 +1,34 @@
+<div class="modal-header">Detalji</div>
+  <div class="modal-body">
+	  <table class="table table-bordered">
+			<tr class = "header">
+			   <th>Zvanicna Sifra</th>
+			   <th>Oznaka</th> 
+			   <th>Drzava</th>
+			   <th>Zvanicna Sifra</th>
+			   <th>Oznaka</th>
+			   <th>Drzava</th>
+			   <th>Kupovni</th>
+			   <th>Srednji</th>
+			   <th>Prodajni</th>
+			</tr>
+			#{list items:kursnaLista.valuteUListi, as:'kv'}
+			<tr>
+				<td>${kv.osnovnaValuta.zvanicnaSifra}</td>
+				<td>${kv.osnovnaValuta.oznaka}</td>
+				<td>${kv.osnovnaValuta.drzava.naziv}</td>
+				<td>${kv.premaValuti.zvanicnaSifra}</td>
+				<td>${kv.premaValuti.oznaka}</td>		
+				<td>${kv.premaValuti.drzava.naziv}</td>
+				<td>${kv.kupovni}</td>
+				<td>${kv.srednji}</td>
+				<td>${kv.prodajni}</td>
+			</tr>
+			#{/list}
+		</table>
+		
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Zatvori</button>
+	</div>
+</div>

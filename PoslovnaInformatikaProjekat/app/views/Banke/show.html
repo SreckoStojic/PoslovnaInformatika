@@ -26,12 +26,12 @@ function sync(item){
     $("#banka_web").val(web);
     $("#banka_telefon").val(telefon);
     $("#banka_fax").val(fax);
-    $("#banka_banka").val(banka);
+    $("#banka_banka").prop("checked", banka == "true");
 }
 
 </script>
 
-<p>
+<div>
 <ul>
   <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
   <li><a href="@{Banke.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
@@ -46,14 +46,14 @@ function sync(item){
   <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
   <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
 </ul>
-</p>
+</div>
 
 <div class = "container-fluid">
-<h1>Banke</h1>
+	<h1>Banke</h1>
 
-<table>
+	<table class="table table-bordered">
 	<tr class = "header"> 
-	   <th width="20%">Sifra</th>
+	   <th>Sifra</th>
 	   <th>Pib</th>
 	   <th>Naziv</th>
 	   <th>Adresa</th>
@@ -63,7 +63,7 @@ function sync(item){
 	   <th>Faks</th>
 	   <th>Centralna banka</th>
 	</tr>
-#{list items:banke, as:'banka'}
+	#{list items:banke, as:'banka'}
 	<tr>
 		<td class = "sifra">${banka.sifra}</td>
 		<td class = "pib">${banka.pib}</td>
@@ -76,9 +76,9 @@ function sync(item){
 		<td class = "banka">${banka.banka}</td>
 		<td style = "visibility: hidden; max-width: 0px" class = "id">${banka.id}</td>
 	</tr>
-#{/list}
-</table>
-
+	#{/list}
+	</table>
+</div>
 
 #{set 'action'}
     #{if mode == 'add'}
@@ -92,76 +92,124 @@ function sync(item){
     #{/else}
   #{/set}
   
-<div class = "panel">
-	<p>
-	
-		<form action = "${action}" method="post">
-		
-				#{field 'banka.id'}
+<div class = "container-fluid">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="form-wrapper row">
+				<form action = "${action}" method="post" class="form-horizontal">
+					#{field 'banka.id'}
 					<input type = "hidden" name = "${field.name}" id = "banka_id"/>
-				#{/}
-				<p>
-				#{field 'banka.sifra'}
-					<label for = "${field.id}">Sifra</label>
-					<input type = "text" name = "${field.name}" id = "banka_sifra"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'banka.pib'}
-					<label for = "${field.id}">Pib</label>
-					<input type = "text" name = "${field.name}" id = "banka_pib"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'banka.naziv'}
-					<label for = "${field.id}">Naziv</label>
-					<input type = "text" name = "${field.name}" id = "banka_naziv"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'banka.adresa'}
-					<label for = "${field.id}">Adresa</label>
-					<input type = "text" name = "${field.name}" id = "banka_adresa"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'banka.email'}
-					<label for = "${field.id}">Email</label>
-					<input type = "text" name = "${field.name}" id = "banka_email"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'banka.web'}
-					<label for = "${field.id}">Web</label>
-					<input type = "text" name = "${field.name}" id = "banka_web"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'banka.telefon'}
-					<label for = "${field.id}">Telefon</label>
-					<input type = "text" name = "${field.name}" id = "banka_telefon"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'banka.fax'}
-					<label for = "${field.id}">Faks</label>
-					<input type = "text" name = "${field.name}" id = "banka_fax"/>
-				#{/}
-				</p>
-				<p>
-				<p>
-				#{field 'banka.banka'}
-					<label for = "${field.id}">Centralna Banka</label>
-					<input type = "text" name = "${field.name}" id = "banka_banka"/>
-				#{/}
-				</p>
-				<div id = "formActions">
-					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
-					<a href = "#" style="margin-left:1em">Rollback</a>
-				</div>			
-				
-		</form>
-	</p>
+					#{/}
+					<div class="form-group">
+					#{field 'banka.sifra'}						
+						<label for = "${field.id}" class="col-sm-3 control-label">Sifra</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "banka_sifra" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'banka.pib'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Pib</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "banka_pib" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'banka.naziv'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Naziv</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "banka_naziv" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'banka.adresa'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Adresa</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "banka_adresa" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'banka.email'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Email</label>
+						<div class="col-sm-9">
+							<input type = "email" name = "${field.name}" id = "banka_email" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'banka.web'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Web</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "banka_web" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'banka.telefon'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Telefon</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "banka_telefon" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'banka.fax'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Faks</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "banka_fax" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'banka.banka'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Centralna Banka</label>
+						<div class="col-sm-9">
+							<input type = "checkbox" name = "${field.name}" id = "banka_banka" />
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+						<div id = "formActions" class="col-sm-offset-3 col-sm-9">
+							<input type = "submit" value = "Potvrda" class="btn btn-default"/>
+							<a href = "#">Rollback</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="drzaveModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+    <div class="modal-header">
+    	Drzave
+    </div>
+    <div class="modal-body">
+   <table class="table table-bordered">
+	<tr class = "header">
+	   <th>Oznaka</th> 
+	   <th>Naziv</th>
+	</tr>
+	#{list items:drzave, as:'drzava'}
+	<tr>
+		<td class = "dr_oznaka">${drzava.oznaka}</td>
+		<td class = "dr_naziv">${drzava.naziv}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "dr_id">${drzava.id}</td>
+	</tr>
+	#{/list}
+	</table>
+	<div class="modal-footer">
+		<input id = "drzavaPickup" type = "button" value = "izbor"/>
+	</div>
+	</div>
+    </div>
+  </div>
 </div>
 
-</div>

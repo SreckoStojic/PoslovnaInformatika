@@ -6,14 +6,13 @@ import java.math.BigInteger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 
 import play.db.jpa.Model;
 
 @Entity
 public class KursUValuti extends Model {
 
-	@Column(nullable = false, precision = 9, scale=4)
-	public Number redniBroj;
 	@Column(nullable = false, precision = 9, scale=4)
 	public BigDecimal kupovni;
 	@Column(nullable = false, precision = 9, scale=4)
@@ -26,12 +25,7 @@ public class KursUValuti extends Model {
 	public Valuta osnovnaValuta;
 	@ManyToOne
 	public Valuta premaValuti;
-	public Number getRedniBroj() {
-		return redniBroj;
-	}
-	public void setRedniBroj(Number redniBroj) {
-		this.redniBroj = redniBroj;
-	}
+	
 	public BigDecimal getKupovni() {
 		return kupovni;
 	}
@@ -68,6 +62,10 @@ public class KursUValuti extends Model {
 	public void setPremaValuti(Valuta premaValuti) {
 		this.premaValuti = premaValuti;
 	}
-	
+
+	@PrePersist
+	public void izracunajSrednjiKurs() {
+		this.srednji = this.kupovni.add(this.prodajni).divide((new BigDecimal(2)));
+	}
 	
 }

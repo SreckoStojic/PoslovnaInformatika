@@ -25,7 +25,7 @@ function sync(item){
     var nMestoId = item.find("nMesto_id").html();
     $("#klijent_ime").val(ime);
     $("#klijent_prezime").val(prezime);
-    $("#klijent_pravnoLice").val(pravnoLice);
+    $("#klijent_pravnoLice").prop("checked", pravnoLice == "true");
     $("#klijent_id").val(id);
     $("#klijent_nMesto_drzava_id").val(drzavaId);
     $("#klijent_nMesto_id").val(nMestoId);
@@ -33,48 +33,48 @@ function sync(item){
 
 </script>
 
-<p>
-<ul>
-  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
-  <li><a href="@{Klijenti.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
-  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
-  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
-  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
-  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
-  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
-  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
-  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
-  <li><a href="@{Klijenti.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
-  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
-  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
-</ul>
-</p>
+<div>
+	<ul>
+	  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
+	  <li><a href="@{Klijenti.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+	  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+	  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+	  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+	  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+	  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+	  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+	  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+	  <li><a href="@{Klijenti.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+	  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+	  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+	</ul>
+</div>
 
 <div class = "container-fluid">
-<h1>Klijenti</h1>
-
-<table>
-	<tr class = "header"> 
-	   <th>Ime</th>
-	   <th>Prezime</th>
-	   <th>Naseljeno Mesto</th>
-	   <th>Drzava</th>
-	   <th>Pravno Lice</th>
-	</tr>
-#{list items:klijenti, as:'klijent'}
-	<tr>
-		<td class = "ime">${klijent.ime}</td>
-		<td class = "prezime">${klijent.prezime}</td>
-		<td class = "nMesto">${klijent.naseljenoMesto.naziv}</td>
-		<td class = "drzava">${klijent.naseljenoMesto.drzava.naziv}</td>
-		<td class = "pravnoLice">${klijent.pravnoLice}</td>
-		<td style = "visibility: hidden; max-width: 0px" class = "klijent_id">${klijent.id}</td>
-		<td style = "visibility: hidden; max-width: 0px" class = "nMesto_id">${klijent.naseljenoMesto.id}</td>
-		<td style = "visibility: hidden; max-width: 0px" class = "drzava_id">${klijent.naseljenoMesto.drzava.id}</td>
-	</tr>
-#{/list}
-</table>
-
+	<h1>Klijenti</h1>
+	
+	<table class="table table-bordered">
+		<tr class = "header"> 
+		   <th>Ime</th>
+		   <th>Prezime</th>
+		   <th>Naseljeno Mesto</th>
+		   <th>Drzava</th>
+		   <th>Pravno Lice</th>
+		</tr>
+	#{list items:klijenti, as:'klijent'}
+		<tr>
+			<td class = "ime">${klijent.ime}</td>
+			<td class = "prezime">${klijent.prezime}</td>
+			<td class = "nMesto">${klijent.naseljenoMesto.naziv}</td>
+			<td class = "drzava">${klijent.naseljenoMesto.drzava.naziv}</td>
+			<td class = "pravnoLice">${klijent.pravnoLice}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "klijent_id">${klijent.id}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "nMesto_id">${klijent.naseljenoMesto.id}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "drzava_id">${klijent.naseljenoMesto.drzava.id}</td>
+		</tr>
+	#{/list}
+	</table>
+</div>
 
 #{set 'action'}
     #{if mode == 'add'}
@@ -88,51 +88,63 @@ function sync(item){
     #{/else}
   #{/set}
   
-<div class = "panel">
-	<p>
-	
-		<form action = "${action}" method="post">
-		
-				#{field 'klijent.id'}
-					<input type = "hidden" name = "${field.name}" id = "klijent_id"/>
-				#{/}
-				<p>
-				#{field 'klijent.ime'}
-					<label for = "${field.id}">Ime</label>
-					<input type = "text" name = "${field.name}" id = "klijent_ime"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'klijent.prezime'}
-					<label for = "${field.id}">Prezime</label>
-					<input type = "text" name = "${field.name}" id = "klijent_prezime"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'klijent.pravnoLice'}
-					<label for = "${field.id}">Pravno Lice</label>
-					<input type = "text" name = "${field.name}" id = "klijent_pravnoLice"/>
-				#{/}
-				</p>
-				<p>
-				#{field 'klijent.naseljenoMesto.id'}
-					<label for = "klijent_nMesto_id">Naseljeno Mesto</label>
-					<select name = "${field.name}" id = "klijent_nMesto_id"/>
-					#{list items:nMesta, as:'nMesto'}
-					<option value = "${nMesto.id}">${nMesto.naziv}</option>
-					#{/list}
-					</select>
-					
-					 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#nMestaModal">...	</button>
-				#{/}
-				</p>
-				<div id = "formActions">
-					<input type = "submit" value = "Potvrda" style="margin-left:6em"/>
-					<a href = "#" style="margin-left:1em">Rollback</a>
-				</div>			
-				
-		</form>
-	</p>
+<div class = "container-fluid">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="form-wrapper row">
+				<form action = "${action}" method="post" class="form-horizontal">
+					#{field 'klijent.id'}
+						<input type = "hidden" name = "${field.name}" id = "klijent_id"/>
+					#{/}
+					<div class="form-group">
+					#{field 'klijent.ime'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Ime</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "klijent_ime" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'klijent.prezime'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Prezime</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "klijent_prezime" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'klijen.pravnoLice'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Pravno Lice</label>
+						<div class="col-sm-9">	
+							<input type = "checkbox" name = "${field.name}" id = "klijent_pravnoLice" />
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'klijent.naseljenoMesto.id'}
+						<label for = "klijent_nMesto_id" class="col-sm-3 control-label">Naseljeno Mesto</label>
+						<div class="col-sm-7">
+							<select name = "${field.name}" id = "klijent_nMesto_id" class="form-control"/>
+							#{list items:nMesta, as:'nMesto'}
+							<option value = "${nMesto.id}">${nMesto.naziv}</option>
+							#{/list}
+							</select>
+						</div>
+						<div class="col-sm-2">
+						 	<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#nMestaModal">...	</button>
+					 	</div>
+					#{/}
+					</div>
+					<div class="form-group">
+						<div id = "formActions" class="col-sm-offset-3 col-sm-9">
+							<input type = "submit" value = "Potvrda" class="btn btn-default"/>
+							<a href = "#">Rollback</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 
  <!-- Modal -->
@@ -144,7 +156,7 @@ function sync(item){
       	Naseljena Mesta
       </div>
       <div class="modal-body">
-	    <table style = "padding:2em">
+	    <table class="table table-bordered">
 		<tr class = "header">
 		   <th>Oznaka</th> 
 		   <th>Naziv</th>
