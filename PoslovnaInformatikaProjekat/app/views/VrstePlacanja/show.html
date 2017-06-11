@@ -1,0 +1,94 @@
+#{extends 'standardForm.html' /}
+#{set title:'Vrste Placanja' /}
+
+<script>
+
+function sync(item){
+    naziv = item.find(".naziv").html()
+    id = item.find(".id").html()
+    $("#vrstaPlacanja_naziv").val(naziv);
+    $("#vrstaPlacanja_id").val(id);
+}
+
+
+function remove(id){
+	$(location).attr('href','/VrstePlacanja/remove?id='+id);
+}
+
+</script>
+
+<div>
+	<ul>
+	  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
+	  <li><a href="@{VrstePlacanja.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+	  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+	  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+	  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+	  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+	  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+	  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+	  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+	  <li><a href="@{VrstePlacanja.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+	  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+	  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+	</ul>
+</div>
+
+<div class = "container-fluid">
+	<h1>Vrste Placanja</h1>
+
+	<table class="table table-bordered">
+		<tr class = "header"> 
+		   <th>Naziv</th>
+		</tr>
+	#{list items:vrstePlacanja, as:'vrstaPlacanja'}
+		<tr>
+			<td class="naziv">${vrstaPlacanja.naziv}</td>
+			<td style="visibility: hidden; max-width: 0px" class = "id">${vrstaPlacanja.id}</td>
+		</tr>
+	#{/list}
+	</table>
+</div>
+
+#{set 'action'}
+    #{if mode == 'add'}
+        @{VrstePlacanja.create()}
+    #{/if}
+    #{elseif mode == 'edit'}
+        @{VrstePlacanja.edit()}
+    #{/elseif}
+    #{else}
+       @{VrstePlacanja.filter()}
+    #{/else}
+  #{/set}
+  
+<div class = "container-fluid">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="form-wrapper row">
+				<form action = "${action}" method="post" class="form-horizontal">
+					#{field 'vrstaPlacanja.id'}
+						<input type = "hidden" name = "${field.name}" id = "vrstaPlacanja_id"/>
+					#{/}
+					<div class="form-group">
+					#{field 'vrstaPlacanja.naziv'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Naziv</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "vrstaPlacanja_naziv" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+						<div id = "formActions" class="col-sm-offset-3 col-sm-9">
+							<input type = "submit" value = "Potvrda" class="btn btn-default"/>
+							<a href = "#">Rollback</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+

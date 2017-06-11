@@ -43,9 +43,8 @@ public class Drzave extends Controller{
 		
 	}
 	
-	public static void filter(Drzava drzava, String mode){
+	public static void filter(Drzava drzava){
 		List<Drzava> drzave = Drzava.find("byOznakaLikeAndNazivLike", "%"+drzava.oznaka+"%","%"+drzava.naziv+"%").fetch();
-		System.out.println(drzave.size());
 		
 		renderTemplate("Drzave/show.html", drzave);
 	}

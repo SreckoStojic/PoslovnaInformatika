@@ -62,5 +62,10 @@ public class RacuniPravnihLica extends Controller{
 		renderTemplate("RacuniPravnihLica/racunModal.html",banke,klijenti,valute,klijentID);
 	}
 	
+	public static void racuniBanke(Long bankaID){
+		List<RacunPravnihLica> racuni = RacunPravnihLica.find("banka_id = ?", bankaID).fetch();
+		renderTemplate("RacuniPravnihLica/show.html",racuni);
+	}
+	
 	
 }

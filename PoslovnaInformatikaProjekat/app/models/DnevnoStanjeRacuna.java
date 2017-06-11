@@ -1,6 +1,7 @@
 package models;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -15,28 +16,20 @@ import play.db.jpa.Model;
 public class DnevnoStanjeRacuna extends Model {
 
 	@Column(nullable = false)
-	public Long brojIzvoda;
-	@Column(nullable = false)
 	public Date datumPrometa;
 	@Column(nullable = false, precision = 15, scale = 2)
-	public BigDecimal prethodnoStanje;
+	public BigDecimal prethodnoStanje = BigDecimal.valueOf(0);
 	@Column(nullable = false, precision = 15, scale = 2)
-	public BigDecimal prometUKorist;
+	public BigDecimal prometUKorist = BigDecimal.valueOf(0);
 	@Column(nullable = false, precision = 15, scale = 2)
-	public BigDecimal prometNaTeret;
+	public BigDecimal prometNaTeret = BigDecimal.valueOf(0);
 	@Column(nullable = false, precision = 15, scale = 2)
-	public BigDecimal novoStanje;
+	public BigDecimal novoStanje = BigDecimal.valueOf(0);
 	@ManyToOne
 	public RacunPravnihLica racun;
 	@OneToMany(mappedBy = "stanjeRacuna")
 	public List<AnalitikaIzvoda> analitikaIzvoda;
 	
-	public Long getBrojIzvoda() {
-		return brojIzvoda;
-	}
-	public void setBrojIzvoda(Long brojIzvoda) {
-		this.brojIzvoda = brojIzvoda;
-	}
 	public Date getDatumPrometa() {
 		return datumPrometa;
 	}
@@ -79,6 +72,16 @@ public class DnevnoStanjeRacuna extends Model {
 	public void setAnalitikaIzvoda(List<AnalitikaIzvoda> analitikaIzvoda) {
 		this.analitikaIzvoda = analitikaIzvoda;
 	}
-
 	
+	public String formatDate(Date datum){
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		return formatter.format(datum);
+	}
+	
+	public BigDecimal izracunajNovoStanje(BigDecimal prethodnoStanje, BigDecimal prometUKorist, BigDecimal prometNaTeret){
+		return prethodnoStanje.add(prometUKorist).subtract(prometNaTeret);
+	}
+	public void setPrethodnoZaNoviDan(BigDecimal novoStanje){
+		this.prethodnoStanje = novoStanje; 
+	}
 }

@@ -37,6 +37,7 @@ function remove(id){
 		   <th>Banka</th>
 		   <th>Klijent</th>
 		   <th>Valuta</th>
+		   <th width="50"></th>
 		</tr>
 	#{list items:racuni, as:'racun'}
 		<tr>
@@ -51,6 +52,9 @@ function remove(id){
 				${racun.klijent.ime} ${racun.klijent.prezime}  
 			#{/else} </td>
 			<td class = "valuta">${racun.valuta.naziv}</td>
+			<td align="center">
+				<a href="@{DnevnaStanjaRacuna.create(racun.id)}" class="btn btn-info btn-xs">Dnevno Stanje Racuna</a>
+			</td>
 			<td style = "visibility: hidden; max-width: 0px" class = "id">${racun.id}</td>
 			<td style = "visibility: hidden; max-width: 0px" class = "racun_banka_id">${racun.banka.id}</td>
 			<td style = "visibility: hidden; max-width: 0px" class = "racun_klijent_id">${racun.klijent.id}</td>

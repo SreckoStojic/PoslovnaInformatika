@@ -1,0 +1,108 @@
+#{extends 'standardForm.html' /}
+#{set title:'Dnevna Stanja Racuna' /}
+
+<script>
+
+function remove(id){
+	$(location).attr('href','/DnevnaStanjaRacuna/remove?id='+id);
+}
+
+function sync(item){
+	
+    var id = item.find(".id").html();
+    var datumPrometa = item.find(".datumPrometa").html();
+    var racunID = item.find(".racun_id").html();
+    $("#dnevnoStanjeRacuna_racun_id").val(id);
+    $("#dnevnoStanjeRacuna_datumPrometa").val(datumPrometa);
+    $("#dnevnoStanjeRacuna_id").val(id);
+    
+}
+
+</script>
+
+<div>
+<ul>
+  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
+  <li><a href="@{DnevnaStanjaRacuna.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+  <li><a href="@{DnevnaStanjaRacuna.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+</ul>
+</div>
+
+<div class = "container-fluid">
+	<h1>Dnevna Stanja Racuna</h1>
+
+	<table class="table table-bordered">
+	<tr class = "header"> 
+	   <th>Datum Prometa</th>
+	   <th>Prethodno Stanje</th>
+	   <th>Promet u Korist</th>
+	   <th>Promet na Teret</th>
+	   <th>Novo Stanje</th>
+	   <th>Racun</th>
+	</tr>
+	#{list items:dnevnaStanjaRacuna, as:'dnevnoStanjeRacuna'}
+	<tr>
+		<td class = "datumPrometa">${dnevnoStanjeRacuna.formatDate(dnevnoStanjeRacuna.datumPrometa)}</td>
+		<td class = "prethodnoStanje">${dnevnoStanjeRacuna.prethodnoStanje}</td>
+		<td class = "prometUKorist">${dnevnoStanjeRacuna.prometUKorist}</td>
+		<td class = "prometNaTeret">${dnevnoStanjeRacuna.prometNaTeret}</td>
+		<td class = "novoStanje">${dnevnoStanjeRacuna.novoStanje}</td>
+		<td class = "racun">${dnevnoStanjeRacuna.racun.brojRacuna}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "id">${dnevnoStanjeRacuna.id}</td>
+		<td style = "visibility: hidden; max-width: 0px" class = "racun_id">${dnevnoStanjeRacuna.racun.id}</td>
+	</tr>
+	#{/list}
+	</table>
+</div>
+
+#{set 'action'}
+    #{if mode == 'add'}
+        @{DnevnaStanjaRacuna.create()}
+    #{/if}
+    #{elseif mode == 'edit'}
+        @{DnevnaStanjaRacuna.edit()}
+    #{/elseif}
+    #{else}
+       @{DnevnaStanjaRacuna.filter()}
+    #{/else}
+  #{/set}
+  
+<div class = "container-fluid">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="form-wrapper row">
+				<form action = "${action}" method="post" class="form-horizontal">
+					#{field 'dnevnoStanjeRacuna.id'}
+					<input type = "hidden" name = "${field.name}" id = "dnevnoStanjeRacuna_id"/>
+					#{/}
+					#{field 'dnevnoStanjeRacuna.racun.id'}
+					<input type = "hidden" name = "${field.name}" id = "dnevnoStanjeRacuna_racun_id"/>
+					#{/}
+					<div class="form-group">
+					#{field 'dnevnoStanjeRacuna.datumPrometa'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Datum Prometa</label>
+						<div class="col-sm-9">
+							<input type = "date" name = "${field.name}" id = "dnevnoStanjeRacuna_datumPrometa" class="form-control"/>
+						</div>
+					#{/}
+					</div>			
+					<div class="form-group">
+						<div id = "formActions" class="col-sm-offset-3 col-sm-9">
+							<input type = "submit" value = "Potvrda" class="btn btn-default"/>
+							<a href = "#">Rollback</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

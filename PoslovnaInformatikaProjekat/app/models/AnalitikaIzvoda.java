@@ -53,7 +53,7 @@ public class AnalitikaIzvoda extends Model {
 	@ManyToOne(optional=true)
 	public Valuta valuta;
 	@ManyToOne(optional=true)
-	public VrstePlacanja vrstaPlacanja;
+	public VrstaPlacanja vrstaPlacanja;
 	public Long getBrojStavke() {
 		return brojStavke;
 	}
@@ -168,10 +168,10 @@ public class AnalitikaIzvoda extends Model {
 	public void setValuta(Valuta valuta) {
 		this.valuta = valuta;
 	}
-	public VrstePlacanja getVrstaPlacanja() {
+	public VrstaPlacanja getVrstaPlacanja() {
 		return vrstaPlacanja;
 	}
-	public void setVrstaPlacanja(VrstePlacanja vrstaPlacanja) {
+	public void setVrstaPlacanja(VrstaPlacanja vrstaPlacanja) {
 		this.vrstaPlacanja = vrstaPlacanja;
 	}
 	

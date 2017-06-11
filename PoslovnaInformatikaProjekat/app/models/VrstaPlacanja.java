@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 import play.db.jpa.Model;
 
 @Entity
-public class VrstePlacanja extends Model {
+public class VrstaPlacanja extends Model {
 
 	@Column(nullable = false, length = 120)
 	public String naziv;
