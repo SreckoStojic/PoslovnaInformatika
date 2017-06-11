@@ -36,15 +36,6 @@ public class NaseljenaMesta extends Controller{
 		show("edit");
 		
 	}
-	/*
-	public static void remove(NaseljenoMesto nMesto){
-		NaseljenoMesto nm = NaseljenoMesto.findById(nMesto.id);
-		nm.delete();
-		
-	
-		show("edit");
-		
-	}*/
 	
 	public static void remove(Long id){
 		NaseljenoMesto nm = NaseljenoMesto.findById(id);

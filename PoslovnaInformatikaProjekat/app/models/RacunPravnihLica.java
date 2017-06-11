@@ -1,5 +1,6 @@
 package models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -16,9 +17,9 @@ public class RacunPravnihLica extends Model {
 	@Column(nullable = false, length = 18)
 	public String brojRacuna;
 	@Column(nullable = false)
-	public Date datumOtvaranja;
+	Date datumOtvaranja = new Date();
 	@Column(nullable = false)
-	public Boolean vazeci;
+	public Boolean vazeci = false;
 	@ManyToOne
 	public Banka banka;
 	@ManyToOne
@@ -94,5 +95,10 @@ public class RacunPravnihLica extends Model {
 
 	public void setStanjeRacuna(List<DnevnoStanjeRacuna> stanjeRacuna) {
 		this.stanjeRacuna = stanjeRacuna;
+	}
+	
+	public String formatDate(Date datum){
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		return formatter.format(datum);
 	}
 }

@@ -38,15 +38,6 @@ public class KursneListe extends Controller{
 		show("edit");
 		
 	}
-	/*
-	public static void remove(NaseljenoMesto nMesto){
-		NaseljenoMesto nm = NaseljenoMesto.findById(nMesto.id);
-		nm.delete();
-		
-	
-		show("edit");
-		
-	}*/
 	
 	public static void remove(Long id){
 		KursnaLista kl = KursnaLista.findById(id);

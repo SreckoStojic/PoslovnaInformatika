@@ -33,14 +33,6 @@ public class Drzave extends Controller{
 		show("edit");
 		
 	}
-	/*
-	public static void remove(Drzava drzava){
-		Drzava d = Drzava.findById(drzava.id);
-		d.delete();
-		
-		show("edit");
-		
-	}*/
 	
 	public static void remove(Long id){
 		Drzava d = Drzava.findById(id);

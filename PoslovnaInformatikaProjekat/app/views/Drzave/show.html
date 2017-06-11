@@ -65,13 +65,13 @@ function nextForm(id){
 
 #{set 'action'}
     #{if mode == 'add'}
-        @{Valute.create()}
+        @{Drzave.create()}
     #{/if}
     #{elseif mode == 'edit'}
-        @{Valute.edit()}
+        @{Drzave.edit()}
     #{/elseif}
     #{else}
-       @{Valute.filter()}
+       @{Drzave.filter()}
     #{/else}
   #{/set}
   

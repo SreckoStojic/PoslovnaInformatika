@@ -9,14 +9,12 @@ public class Banke extends Controller{
 	
 	public static void show(String mode)
 	{
-		//List<Drzava> drzave = Drzava.findAll();
 		List<Banka> banke = Banka.findAll();
 		if(mode == null || mode.equals(""))
 			mode = "edit";
 		
 		render(banke,mode);
 	}
-	
 	
 	public static void create(Banka banka){
 		
@@ -40,15 +38,6 @@ public class Banke extends Controller{
 		show("edit");
 		
 	}
-	/*
-	public static void remove(NaseljenoMesto nMesto){
-		NaseljenoMesto nm = NaseljenoMesto.findById(nMesto.id);
-		nm.delete();
-		
-	
-		show("edit");
-		
-	}*/
 	
 	public static void remove(Long id){
 		Banka b = Banka.findById(id);

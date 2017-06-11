@@ -1,5 +1,5 @@
 #{extends 'standardForm.html' /}
-#{set title:'Klijenti' /}
+#{set title:'Klijenti Fizicka Lica' /}
 
 <script>
 
@@ -13,22 +13,22 @@ $(document).ready(function(){
 
 
 function remove(id){
-	$(location).attr('href','/Klijenti/remove?id='+id);
+	$(location).attr('href','/KlijentiFizickaLica/remove?id='+id);
 }
 
 function sync(item){
 	var ime = item.find(".ime").html();
     var prezime = item.find(".prezime").html();
-    var pravnoLice = item.find(".pravnoLice").html();
     var id = item.find(".id").html();
-    var drzavaId = item.find(".nMesto_drzava_id").html();
-    var nMestoId = item.find("nMesto_id").html();
+    var adresa = item.find(".adresa").html();
+    var drzavaId = item.find(".klijent_nMesto_drzava_id").html();
+    var nMestoId = item.find(".nMesto_id").html();
     $("#klijent_ime").val(ime);
     $("#klijent_prezime").val(prezime);
-    $("#klijent_pravnoLice").prop("checked", pravnoLice == "true");
     $("#klijent_id").val(id);
     $("#klijent_nMesto_drzava_id").val(drzavaId);
     $("#klijent_nMesto_id").val(nMestoId);
+    $("#klijent_adresa").val(adresa);
 }
 
 </script>
@@ -36,7 +36,7 @@ function sync(item){
 <div>
 	<ul>
 	  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
-	  <li><a href="@{Klijenti.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+	  <li><a href="@{KlijentiFizickaLica.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
 	  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
 	  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
 	  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
@@ -44,31 +44,35 @@ function sync(item){
 	  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
 	  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
 	  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
-	  <li><a href="@{Klijenti.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+	  <li><a href="@{KlijentiFizickaLica.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
 	  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
 	  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
 	</ul>
 </div>
 
 <div class = "container-fluid">
-	<h1>Klijenti</h1>
+	<h1>Klijenti Fizicka Lica</h1>
 	
 	<table class="table table-bordered">
 		<tr class = "header"> 
 		   <th>Ime</th>
 		   <th>Prezime</th>
+		   <th>Adresa</th>
 		   <th>Naseljeno Mesto</th>
 		   <th>Drzava</th>
-		   <th>Pravno Lice</th>
+		   <th width="50"></th>
 		</tr>
 	#{list items:klijenti, as:'klijent'}
 		<tr>
 			<td class = "ime">${klijent.ime}</td>
 			<td class = "prezime">${klijent.prezime}</td>
+			<td class = "adresa">${klijent.adresa}</td>
 			<td class = "nMesto">${klijent.naseljenoMesto.naziv}</td>
 			<td class = "drzava">${klijent.naseljenoMesto.drzava.naziv}</td>
-			<td class = "pravnoLice">${klijent.pravnoLice}</td>
-			<td style = "visibility: hidden; max-width: 0px" class = "klijent_id">${klijent.id}</td>
+			<td align="center">
+				<a href="@{RacuniPravnihLica.formaNapraviRacun(klijent.id)}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#racunModal">Napravi Racun</a>
+			</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "id">${klijent.id}</td>
 			<td style = "visibility: hidden; max-width: 0px" class = "nMesto_id">${klijent.naseljenoMesto.id}</td>
 			<td style = "visibility: hidden; max-width: 0px" class = "drzava_id">${klijent.naseljenoMesto.drzava.id}</td>
 		</tr>
@@ -78,13 +82,13 @@ function sync(item){
 
 #{set 'action'}
     #{if mode == 'add'}
-        @{Klijenti.create()}
+        @{KlijentiFizickaLica.create()}
     #{/if}
     #{elseif mode == 'edit'}
-        @{Klijenti.edit()}
+        @{KlijentiFizickaLica.edit()}
     #{/elseif}
     #{else}
-       @{Klijenti.filter()}
+       @{KlijentiFizickaLica.filter()}
     #{/else}
   #{/set}
   
@@ -113,10 +117,10 @@ function sync(item){
 					#{/}
 					</div>
 					<div class="form-group">
-					#{field 'klijen.pravnoLice'}
-						<label for = "${field.id}" class="col-sm-3 control-label">Pravno Lice</label>
-						<div class="col-sm-9">	
-							<input type = "checkbox" name = "${field.name}" id = "klijent_pravnoLice" />
+					#{field 'klijent.adresa'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Adresa</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "klijent_adresa" class="form-control"/>
 						</div>
 					#{/}
 					</div>
@@ -176,5 +180,15 @@ function sync(item){
       </div>
     </div>
    </div>
+</div>
+
+<!-- Modal Racun -->
+<div class="modal fade" id="racunModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+	    
+    </div>
+  </div>
 </div>
 

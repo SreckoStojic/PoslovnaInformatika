@@ -97,15 +97,19 @@
         </div><!--/.col-xs-12.col-sm-9-->
 
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-          <div class="list-group">
+          <div class="list-group list-group-root well">
             <a href="@{Drzave.show("edit")}" class="list-group-item">Drzave</a>
             <a href="@{NaseljenaMesta.show("edit")}" class="list-group-item">Naseljena mesta</a>
-            <a href="@{Klijenti.show("edit")}" class="list-group-item">Klijenti</a>
+            <a href="#klijent-group" class="list-group-item" data-toggle="collapse"><i class="glyphicon glyphicon-chevron-right"></i>Klijenti</a>
+            <div class="list-group collapse" id="klijent-group">
+            	<a href="@{KlijentiFizickaLica.show()}" class="list-group-item">Fizicka Lica</a>
+				<a href="@{KlijentiPravnaLica.show()}" class="list-group-item">Pravna Lica</a>
+            </div>
             <a href="@{Valute.show("edit")}" class="list-group-item">Valute</a>
             <a href="@{Banke.show("edit")}" class="list-group-item">Banke</a>
             <a href="@{KurseviUValuti.show("edit")}" class="list-group-item">Kursevi u Valuti</a>
             <a href="@{KursneListe.show("edit")}" class="list-group-item">Kursne Liste</a>
-            <a href="#" class="list-group-item">Link</a>
+            <a href="@{RacuniPravnihLica.show("edit")}" class="list-group-item">Racuni Pravnih Lica</a>
             <a href="#" class="list-group-item">Link</a>
           </div>
         </div><!--/.sidebar-offcanvas-->
@@ -129,5 +133,18 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
     <script src="offcanvas.js"></script>
+
+<script type="text/javascript">    
+	$(function() {
+	        
+	  $('.list-group-item').on('click', function() {
+	    $('.glyphicon', this)
+	      .toggleClass('glyphicon-chevron-right')
+	      .toggleClass('glyphicon-chevron-down');
+	  });
+	
+	});  
+</script>
+  
   </body>
 </html>

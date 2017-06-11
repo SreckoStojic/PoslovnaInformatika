@@ -13,5 +13,4 @@ public class Application extends Controller {
 
         renderTemplate("Application/index.html");
     }
-
 }

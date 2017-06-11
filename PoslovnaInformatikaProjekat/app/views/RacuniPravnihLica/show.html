@@ -1,0 +1,75 @@
+#{extends 'standardForm.html' /}
+#{set title:'Racuni Pravnih Lica' /}
+
+<script>
+
+function remove(id){
+	$(location).attr('href','/RacuniPravnihLica/remove?id='+id);
+}
+
+</script>
+
+<div>
+	<ul>
+	  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
+	  <li><a href="@{RacuniPravnihLica.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+	  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+	  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+	  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+	  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+	  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+	  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+	  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+	  <li><a href="@{RacuniPravnihLica.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+	  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+	  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+	</ul>
+</div>
+
+<div class = "container-fluid">
+	<h1>Racuni Pravnih Lica</h1>
+
+	<table class="table table-bordered">
+		<tr class = "header"> 
+		   <th>Broj Racuna</th>
+		   <th>Datum Otvaranja</th>
+		   <th>Vazeci</th>
+		   <th>Banka</th>
+		   <th>Klijent</th>
+		   <th>Valuta</th>
+		</tr>
+	#{list items:racuni, as:'racun'}
+		<tr>
+			<td class = "brojRacuna">${racun.brojRacuna}</td>
+			<td class = "datumOtvaranja">${racun.formatDate(racun.datumOtvaranja)}</td>
+			<td class = "vazeci">${racun.vazeci}</td>
+			<td class = "banka">${racun.banka.naziv}</td>
+			<td class = "klijent">
+			#{if racun.klijent.getClass().getSimpleName().equals("KlijentPravnoLice")} ${racun.klijent.naziv}
+			#{/if}
+			#{else}
+				${racun.klijent.ime} ${racun.klijent.prezime}  
+			#{/else} </td>
+			<td class = "valuta">${racun.valuta.naziv}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "id">${racun.id}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "racun_banka_id">${racun.banka.id}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "racun_klijent_id">${racun.klijent.id}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "racun_valuta_id">${racun.valuta.id}</td>
+		</tr>
+	#{/list}
+	</table>
+</div>
+
+#{set 'action'}
+    #{if mode == 'add'}
+        @{RacuniPravnihLica.create()}
+    #{/if}
+    #{elseif mode == 'edit'}
+        @{RacuniPravnihLica.edit()}
+    #{/elseif}
+    #{else}
+       @{RacuniPravnihLica.filter()}
+    #{/else}
+  #{/set}
+  
+

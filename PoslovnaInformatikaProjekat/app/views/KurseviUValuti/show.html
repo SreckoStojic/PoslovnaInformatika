@@ -28,14 +28,15 @@ function sync(item){
 	var kupovni = item.find(".kupovni").html();
     var srednji = item.find(".srednji").html();
     var prodajni = item.find(".prodajni").html();
-    var osnovnaValuta = item.find(".osnovnaValuta").html();
-    var premaValuti = item.find(".premaValuti").html();
+    var osnovnaValuta = item.find(".osnovnaValuta_id").html();
+    var premaValuti = item.find(".premaValuti_id").html();
     var id = item.find(".id").html();
-    $("#kurs_osnovnaValuta").val(osnovnaValuta);
-    $("#kurs_premaValuti").val(premaValuti);
+    $("#kurs_osnovnaValuta_id").val(osnovnaValuta);
+    $("#kurs_premaValuti_id").val(premaValuti);
     $("#kurs_kupovni").val(kupovni);
     $("#kurs_srednji").val(srednji);
     $("#kurs_prodajni").val(prodajni);
+    $("#kurs_id").val(id);
 }
 
 </script>
@@ -75,7 +76,9 @@ function sync(item){
 			<td class = "kupovni">${kurs.kupovni}</td>
 			<td class = "srednji">${kurs.srednji}</td>
 			<td class = "prodajni">${kurs.prodajni}</td>
-			<td style = "visibility: hidden; max-width: 0px" class = "kurs_id">${kurs.id}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "id">${kurs.id}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "osnovnaValuta_id">${kurs.osnovnaValuta.id}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "premaValuti_id">${kurs.premaValuti.id}</td>
 		</tr>
 	#{/list}
 	</table>

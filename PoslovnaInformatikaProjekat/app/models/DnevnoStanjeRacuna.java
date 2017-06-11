@@ -30,6 +30,7 @@ public class DnevnoStanjeRacuna extends Model {
 	public RacunPravnihLica racun;
 	@OneToMany(mappedBy = "stanjeRacuna")
 	public List<AnalitikaIzvoda> analitikaIzvoda;
+	
 	public Long getBrojIzvoda() {
 		return brojIzvoda;
 	}

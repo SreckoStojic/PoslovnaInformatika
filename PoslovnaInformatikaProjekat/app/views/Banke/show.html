@@ -17,7 +17,8 @@ function sync(item){
     var telefon = item.find(".telefon").html();
     var fax = item.find(".fax").html();
     var banka = item.find(".banka").html();
-    
+    var id = item.find(".id").html();
+    $("#banka_id").val(id);
     $("#banka_sifra").val(sifra);
     $("#banka_pib").val(pib);
    	$("#banka_naziv").val(naziv);

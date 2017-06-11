@@ -1,0 +1,182 @@
+#{extends 'standardForm.html' /}
+#{set title:'Klijenti Pravna Lica' /}
+
+<script>
+
+$(document).ready(function(){
+	$("#nMestoPickup").click(function(){
+		id = $(".highlighted").find(".nm_id").html();
+		$("#klijent_nMesto_id").val(id);
+		$('#nMestaModal').modal('toggle');
+	});
+});
+
+
+function remove(id){
+	$(location).attr('href','/KlijentiPravnaLica/remove?id='+id);
+}
+
+function sync(item){
+    var naziv = item.find(".naziv").html();
+    var id = item.find(".id").html();
+    var adresa = item.find(".adresa").html();
+    var drzavaId = item.find("drzava_id").html();
+    var nMestoId = item.find(".nMesto_id").html();
+    $("#klijentPL_naziv").val(naziv);
+    $("#klijentPL_id").val(id);
+    $("#klijentPL_nMesto_drzava_id").val(drzavaId);
+    $("#klijentPL_nMesto_id").val(nMestoId);
+    $("#klijentPL_adresa").val(adresa);
+}
+
+</script>
+
+<div>
+	<ul>
+	  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
+	  <li><a href="@{KlijentiPravnaLica.show("search")}" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+	  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+	  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+	  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+	  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+	  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+	  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+	  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+	  <li><a href="@{KlijentiPravnaLica.show("add")}" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+	  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+	  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+	</ul>
+</div>
+
+<div class = "container-fluid">
+	<h1>Klijenti Pravna Lica</h1>
+	
+	<table class="table table-bordered">
+		<tr class = "header"> 
+		   <th>Naziv</th>
+		   <th>Adresa</th>
+		   <th>Naseljeno Mesto</th>
+		   <th>Drzava</th>
+		   <th width="50"></th>
+		</tr>
+	#{list items:klijentiPL, as:'klijentPL'}
+		<tr>
+			<td class = "naziv">${klijentPL.naziv}</td>
+			<td class = "adresa">${klijentPL.adresa}</td>
+			<td class = "nMesto">${klijentPL.naseljenoMesto.naziv}</td>
+			<td class = "drzava">${klijentPL.naseljenoMesto.drzava.naziv}</td>
+			<td align="center">
+				<a href="@{RacuniPravnihLica.formaNapraviRacun(klijentPL.id)}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#racunModal">Napravi Racun</a>
+			</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "id">${klijentPL.id}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "nMesto_id">${klijentPL.naseljenoMesto.id}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "drzava_id">${klijentPL.naseljenoMesto.drzava.id}</td>
+		</tr>
+	#{/list}
+	</table>
+</div>
+
+#{set 'action'}
+    #{if mode == 'add'}
+        @{KlijentiPravnaLica.create()}
+    #{/if}
+    #{elseif mode == 'edit'}
+        @{KlijentiPravnaLica.edit()}
+    #{/elseif}
+    #{else}
+       @{KlijentiPravnaLica.filter()}
+    #{/else}
+  #{/set}
+  
+<div class = "container-fluid">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="form-wrapper row">
+				<form action = "${action}" method="post" class="form-horizontal">
+					#{field 'klijentPL.id'}
+						<input type = "hidden" name = "${field.name}" id = "klijentPL_id"/>
+					#{/}
+					<div class="form-group">
+					#{field 'klijentPL.naziv'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Naziv</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "klijentPL_naziv" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'klijentPL.adresa'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Adresa</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "klijentPL_adresa" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'klijentPL.naseljenoMesto.id'}
+						<label for = "klijent_nMesto_id" class="col-sm-3 control-label">Naseljeno Mesto</label>
+						<div class="col-sm-7">
+							<select name = "${field.name}" id = "klijent_nMesto_id" class="form-control"/>
+							#{list items:nMesta, as:'nMesto'}
+							<option value = "${nMesto.id}">${nMesto.naziv}</option>
+							#{/list}
+							</select>
+						</div>
+						<div class="col-sm-2">
+						 	<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#nMestaModal">...	</button>
+					 	</div>
+					#{/}
+					</div>
+					<div class="form-group">
+						<div id = "formActions" class="col-sm-offset-3 col-sm-9">
+							<input type = "submit" value = "Potvrda" class="btn btn-default"/>
+							<a href = "#">Rollback</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+ <!-- Modal -->
+  <div class="modal fade" id="nMestaModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+      <div class="modal-header">
+      	Naseljena Mesta
+      </div>
+      <div class="modal-body">
+	    <table class="table table-bordered">
+		<tr class = "header">
+		   <th>Oznaka</th> 
+		   <th>Naziv</th>
+		</tr>
+		#{list items:nMesta, as:'nMesto'}
+		<tr>
+			<td class = "dr_oznaka">${nMesto.oznaka}</td>
+			<td class = "dr_naziv">${nMesto.naziv}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "nm_id">${nMesto.id}</td>
+		</tr>
+		#{/list}
+		</table>
+		<div class="modal-footer">
+			<input id = "nMestoPickup" type = "button" value = "izbor"/>
+		</div>
+		</div>
+      </div>
+    </div>
+   </div>
+</div>
+
+<!-- Modal Racun -->
+<div class="modal fade" id="racunModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+	    
+    </div>
+  </div>
+</div>
+
