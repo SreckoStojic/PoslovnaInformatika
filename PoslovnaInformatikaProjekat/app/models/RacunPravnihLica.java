@@ -101,4 +101,9 @@ public class RacunPravnihLica extends Model {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		return formatter.format(datum);
 	}
+	
+	public static RacunPravnihLica pronadjiBrojRacuna(String brojRacuna){
+		RacunPravnihLica racun = RacunPravnihLica.find("brojRacuna = ?", brojRacuna).first();
+		return racun;
+	}
 }

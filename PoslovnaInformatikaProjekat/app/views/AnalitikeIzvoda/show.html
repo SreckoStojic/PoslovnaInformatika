@@ -1,0 +1,68 @@
+#{extends 'standardForm.html' /}
+#{set title:'Transakcije' /}
+
+<script>
+
+function remove(id){
+	$(location).attr('href','/AnalitikeIzvoda/remove?id='+id);
+}
+
+</script>
+
+<div>
+<ul>
+  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
+  <li><a href="#" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
+  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
+  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
+  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
+  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
+  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
+  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
+  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
+  <li><a href="#" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
+  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
+  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
+</ul>
+</div>
+
+<div class = "container-fluid">
+	<h1>Transakcije</h1>
+
+	<table class="table table-bordered">
+	<tr class = "header"> 
+	   <th>Duznik</th>
+	   <th>Svrha Placanja</th>
+	   <th>Racun Duznika</th>
+	   <th>Model Zaduzenja</th>
+	   <th>Poziv na broj Zaduzenja</th>
+	   <th>Poverilac</th>
+	   <th>Racun Poverioca</th>
+	   <th>Model Odobrenja</th>
+	   <th>Poziv na broj Odobrenja</th>
+	   <th>Hitno</th>
+	   <th>Valuta</th>
+	   <th>Mesto Prijema</th>
+	   <th>Vrsta Placanja</th>
+	   <th>IZNOS</th>
+	</tr>
+	#{list items:analitikeIzvoda, as:'ai'}
+	<tr>
+		<td class = "duznik">${ai.duznik}</td>
+		<td class = "svrhaPlacanja">${ai.svrhaPlacanja}</td>
+		<td class = "racunDuznika">${ai.racunDuznika}</td>
+		<td class = "modelZaduzenja">${ai.modelZaduzenja}</td>
+		<td class = "pozviNaBrZaduzenja">${ai.pozivNaBrZaduzenja}</td>
+		<td class = "poverilac">${ai.poverilac}</td>
+		<td class = "racunPoverioca">${ai.racunPoverioca}</td>
+		<td class = "modelOdobrenja">${ai.modelOdobrenja}</td>
+		<td class = "pozivNaBrOdobrenja">${ai.pozivNaBrOdobrenja}</td>
+		<td class = "hitno">${ai.hitno}</td>
+		<td class = "valuta">${ai.valuta.naziv} ${ai.valuta.oznaka}</td>
+		<td class = "mestoPrijema">${ai.mestoPrijema.naziv}</td>
+		<td class = "vrstaPlacanja">${ai.vrstaPlacanja.naziv}</td>
+		<td class = "iznos">${ai.iznos}</td>
+	</tr>
+	#{/list}
+	</table>
+</div>

@@ -14,8 +14,6 @@ import play.db.jpa.Model;
 @Entity
 public class AnalitikaIzvoda extends Model {
 
-	@Column(nullable = false)
-	public Long brojStavke;
 	@Column(nullable = false, length = 256)
 	public String duznik;
 	@Column(nullable = false, length = 256)
@@ -28,21 +26,21 @@ public class AnalitikaIzvoda extends Model {
 	public Date datumValute;
 	@Column(nullable = true, length = 18)
 	public String racunDuznika;
-	@Column(nullable = true, precision = 2, scale = 0)
-	public Number modelZaduzenja;
+	@Column(nullable = true)
+	public int modelZaduzenja;
 	@Column(nullable = true, length = 20)
 	public String pozivNaBrZaduzenja;
 	@Column(nullable = true, length = 20)
 	public String racunPoverioca;
-	@Column(nullable = true, precision = 2, scale = 0)
-	public Number modelOdobrenja;
+	@Column(nullable = true)
+	public int modelOdobrenja;
 	@Column(nullable = true, length = 20)
 	public String pozivNaBrOdobrenja;
 	@Column(nullable = false)
-	public Boolean hitno;
+	public Boolean hitno = false;
 	@Column(nullable = false, precision = 15, scale = 2)
 	public BigDecimal iznos;
-	@Column(nullable = false, precision = 1, scale = 0)
+	@Column(nullable = true, precision = 1, scale = 0)
 	public Number tipGreske;
 	@Column(nullable = true, length = 1)
 	public char status;
@@ -54,12 +52,7 @@ public class AnalitikaIzvoda extends Model {
 	public Valuta valuta;
 	@ManyToOne(optional=true)
 	public VrstaPlacanja vrstaPlacanja;
-	public Long getBrojStavke() {
-		return brojStavke;
-	}
-	public void setBrojStavke(Long brojStavke) {
-		this.brojStavke = brojStavke;
-	}
+	
 	public String getDuznik() {
 		return duznik;
 	}
@@ -96,10 +89,10 @@ public class AnalitikaIzvoda extends Model {
 	public void setRacunDuznika(String racunDuznika) {
 		this.racunDuznika = racunDuznika;
 	}
-	public Number getModelZaduzenja() {
+	public int getModelZaduzenja() {
 		return modelZaduzenja;
 	}
-	public void setModelZaduzenja(Number modelZaduzenja) {
+	public void setModelZaduzenja(int modelZaduzenja) {
 		this.modelZaduzenja = modelZaduzenja;
 	}
 	public String getPozivNaBrZaduzenja() {
@@ -114,10 +107,10 @@ public class AnalitikaIzvoda extends Model {
 	public void setRacunPoverioca(String racunPoverioca) {
 		this.racunPoverioca = racunPoverioca;
 	}
-	public Number getModelOdobrenja() {
+	public int getModelOdobrenja() {
 		return modelOdobrenja;
 	}
-	public void setModelOdobrenja(Number modelOdobrenja) {
+	public void setModelOdobrenja(int modelOdobrenja) {
 		this.modelOdobrenja = modelOdobrenja;
 	}
 	public String getPozivNaBrOdobrenja() {
@@ -174,7 +167,4 @@ public class AnalitikaIzvoda extends Model {
 	public void setVrstaPlacanja(VrstaPlacanja vrstaPlacanja) {
 		this.vrstaPlacanja = vrstaPlacanja;
 	}
-	
-	
-	
 }

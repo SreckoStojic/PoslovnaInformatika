@@ -84,4 +84,8 @@ public class DnevnoStanjeRacuna extends Model {
 	public void setPrethodnoZaNoviDan(BigDecimal novoStanje){
 		this.prethodnoStanje = novoStanje; 
 	}
+	public static DnevnoStanjeRacuna pronadjiDnevnoStanjeRacunaNaOsnovuIDRacuna(Long racunID){
+		DnevnoStanjeRacuna dsr = DnevnoStanjeRacuna.find("racun_id = ?", racunID).first();
+		return dsr;
+	}
 }

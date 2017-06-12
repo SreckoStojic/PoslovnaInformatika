@@ -1,0 +1,135 @@
+<div class="modal-header">Nalog za uplatu</div>
+  <div class="modal-body">
+	  <form action="@{AnalitikeIzvoda.create()}" method="post" class="form-horizontal">
+			
+					<div class="form-group">
+					#{field 'analitikaIzvoda.duznik'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Duznik</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "analitikaIzvoda_duznik" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'analitikaIzvoda.svrhaPlacanja'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Svrha Placanja</label>
+						<div class="col-sm-9">	
+							<input type = "text" name = "${field.name}" id = "analitikaIzvoda_svrhaPlacanja" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'analitikaIzvoda.racunDuznika'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Racun Duznika</label>
+						<div class="col-sm-9">	
+							<input type = "text" name = "${field.name}" id = "analitikaIzvoda_racunDuznika" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'analitikaIzvoda.modelZaduzenja'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Model Zaduzenja</label>
+						<div class="col-sm-9">	
+							<input type = "text" name = "${field.name}" id = "analitikaIzvoda_modelZaduzenja" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'analitikaIzvoda.pozivNaBrZaduzenja'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Poziv na broj Zaduzenja</label>
+						<div class="col-sm-9">	
+							<input type = "text" name = "${field.name}" id = "analitikaIzvoda_pozivNaBrZaduzenja" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'analitikaIzvoda.poverilac'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Poverilac</label>
+						<div class="col-sm-9">
+							<input type = "text" name = "${field.name}" id = "analitikaIzvoda_poverilac" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'analitikaIzvoda.racunPoverioca'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Racun Poverioca</label>
+						<div class="col-sm-9">	
+							<input type = "text" name = "${field.name}" id = "analitikaIzvoda_racunPoverioca" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'analitikaIzvoda.modelOdobrenja'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Model Odobrenja</label>
+						<div class="col-sm-9">	
+							<input type = "text" name = "${field.name}" id = "analitikaIzvoda_modelOdobrenja" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'analitikaIzvoda.pozivNaBrOdobrenja'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Poziv na broj Odobrenja</label>
+						<div class="col-sm-9">	
+							<input type = "text" name = "${field.name}" id = "analitikaIzvoda_pozivNaBrOdobrenja" class="form-control"/>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'analitikaIzvoda.hitno'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Hitno</label>
+						<div class="col-sm-9">	
+							<input type = "checkbox" name = "${field.name}" id = "analitikaIzvoda_hitno" />
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'analitikaIzvoda.valuta.id'}
+						<label for = "analitikaIzvoda_valuta_id" class="col-sm-3 control-label">Valuta</label>
+						<div class="col-sm-7">
+							<select name = "${field.name}" id = "analitikaIzvoda_valuta_id" class="form-control">
+							#{list items:valute, as:'valuta'}
+							<option value = "${valuta.id}">${valuta.naziv} (${valuta.oznaka})</option>
+							#{/list}
+							</select>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'analitikaIzvoda.mestoPrijema.id'}
+						<label for = "analitikaIzvoda_mestoPrijema_id" class="col-sm-3 control-label">Mesto Prijema</label>
+						<div class="col-sm-7">
+							<select name = "${field.name}" id = "analitikaIzvoda_mestoPrijema_id" class="form-control">
+							#{list items:naseljenaMesta, as:'nMesto'}
+							<option value = "${nMesto.id}">${nMesto.naziv} (${nMesto.oznaka})</option>
+							#{/list}
+							</select>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'analitikaIzvoda.vrstaPlacanja.id'}
+						<label for = "analitikaIzvoda_vrstaPlacanja_id" class="col-sm-3 control-label">Vrsta Placanja</label>
+						<div class="col-sm-7">
+							<select name = "${field.name}" id = "analitikaIzvoda_vrstaPlacanja_id" class="form-control">
+							#{list items:vrstePlacanja, as:'vrstaPlacanja'}
+							<option value = "${vrstaPlacanja.id}">${vrstaPlacanja.naziv}</option>
+							#{/list}
+							</select>
+						</div>
+					#{/}
+					</div>
+					<div class="form-group">
+					#{field 'analitikaIzvoda.iznos'}
+						<label for = "${field.id}" class="col-sm-3 control-label">IZNOS</label>
+						<div class="col-sm-9">	
+							<input type = "text" name = "${field.name}" id = "analitikaIzvoda_iznos" class="form-control"/>
+						</div>
+					#{/}
+					</div>				
+					<div class="modal-footer">
+				<input type = "submit" value = "Potvrda" class="btn btn-default btn-sm"/>
+					<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Zatvori</button>
+				</div>
+		</form>
+	</div>
+</div>

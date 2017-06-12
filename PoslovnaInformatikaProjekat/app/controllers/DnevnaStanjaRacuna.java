@@ -23,10 +23,9 @@ public class DnevnaStanjaRacuna extends Controller{
 		DnevnoStanjeRacuna dnevnoStanjeRacuna = new DnevnoStanjeRacuna();
 		dnevnoStanjeRacuna.setDatumPrometa(new Date());
 		dnevnoStanjeRacuna.setRacun(RacunPravnihLica.findById(racunID));
-		dnevnoStanjeRacuna.setNovoStanje(dnevnoStanjeRacuna.izracunajNovoStanje(dnevnoStanjeRacuna.prethodnoStanje, dnevnoStanjeRacuna.prometUKorist, dnevnoStanjeRacuna.prometNaTeret));
-		//dnevnoStanjeRacuna.setPrethodnoZaNoviDan(dnevnoStanjeRacuna.getNovoStanje());
-		
-		dnevnoStanjeRacuna.save();
+		if(dnevnoStanjeRacuna.pronadjiDnevnoStanjeRacunaNaOsnovuIDRacuna(racunID) == null){
+			dnevnoStanjeRacuna.save();			
+		}
 		show("edit");
 	}
 	
