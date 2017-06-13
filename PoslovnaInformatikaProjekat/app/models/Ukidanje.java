@@ -1,5 +1,6 @@
 package models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,19 +13,13 @@ import play.db.jpa.Model;
 public class Ukidanje extends Model{
 
 	@Column (nullable=false)
-	public int sifra;
-	@Column (nullable=false)
 	public Date datumUkidanja;
 	@Column (nullable=false, length=20)
 	public String prenosenjeNaRacun;
 	@ManyToOne
 	public RacunPravnihLica racun;
-	public int getSifra() {
-		return sifra;
-	}
-	public void setSifra(int sifra) {
-		this.sifra = sifra;
-	}
+	
+	
 	public Date getDatumUkidanja() {
 		return datumUkidanja;
 	}
@@ -42,6 +37,10 @@ public class Ukidanje extends Model{
 	}
 	public void setRacun(RacunPravnihLica racun) {
 		this.racun = racun;
+	}
+	public String formatDate(Date datum){
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		return formatter.format(datum);
 	}
 	
 	

@@ -37,7 +37,11 @@ public class AnalitikeIzvoda extends Controller{
 		RacunPravnihLica racunPoverilac = RacunPravnihLica.pronadjiBrojRacuna(analitikaIzvoda.racunPoverioca);
 		DnevnoStanjeRacuna dnevnoStanjeRacunaPoverilac = DnevnoStanjeRacuna.pronadjiDnevnoStanjeRacunaNaOsnovuIDRacuna(racunPoverilac.id);
 		RacunPravnihLica racunDuznik = RacunPravnihLica.pronadjiBrojRacuna(analitikaIzvoda.racunDuznika);
-		
+		if(racunPoverilac.vazeci == false){
+			error("Racun poverioca je nevazeci.");
+		}else if(racunDuznik.vazeci == false){
+			error("Racun duznika je nevazeci.");
+		}else {
 			if(!analitikaIzvoda.racunDuznika.equals("")){
 				DnevnoStanjeRacuna dnevnoStanjeRacunaDuznik = DnevnoStanjeRacuna.pronadjiDnevnoStanjeRacunaNaOsnovuIDRacuna(racunDuznik.id);
 				if(dnevnoStanjeRacunaDuznik.getNovoStanje().compareTo(analitikaIzvoda.iznos) > 0){
@@ -54,11 +58,11 @@ public class AnalitikeIzvoda extends Controller{
 				dnevnoStanjeRacunaPoverilac.setPrometUKorist(dnevnoStanjeRacunaPoverilac.getPrometUKorist().add(analitikaIzvoda.iznos));
 			}
 		
-		dnevnoStanjeRacunaPoverilac.setNovoStanje(dnevnoStanjeRacunaPoverilac.izracunajNovoStanje(dnevnoStanjeRacunaPoverilac.getPrethodnoStanje(), dnevnoStanjeRacunaPoverilac.getPrometUKorist(), dnevnoStanjeRacunaPoverilac.getPrometNaTeret()));
-		analitikaIzvoda.save();
-		dnevnoStanjeRacunaPoverilac.save();
-		
-		Application.index();
+			dnevnoStanjeRacunaPoverilac.setNovoStanje(dnevnoStanjeRacunaPoverilac.izracunajNovoStanje(dnevnoStanjeRacunaPoverilac.getPrethodnoStanje(), dnevnoStanjeRacunaPoverilac.getPrometUKorist(), dnevnoStanjeRacunaPoverilac.getPrometNaTeret()));
+			analitikaIzvoda.save();
+			dnevnoStanjeRacunaPoverilac.save();
+			Application.index();
+		}
 	}
 	
 	public static void edit(){

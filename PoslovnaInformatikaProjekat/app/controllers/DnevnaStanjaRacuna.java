@@ -10,9 +10,9 @@ import play.mvc.Controller;
 
 public class DnevnaStanjaRacuna extends Controller{
 	
-	public static void show(String mode)
+	public static void show(String mode, Long dnevnoStanjeRacunaID)
 	{
-		List<DnevnoStanjeRacuna> dnevnaStanjaRacuna = DnevnoStanjeRacuna.findAll();
+		List<DnevnoStanjeRacuna> dnevnaStanjaRacuna = DnevnoStanjeRacuna.find("racun_id = ?", dnevnoStanjeRacunaID).fetch();
 		if(mode == null || mode.equals(""))
 			mode = "edit";
 		
@@ -25,19 +25,23 @@ public class DnevnaStanjaRacuna extends Controller{
 		dnevnoStanjeRacuna.setRacun(RacunPravnihLica.findById(racunID));
 		if(dnevnoStanjeRacuna.pronadjiDnevnoStanjeRacunaNaOsnovuIDRacuna(racunID) == null){
 			dnevnoStanjeRacuna.save();			
-		}
-		show("edit");
+		}/*else if(!dnevnoStanjeRacuna.getDatumPrometa().equals(new Date())){
+			dnevnoStanjeRacuna.setPrethodnoStanje(dnevnoStanjeRacuna.getNovoStanje());
+			dnevnoStanjeRacuna.izracunajNovoStanje(dnevnoStanjeRacuna.getPrethodnoStanje(), dnevnoStanjeRacuna.prometUKorist, dnevnoStanjeRacuna.prometNaTeret);
+			dnevnoStanjeRacuna.save();
+		}*/
+		show("edit", dnevnoStanjeRacuna.racun.id);
 	}
 	
 	public static void edit(DnevnoStanjeRacuna dnevnoStanjeRacuna){
-		show("edit");
+		show("edit", dnevnoStanjeRacuna.racun.id);
 	}
 	
 	public static void remove(Long id){
 		DnevnoStanjeRacuna dsr = DnevnoStanjeRacuna.findById(id);
 		dsr.delete();
 		
-		show("edit");
+		show("edit", dsr.racun.id);
 		
 	}
 	

@@ -11,8 +11,6 @@ function sync(item){
 	
     var id = item.find(".id").html();
     var datumPrometa = item.find(".datumPrometa").html();
-    var racunID = item.find(".racun_id").html();
-    $("#dnevnoStanjeRacuna_racun_id").val(id);
     $("#dnevnoStanjeRacuna_datumPrometa").val(datumPrometa);
     $("#dnevnoStanjeRacuna_id").val(id);
     
@@ -83,9 +81,6 @@ function sync(item){
 				<form action = "${action}" method="post" class="form-horizontal">
 					#{field 'dnevnoStanjeRacuna.id'}
 					<input type = "hidden" name = "${field.name}" id = "dnevnoStanjeRacuna_id"/>
-					#{/}
-					#{field 'dnevnoStanjeRacuna.racun.id'}
-					<input type = "hidden" name = "${field.name}" id = "dnevnoStanjeRacuna_racun_id"/>
 					#{/}
 					<div class="form-group">
 					#{field 'dnevnoStanjeRacuna.datumPrometa'}

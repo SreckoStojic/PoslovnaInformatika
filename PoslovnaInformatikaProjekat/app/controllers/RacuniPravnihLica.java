@@ -1,10 +1,13 @@
 package controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import models.Banka;
+import models.DnevnoStanjeRacuna;
 import models.Klijent;
 import models.RacunPravnihLica;
+import models.Ukidanje;
 import models.Valuta;
 import play.mvc.Controller;
 
@@ -66,6 +69,4 @@ public class RacuniPravnihLica extends Controller{
 		List<RacunPravnihLica> racuni = RacunPravnihLica.find("banka_id = ?", bankaID).fetch();
 		renderTemplate("RacuniPravnihLica/show.html",racuni);
 	}
-	
-	
 }

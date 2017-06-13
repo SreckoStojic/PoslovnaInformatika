@@ -7,6 +7,13 @@ function remove(id){
 	$(location).attr('href','/RacuniPravnihLica/remove?id='+id);
 }
 
+function sync(item){
+	
+    var id = item.find(".id").html();
+    $("#ukidanjeRacuna_id").val(id);
+    
+}
+
 </script>
 
 <div>
@@ -38,8 +45,10 @@ function remove(id){
 		   <th>Klijent</th>
 		   <th>Valuta</th>
 		   <th width="50"></th>
+		   <th width="50"></th>
 		</tr>
 	#{list items:racuni, as:'racun'}
+	
 		<tr>
 			<td class = "brojRacuna">${racun.brojRacuna}</td>
 			<td class = "datumOtvaranja">${racun.formatDate(racun.datumOtvaranja)}</td>
@@ -52,9 +61,18 @@ function remove(id){
 				${racun.klijent.ime} ${racun.klijent.prezime}  
 			#{/else} </td>
 			<td class = "valuta">${racun.valuta.naziv}</td>
+			#{if racun.vazeci == true}
 			<td align="center">
 				<a href="@{DnevnaStanjaRacuna.create(racun.id)}" class="btn btn-info btn-xs">Dnevno Stanje Racuna</a>
 			</td>
+			
+			<td align="center">
+				<a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#ukidanjeRacunaModal">Ukidanje Racuna</a>
+			</td>
+			#{/if}
+			#{else}
+			<td colspan="2" align="center">Racun je ukinut.</td>
+			#{/else}
 			<td style = "visibility: hidden; max-width: 0px" class = "id">${racun.id}</td>
 			<td style = "visibility: hidden; max-width: 0px" class = "racun_banka_id">${racun.banka.id}</td>
 			<td style = "visibility: hidden; max-width: 0px" class = "racun_klijent_id">${racun.klijent.id}</td>
@@ -76,4 +94,34 @@ function remove(id){
     #{/else}
   #{/set}
   
+<!-- Modal Racun -->
+<div class="modal fade" id="ukidanjeRacunaModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+	    <div class="modal-header">Ukidanje Racuna</div>
+  <div class="modal-body">
+	  <form action="@{UkidanjeRacuna.create()}" method="post" class="form-horizontal">
+					<div class="form-group">
+					#{field 'ukidanjeRacuna.prenosenjeNaRacun'}
+						<label for = "${field.id}" class="col-sm-3 control-label">Prenosenje na Racun</label>
+						<div class="col-sm-9">	
+							<input type = "text" name = "${field.name}" id = "ukidanjeRacuna_prenosenjeNaRacun" class="form-control"/>
+						</div>
+					#{/}
+					#{field 'ukidanjeRacuna.racun.id'}
+						<div class="col-sm-9">	
+							<input type = "hidden" name = "${field.name}" id = "ukidanjeRacuna_id"/>
+						</div>
+					#{/}
+					</div>
+				<div class="modal-footer">
+					<input type = "submit" value = "Potvrda" class="btn btn-default btn-sm"/>
+					<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Zatvori</button>
+				</div>
+		</form>
+	</div>
+	</div>
+    </div>
+  </div>
 

@@ -88,4 +88,9 @@ public class DnevnoStanjeRacuna extends Model {
 		DnevnoStanjeRacuna dsr = DnevnoStanjeRacuna.find("racun_id = ?", racunID).first();
 		return dsr;
 	}
+	public static DnevnoStanjeRacuna pronadjiDnevnoStanjeRacunaNaOsnovuBrojaRacuna(String brojRacuna){
+		RacunPravnihLica racun = RacunPravnihLica.find("brojRacuna = ?", brojRacuna).first();
+		DnevnoStanjeRacuna dsr = DnevnoStanjeRacuna.find("racun_id = ?", racun.id).first();
+		return dsr;
+	}
 }
