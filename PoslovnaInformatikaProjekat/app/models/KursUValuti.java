@@ -65,7 +65,7 @@ public class KursUValuti extends Model {
 
 	@PrePersist
 	public void izracunajSrednjiKurs() {
-		this.srednji = this.kupovni.add(this.prodajni).divide((new BigDecimal(2)));
+		this.srednji = (this.kupovni.add(this.prodajni)).divide(new BigDecimal(2));
 	}
 	
 }

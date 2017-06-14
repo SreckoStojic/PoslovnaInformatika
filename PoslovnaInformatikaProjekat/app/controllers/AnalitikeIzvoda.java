@@ -1,10 +1,12 @@
 package controllers;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import models.AnalitikaIzvoda;
 import models.DnevnoStanjeRacuna;
+import models.KursUValuti;
 import models.KursnaLista;
 import models.NaseljenoMesto;
 import models.RacunPravnihLica;
@@ -39,23 +41,65 @@ public class AnalitikeIzvoda extends Controller{
 		RacunPravnihLica racunDuznik = RacunPravnihLica.pronadjiBrojRacuna(analitikaIzvoda.racunDuznika);
 		if(racunPoverilac.vazeci == false){
 			error("Racun poverioca je nevazeci.");
-		}else if(racunDuznik.vazeci == false){
+		}else if(racunDuznik != null && racunDuznik.vazeci == false){
 			error("Racun duznika je nevazeci.");
-		}else {
+		}else if(racunDuznik == null && analitikaIzvoda.vrstaPlacanja.naziv.equals("Medjubankarski prenos")){
+			error("Kod medjubankarskog prenosa se mora uneti i racun duznika.");
+		}else if(!analitikaIzvoda.racunDuznika.equals("") && analitikaIzvoda.vrstaPlacanja.naziv.equals("Uplata na racun")){
+			error("Kod uplate na racun polje za racun duznika mora biti prazno.");
+		}else{
 			if(!analitikaIzvoda.racunDuznika.equals("")){
 				DnevnoStanjeRacuna dnevnoStanjeRacunaDuznik = DnevnoStanjeRacuna.pronadjiDnevnoStanjeRacunaNaOsnovuIDRacuna(racunDuznik.id);
-				if(dnevnoStanjeRacunaDuznik.getNovoStanje().compareTo(analitikaIzvoda.iznos) > 0){
-					dnevnoStanjeRacunaPoverilac.setPrometUKorist(dnevnoStanjeRacunaPoverilac.getPrometUKorist().add(analitikaIzvoda.iznos));
+				
+					BigDecimal kursUKorist = BigDecimal.valueOf(1);
+					BigDecimal kursNaTeret = BigDecimal.valueOf(1);
+					if(racunPoverilac.valuta.id.equals(racunDuznik.valuta.id) && analitikaIzvoda.valuta.id.equals(racunDuznik.valuta.id)){
+						kursUKorist = BigDecimal.valueOf(1);
+						kursNaTeret = BigDecimal.valueOf(1);
+					}else if(racunPoverilac.valuta.id.equals(racunDuznik.valuta.id) && !analitikaIzvoda.valuta.id.equals(racunPoverilac.valuta.id)){
+						KursUValuti kursUvalutiKorist = KursUValuti.find("osnovnaValuta_id = ? AND premaValuti_id = ?", analitikaIzvoda.valuta.id, racunPoverilac.valuta.id).first();
+						kursUKorist = kursUvalutiKorist.srednji;
+						KursUValuti kursUvalutiTeret = KursUValuti.find("osnovnaValuta_id = ? AND premaValuti_id = ?", analitikaIzvoda.valuta.id, racunDuznik.valuta.id).first();
+						kursNaTeret = kursUvalutiTeret.srednji;
+					}else if(!racunPoverilac.valuta.id.equals(racunDuznik.valuta.id) && !analitikaIzvoda.valuta.id.equals(racunPoverilac.valuta.id) && !analitikaIzvoda.valuta.id.equals(racunDuznik.valuta.id)){
+						KursUValuti kursUvalutiKorist = KursUValuti.find("osnovnaValuta_id = ? AND premaValuti_id = ?", analitikaIzvoda.valuta.id, racunPoverilac.valuta.id).first();
+						kursUKorist = kursUvalutiKorist.srednji;
+						KursUValuti kursUvalutiTeret = KursUValuti.find("osnovnaValuta_id = ? AND premaValuti_id = ?", analitikaIzvoda.valuta.id, racunDuznik.valuta.id).first();
+						kursNaTeret = kursUvalutiTeret.srednji;
+					}else if(!racunPoverilac.valuta.id.equals(racunDuznik.valuta.id) && racunDuznik != null){
+						KursUValuti kursUvalutiKorist = KursUValuti.find("osnovnaValuta_id = ? AND premaValuti_id = ?", analitikaIzvoda.valuta.id, racunPoverilac.valuta.id).first();
+						kursUKorist = kursUvalutiKorist.srednji;
+						KursUValuti kursUvalutiTeret = KursUValuti.find("osnovnaValuta_id = ? AND premaValuti_id = ?", analitikaIzvoda.valuta.id, racunDuznik.valuta.id).first();
+						kursNaTeret = kursUvalutiTeret.srednji;
+					}else if(racunDuznik == null && !analitikaIzvoda.valuta.id.equals(racunPoverilac.valuta.id)){
+						KursUValuti kursUvalutiKorist = KursUValuti.find("osnovnaValuta_id = ? AND premaValuti_id = ?", analitikaIzvoda.valuta.id, racunPoverilac.valuta.id).first();
+						kursUKorist = kursUvalutiKorist.srednji;
+						KursUValuti kursUvalutiTeret = KursUValuti.find("osnovnaValuta_id = ? AND premaValuti_id = ?", racunPoverilac.valuta.id, analitikaIzvoda.valuta.id).first();
+						kursNaTeret = kursUvalutiTeret.srednji;
+					}else if(racunDuznik == null && analitikaIzvoda.valuta.id.equals(racunPoverilac.valuta.id)){
+						kursUKorist = BigDecimal.valueOf(1);
+						kursNaTeret = BigDecimal.valueOf(1);
+					}
 					
-					
-					dnevnoStanjeRacunaDuznik.setPrometNaTeret(dnevnoStanjeRacunaDuznik.prometNaTeret.add(analitikaIzvoda.iznos));
-					dnevnoStanjeRacunaDuznik.setNovoStanje(dnevnoStanjeRacunaDuznik.izracunajNovoStanje(dnevnoStanjeRacunaDuznik.getPrethodnoStanje(), dnevnoStanjeRacunaDuznik.getPrometUKorist(), dnevnoStanjeRacunaDuznik.getPrometNaTeret()));
-					dnevnoStanjeRacunaDuznik.save();
-				}else {
-					error("Duznik nema dovoljno novca na racunu.");
-				}
+					if(dnevnoStanjeRacunaDuznik.getNovoStanje().compareTo(analitikaIzvoda.iznos.multiply(kursNaTeret)) > 0){
+						
+						dnevnoStanjeRacunaPoverilac.setPrometUKorist(dnevnoStanjeRacunaPoverilac.getPrometUKorist().add(analitikaIzvoda.iznos.multiply(kursUKorist)));
+						dnevnoStanjeRacunaDuznik.setPrometNaTeret(dnevnoStanjeRacunaDuznik.prometNaTeret.add(analitikaIzvoda.iznos.multiply(kursNaTeret)));
+						dnevnoStanjeRacunaDuznik.setNovoStanje(dnevnoStanjeRacunaDuznik.izracunajNovoStanje(dnevnoStanjeRacunaDuznik.getPrethodnoStanje(), dnevnoStanjeRacunaDuznik.getPrometUKorist(), dnevnoStanjeRacunaDuznik.getPrometNaTeret()));
+						dnevnoStanjeRacunaDuznik.save();
+				
+					}else {
+						error("Duznik nema dovoljno novca na racunu.");
+					}
 			}else {
-				dnevnoStanjeRacunaPoverilac.setPrometUKorist(dnevnoStanjeRacunaPoverilac.getPrometUKorist().add(analitikaIzvoda.iznos));
+				BigDecimal kursUKorist = BigDecimal.valueOf(1);
+				if(analitikaIzvoda.valuta.id.equals(racunPoverilac.valuta.id)){
+					kursUKorist = BigDecimal.valueOf(1);
+				}else if(!analitikaIzvoda.valuta.id.equals(racunPoverilac.valuta.id)){
+					KursUValuti kursUvalutiKorist = KursUValuti.find("osnovnaValuta_id = ? AND premaValuti_id = ?", analitikaIzvoda.valuta.id, racunPoverilac.valuta.id).first();
+					kursUKorist = kursUvalutiKorist.srednji;
+				}
+				dnevnoStanjeRacunaPoverilac.setPrometUKorist(dnevnoStanjeRacunaPoverilac.getPrometUKorist().add(analitikaIzvoda.iznos.multiply(kursUKorist)));
 			}
 		
 			dnevnoStanjeRacunaPoverilac.setNovoStanje(dnevnoStanjeRacunaPoverilac.izracunajNovoStanje(dnevnoStanjeRacunaPoverilac.getPrethodnoStanje(), dnevnoStanjeRacunaPoverilac.getPrometUKorist(), dnevnoStanjeRacunaPoverilac.getPrometNaTeret()));

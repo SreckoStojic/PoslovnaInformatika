@@ -19,7 +19,7 @@ public class RacunPravnihLica extends Model {
 	@Column(nullable = false)
 	Date datumOtvaranja = new Date();
 	@Column(nullable = false)
-	public Boolean vazeci = false;
+	public Boolean vazeci = true;
 	@ManyToOne
 	public Banka banka;
 	@ManyToOne

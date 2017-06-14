@@ -38,7 +38,7 @@ public class KurseviUValuti extends Controller{
 		k.setProdajni(kurs.prodajni);
 		k.setOsnovnaValuta(kurs.osnovnaValuta);
 		k.setPremaValuti(kurs.premaValuti);
-		//k.setKursnaLista(kurs.kursnaLista);
+		k.izracunajSrednjiKurs();
 		k.save();
 		show("edit");
 		
