@@ -1,9 +1,11 @@
 package controllers;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import models.DnevnoStanjeRacuna;
+import models.KursUValuti;
 import models.RacunPravnihLica;
 import models.Ukidanje;
 import models.Valuta;
@@ -24,20 +26,29 @@ public class UkidanjeRacuna extends Controller{
 	public static void create(Ukidanje ukidanjeRacuna){
 		ukidanjeRacuna.setDatumUkidanja(new Date());
 		ukidanjeRacuna.setRacun(RacunPravnihLica.find("id = ?", ukidanjeRacuna.racun.id).first()); 
-		//RacunPravnihLica racun = RacunPravnihLica.find("brojRacuna = ?", racunID).first();
-		System.out.println(ukidanjeRacuna.prenosenjeNaRacun);
-		//DnevnoStanjeRacuna dnevnoStanjeRacunaKojiSePrebacuje = DnevnoStanjeRacuna.find("racun_brojRacuna = ?", ukidanjeRacuna.prenosenjeNaRacun).first();
+		RacunPravnihLica racunZaUkidanje = RacunPravnihLica.find("id = ?", ukidanjeRacuna.racun.id).first();
+		RacunPravnihLica racunZaPrenos = RacunPravnihLica.find("brojRacuna = ?", ukidanjeRacuna.prenosenjeNaRacun).first();
+		
 		DnevnoStanjeRacuna dnevnoStanjeRacunaKojiSePrebacuje = DnevnoStanjeRacuna.pronadjiDnevnoStanjeRacunaNaOsnovuIDRacuna(ukidanjeRacuna.racun.id);
 		DnevnoStanjeRacuna dnevnoStanjeRacunaZaPrebacivanje = DnevnoStanjeRacuna.pronadjiDnevnoStanjeRacunaNaOsnovuBrojaRacuna(ukidanjeRacuna.prenosenjeNaRacun);
-		dnevnoStanjeRacunaZaPrebacivanje.setPrometUKorist(dnevnoStanjeRacunaZaPrebacivanje.getPrometUKorist().add(dnevnoStanjeRacunaKojiSePrebacuje.getNovoStanje()));
+		
+		
+		BigDecimal kursUKorist = BigDecimal.valueOf(1);
+	
+		if(!racunZaUkidanje.valuta.id.equals(racunZaPrenos.valuta.id)){
+			KursUValuti kursUValutiKorist = KursUValuti.find("osnovnaValuta_id = ? AND premaValuti_id = ?", racunZaUkidanje.valuta.id, racunZaPrenos.valuta.id).first();
+			kursUKorist = kursUValutiKorist.srednji;
+		}
+		
+		dnevnoStanjeRacunaZaPrebacivanje.setPrometUKorist(dnevnoStanjeRacunaZaPrebacivanje.getPrometUKorist().add(dnevnoStanjeRacunaKojiSePrebacuje.getNovoStanje().multiply(kursUKorist)));
 		dnevnoStanjeRacunaZaPrebacivanje.setNovoStanje(dnevnoStanjeRacunaZaPrebacivanje.izracunajNovoStanje(dnevnoStanjeRacunaZaPrebacivanje.getPrethodnoStanje(),dnevnoStanjeRacunaZaPrebacivanje.getPrometUKorist(),dnevnoStanjeRacunaZaPrebacivanje.getPrometNaTeret()));
 		dnevnoStanjeRacunaZaPrebacivanje.save();
 		dnevnoStanjeRacunaKojiSePrebacuje.setPrometNaTeret(dnevnoStanjeRacunaKojiSePrebacuje.getNovoStanje());
 		dnevnoStanjeRacunaKojiSePrebacuje.setNovoStanje(dnevnoStanjeRacunaKojiSePrebacuje.izracunajNovoStanje(dnevnoStanjeRacunaKojiSePrebacuje.getPrethodnoStanje(), dnevnoStanjeRacunaKojiSePrebacuje.getPrometUKorist(), dnevnoStanjeRacunaKojiSePrebacuje.getPrometNaTeret()));
 		dnevnoStanjeRacunaKojiSePrebacuje.save();
-		RacunPravnihLica racun = RacunPravnihLica.find("id = ?", ukidanjeRacuna.racun.id).first();
-		racun.setVazeci(false);
-		racun.save();
+		
+		racunZaUkidanje.setVazeci(false);
+		racunZaUkidanje.save();
 		ukidanjeRacuna.save();
 
 		System.out.println(dnevnoStanjeRacunaKojiSePrebacuje.racun.brojRacuna);
