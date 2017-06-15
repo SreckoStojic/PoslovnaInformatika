@@ -6,9 +6,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import play.db.jpa.Model;
 
+@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlRootElement(name = "Klijent")
 @Entity
 public class Klijent extends Model {
 
@@ -22,6 +28,7 @@ public class Klijent extends Model {
 	public List<RacunPravnihLica> getRacuni() {
 		return racuni;
 	}
+	@XmlElement(name = "RacuniKlijenta")
 	public void setRacuni(List<RacunPravnihLica> racuni) {
 		this.racuni = racuni;
 	}
@@ -29,12 +36,14 @@ public class Klijent extends Model {
 	public NaseljenoMesto getNaseljenoMesto() {
 		return naseljenoMesto;
 	}
+	@XmlElement(name = "NaseljenoMestoKlijenta")
 	public void setNaseljenoMesto(NaseljenoMesto naseljenoMesto) {
 		this.naseljenoMesto = naseljenoMesto;
 	}
 	public String getAdresa() {
 		return adresa;
 	}
+	@XmlElement(name = "AdresaKlijenta")
 	public void setAdresa(String adresa) {
 		this.adresa = adresa;
 	}

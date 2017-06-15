@@ -8,9 +8,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import play.db.jpa.Model;
 
+@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlRootElement(name = "RacunPravnihLica")
 @Entity
 public class RacunPravnihLica extends Model {
 
@@ -37,6 +43,7 @@ public class RacunPravnihLica extends Model {
 		return brojRacuna;
 	}
 
+	@XmlElement(name = "BrojRacunaPL")
 	public void setBrojRacuna(String brojRacuna) {
 		this.brojRacuna = brojRacuna;
 	}
@@ -45,6 +52,7 @@ public class RacunPravnihLica extends Model {
 		return datumOtvaranja;
 	}
 
+	@XmlElement(name = "DatumOtvaranjaRAcuna")
 	public void setDatumOtvaranja(Date datumOtvaranja) {
 		this.datumOtvaranja = datumOtvaranja;
 	}
@@ -53,6 +61,7 @@ public class RacunPravnihLica extends Model {
 		return vazeci;
 	}
 
+	@XmlElement(name = "VazeciJeRacun")
 	public void setVazeci(Boolean vazeci) {
 		this.vazeci = vazeci;
 	}
@@ -61,6 +70,7 @@ public class RacunPravnihLica extends Model {
 		return banka;
 	}
 
+	@XmlElement(name = "OtvorenUBanci")
 	public void setBanka(Banka banka) {
 		this.banka = banka;
 	}
@@ -69,6 +79,7 @@ public class RacunPravnihLica extends Model {
 		return klijent;
 	}
 
+	@XmlElement(name = "VlasnikRacuna")
 	public void setKlijent(Klijent klijent) {
 		this.klijent = klijent;
 	}
@@ -77,6 +88,7 @@ public class RacunPravnihLica extends Model {
 		return valuta;
 	}
 
+	@XmlElement(name = "ValutaRacuna")
 	public void setValuta(Valuta valuta) {
 		this.valuta = valuta;
 	}
@@ -85,6 +97,7 @@ public class RacunPravnihLica extends Model {
 		return ukidanjeRacuna;
 	}
 
+	@XmlElement(name = "UkidanjeRacuna")
 	public void setUkidanjeRacuna(List<Ukidanje> ukidanjeRacuna) {
 		this.ukidanjeRacuna = ukidanjeRacuna;
 	}
@@ -93,6 +106,7 @@ public class RacunPravnihLica extends Model {
 		return stanjeRacuna;
 	}
 
+	@XmlElement(name = "StanjeRacunaPL")
 	public void setStanjeRacuna(List<DnevnoStanjeRacuna> stanjeRacuna) {
 		this.stanjeRacuna = stanjeRacuna;
 	}

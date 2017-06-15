@@ -91,6 +91,20 @@ $(document).ready(function(){
 		remove(id);
 	
 	});
+
+	$("#export").click(function(){
+		highlighted = $(".highlighted");
+		id = highlighted.find(".id").html();
+		exportKl(id);
+	
+	});
+
+	$("#exportPL").click(function(){
+		highlighted = $(".highlighted");
+		id = highlighted.find(".id").html();
+		exportKl(id);
+	
+	});
 	
 	$("#nextform").click(function(e){
 		var id = $(".highlighted").find(".id").html();

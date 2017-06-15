@@ -1,0 +1,67 @@
+#{extends 'standardForm.html' /}
+
+<script>
+
+
+
+function exportKl(id){
+	$(location).attr('href','/ExportIzvodaKlijenta/exportKl?id='+id);
+}
+
+</script>
+
+
+<div class = "container-fluid">
+	<h1>Klijenti Fizicka Lica</h1>
+	
+	<table class="table table-bordered">
+		<tr class = "header"> 
+		   <th>Ime</th>
+		   <th>Prezime</th>
+		   <th>Adresa</th>
+		   <th>Naseljeno Mesto</th>
+		   <th>Drzava</th>
+		   <th width="50"></th>
+		   <th width="50"></th>
+		</tr>
+	#{list items:klijentiFL, as:'klijent'}
+		<tr>
+			<td class = "ime">${klijent.ime}</td>
+			<td class = "prezime">${klijent.prezime}</td>
+			<td class = "adresa">${klijent.adresa}</td>
+			<td class = "nMesto">${klijent.naseljenoMesto.naziv}</td>
+			<td class = "drzava">${klijent.naseljenoMesto.drzava.naziv}</td>
+			<td class = "id">${klijent.id}</td>
+			<td align="center">
+				<a id="export">export</a></td>
+		</tr>
+	#{/list}
+	</table>
+</div>
+<div class = "container-fluid">
+	<h1>Klijenti Pravna Lica</h1>
+	
+	<table class="table table-bordered">
+		<tr class = "header"> 
+		   <th>Ime</th>
+		   <th>Prezime</th>
+		   <th>Adresa</th>
+		   <th>Naseljeno Mesto</th>
+		   <th>Drzava</th>
+		   <th width="50"></th>
+		</tr>
+	#{list items:klijentiPL, as:'klijent'}
+		<tr>
+			<td class = "ime">${klijent.naziv}</td>
+			<td class = "adresa">${klijent.adresa}</td>
+			<td class = "nMesto">${klijent.naseljenoMesto.naziv}</td>
+			<td class = "drzava">${klijent.naseljenoMesto.drzava.naziv}</td>
+			<td class = "id">${klijent.id}</td>
+			<td align="center">
+				<a id="exportPL">export</a></td>
+		</tr>
+	#{/list}
+	</table>
+</div>
+
+

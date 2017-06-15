@@ -9,9 +9,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import play.db.jpa.Model;
 
+@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlRootElement(name = "DnevnoStanjeRacuna")
 @Entity
 public class DnevnoStanjeRacuna extends Model {
 
@@ -33,42 +39,49 @@ public class DnevnoStanjeRacuna extends Model {
 	public Date getDatumPrometa() {
 		return datumPrometa;
 	}
+	@XmlElement(name = "DatumPrometa")
 	public void setDatumPrometa(Date datumPrometa) {
 		this.datumPrometa = datumPrometa;
 	}
 	public BigDecimal getPrethodnoStanje() {
 		return prethodnoStanje;
 	}
+	@XmlElement(name = "PrethodnoStanjeRacuna")
 	public void setPrethodnoStanje(BigDecimal prethodnoStanje) {
 		this.prethodnoStanje = prethodnoStanje;
 	}
 	public BigDecimal getPrometUKorist() {
 		return prometUKorist;
 	}
+	@XmlElement(name = "PrometUKorist")
 	public void setPrometUKorist(BigDecimal prometUKorist) {
 		this.prometUKorist = prometUKorist;
 	}
 	public BigDecimal getPrometNaTeret() {
 		return prometNaTeret;
 	}
+	@XmlElement(name = "PrometNaTeret")
 	public void setPrometNaTeret(BigDecimal prometNaTeret) {
 		this.prometNaTeret = prometNaTeret;
 	}
 	public BigDecimal getNovoStanje() {
 		return novoStanje;
 	}
+	@XmlElement(name = "NovoStanjeRacuna")
 	public void setNovoStanje(BigDecimal novoStanje) {
 		this.novoStanje = novoStanje;
 	}
 	public RacunPravnihLica getRacun() {
 		return racun;
 	}
+	@XmlElement(name = "RacunPravnihLica")
 	public void setRacun(RacunPravnihLica racun) {
 		this.racun = racun;
 	}
 	public List<AnalitikaIzvoda> getAnalitikaIzvoda() {
 		return analitikaIzvoda;
 	}
+	@XmlElement(name = "AnalitikaIzvodaDSR")
 	public void setAnalitikaIzvoda(List<AnalitikaIzvoda> analitikaIzvoda) {
 		this.analitikaIzvoda = analitikaIzvoda;
 	}

@@ -1,0 +1,55 @@
+#{extends 'standardForm.html' /}
+
+<script>
+
+
+
+function exportKl(id){
+	$(location).attr('href','/KlijentiFizickaLica/exportKl?id='+id);
+}
+
+function sync(item){
+	var ime = item.find(".ime").html();
+    var prezime = item.find(".prezime").html();
+    var id = item.find(".id").html();
+    var adresa = item.find(".adresa").html();
+    var drzavaId = item.find(".klijent_nMesto_drzava_id").html();
+    var nMestoId = item.find(".nMesto_id").html();
+    $("#klijent_ime").val(ime);
+    $("#klijent_prezime").val(prezime);
+    $("#klijent_id").val(id);
+    $("#klijent_nMesto_drzava_id").val(drzavaId);
+    $("#klijent_nMesto_id").val(nMestoId);
+    $("#klijent_adresa").val(adresa);
+}
+
+</script>
+
+
+<div class = "container-fluid">
+	<h1>Klijenti Fizicka Lica</h1>
+	
+	<table class="table table-bordered">
+		<tr class = "header"> 
+		   <th>Ime</th>
+		   <th>Prezime</th>
+		   <th>Adresa</th>
+		   <th>Naseljeno Mesto</th>
+		   <th>Drzava</th>
+		   <th width="50"></th>
+		</tr>
+	#{list items:klijenti, as:'klijent'}
+		<tr>
+			<td class = "ime">${klijent.naziv}</td>
+			<td class = "adresa">${klijent.adresa}</td>
+			<td class = "nMesto">${klijent.naseljenoMesto.naziv}</td>
+			<td class = "drzava">${klijent.naseljenoMesto.drzava.naziv}</td>
+			<td class = "id">${klijent.id}</td>
+			<td align="center">
+				<a id="export">export</a></td>
+		</tr>
+	#{/list}
+	</table>
+</div>
+
+
