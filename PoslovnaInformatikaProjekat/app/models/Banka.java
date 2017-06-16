@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import play.db.jpa.Model;
 
@@ -107,14 +108,17 @@ public class Banka extends Model {
 	public List<KursnaLista> getKursnaLista() {
 		return kursnaLista;
 	}
-	@XmlElement(name = "KursnaListaBanke")
+	//@XmlElement(name = "KursnaListaBanke")
+	@XmlTransient
 	public void setKursnaLista(List<KursnaLista> kursnaLista) {
 		this.kursnaLista = kursnaLista;
 	}
 	public List<RacunPravnihLica> getRacuni() {
 		return racuni;
 	}
-	@XmlElement(name = "RacuniKlijenataBanke")
+	//@XmlElement(name = "RacuniKlijenataBanke")
+
+	@XmlTransient
 	public void setRacuni(List<RacunPravnihLica> racuni) {
 		this.racuni = racuni;
 	}

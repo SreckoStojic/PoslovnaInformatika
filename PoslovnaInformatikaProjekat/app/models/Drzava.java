@@ -51,7 +51,8 @@ public class Drzava extends Model {
 	public List<Valuta> getDrzavneValute() {
 		return drzavneValute;
 	}
-	@XmlElement(name = "ValuteUDrzavi")
+	//@XmlElement(name = "ValuteUDrzavi")
+	@XmlTransient
 	public void setDrzavneValute(List<Valuta> drzavneValute) {
 		this.drzavneValute = drzavneValute;
 	}

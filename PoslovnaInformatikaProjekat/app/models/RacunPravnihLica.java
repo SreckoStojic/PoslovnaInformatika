@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import play.db.jpa.Model;
 
@@ -79,7 +80,8 @@ public class RacunPravnihLica extends Model {
 		return klijent;
 	}
 
-	@XmlElement(name = "VlasnikRacuna")
+	//@XmlElement(name = "VlasnikRacuna")
+	@XmlTransient
 	public void setKlijent(Klijent klijent) {
 		this.klijent = klijent;
 	}
@@ -97,7 +99,8 @@ public class RacunPravnihLica extends Model {
 		return ukidanjeRacuna;
 	}
 
-	@XmlElement(name = "UkidanjeRacuna")
+	//@XmlElement(name = "UkidanjeRacuna")
+	@XmlTransient
 	public void setUkidanjeRacuna(List<Ukidanje> ukidanjeRacuna) {
 		this.ukidanjeRacuna = ukidanjeRacuna;
 	}
@@ -106,7 +109,8 @@ public class RacunPravnihLica extends Model {
 		return stanjeRacuna;
 	}
 
-	@XmlElement(name = "StanjeRacunaPL")
+	//@XmlElement(name = "StanjeRacunaPL")
+	@XmlTransient
 	public void setStanjeRacuna(List<DnevnoStanjeRacuna> stanjeRacuna) {
 		this.stanjeRacuna = stanjeRacuna;
 	}

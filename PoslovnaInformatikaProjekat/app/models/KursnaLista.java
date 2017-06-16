@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import antlr.collections.List;
 import play.db.jpa.Model;
@@ -53,7 +54,9 @@ public class KursnaLista extends Model {
 	public java.util.List<KursUValuti> getValuteUListi() {
 		return valuteUListi;
 	}
-	@XmlElement(name = "ValuteUListi")
+	//@XmlElement(name = "ValuteUListi")
+
+	@XmlTransient
 	public void setValuteUListi(java.util.List<KursUValuti> valuteUListi) {
 		this.valuteUListi = valuteUListi;
 	}

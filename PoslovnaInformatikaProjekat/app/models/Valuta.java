@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import play.db.jpa.Model;
 
@@ -48,7 +49,9 @@ public class Valuta extends Model {
 	public List<KursUValuti> getPremaValuti() {
 		return premaValuti;
 	}
-	@XmlElement(name = "KurseviPremaValutama")
+	//@XmlElement(name = "KurseviPremaValutama")
+
+	@XmlTransient
 	public void setPremaValuti(List<KursUValuti> premaValuti) {
 		this.premaValuti = premaValuti;
 	}
@@ -83,21 +86,24 @@ public class Valuta extends Model {
 	public List<KursUValuti> getOsnovnaValuta() {
 		return osnovnaValuta;
 	}
-	@XmlElement(name = "OsnovnaJeValuta")
+	//@XmlElement(name = "OsnovnaJeValuta")
+	@XmlTransient
 	public void setOsnovnaValuta(List<KursUValuti> osnovnaValuta) {
 		this.osnovnaValuta = osnovnaValuta;
 	}
 	public List<RacunPravnihLica> getRacuni() {
 		return racuni;
 	}
-	@XmlElement(name = "RacuniValuta")
+	//@XmlElement(name = "RacuniValuta")
+	@XmlTransient
 	public void setRacuni(List<RacunPravnihLica> racuni) {
 		this.racuni = racuni;
 	}
 	public List<AnalitikaIzvoda> getAnalitikeIzvoda() {
 		return analitikeIzvoda;
 	}
-	@XmlElement(name = "AnalitikeIzvodaValuta")
+	//@XmlElement(name = "AnalitikeIzvodaValuta")
+	@XmlTransient
 	public void setAnalitikeIzvoda(List<AnalitikaIzvoda> analitikeIzvoda) {
 		this.analitikeIzvoda = analitikeIzvoda;
 	}
