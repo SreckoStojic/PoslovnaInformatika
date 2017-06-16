@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import play.db.jpa.Model;
 
@@ -81,7 +82,8 @@ public class DnevnoStanjeRacuna extends Model {
 	public List<AnalitikaIzvoda> getAnalitikaIzvoda() {
 		return analitikaIzvoda;
 	}
-	@XmlElement(name = "AnalitikaIzvodaDSR")
+	//@XmlElement(name = "AnalitikaIzvodaDSR")
+	@XmlTransient
 	public void setAnalitikaIzvoda(List<AnalitikaIzvoda> analitikaIzvoda) {
 		this.analitikaIzvoda = analitikaIzvoda;
 	}
