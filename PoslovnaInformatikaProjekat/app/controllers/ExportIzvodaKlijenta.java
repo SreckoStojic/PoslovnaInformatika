@@ -3,6 +3,7 @@ package controllers;
 import java.io.File;
 import java.util.List;
 
+import javax.sound.midi.ControllerEventListener;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -47,7 +48,8 @@ public class ExportIzvodaKlijenta extends Controller {
 			e.printStackTrace();
 		}
 
-		renderTemplate("Application/index.html");
+		Application.index();
+		//renderTemplate("Application/index.html");
 	}
 
 	public static void showExport() {
