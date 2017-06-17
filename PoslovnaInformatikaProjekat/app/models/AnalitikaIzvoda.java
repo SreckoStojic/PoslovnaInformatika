@@ -15,9 +15,9 @@ import org.hibernate.annotations.ManyToAny;
 
 import play.db.jpa.Model;
 
+@Entity
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "AnalitikaIzvoda")
-@Entity
 public class AnalitikaIzvoda extends Model {
 
 	@Column(nullable = false, length = 256)

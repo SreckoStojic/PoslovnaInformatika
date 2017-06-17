@@ -1,11 +1,17 @@
 package controllers;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+
 import models.AnalitikaIzvoda;
 import models.DnevnoStanjeRacuna;
+import models.KlijentFizickoLice;
 import models.KursUValuti;
 import models.KursnaLista;
 import models.NaseljenoMesto;
@@ -131,4 +137,29 @@ public class AnalitikeIzvoda extends Controller{
 	 	
 		renderTemplate("AnalitikeIzvoda/nalogModal.html", racuni, kursneListe, vrstePlacanja, naseljenaMesta, valute);
 	}
+	
+	public static void exportUplatnice(Long id){
+		AnalitikaIzvoda analitika = AnalitikaIzvoda.findById(id);
+		try {
+			System.out.println(analitika.duznik);
+			File file = new File("D:\\uplatnica" + id + ".xml");
+			JAXBContext jaxbContext = null;
+			jaxbContext = JAXBContext.newInstance(AnalitikaIzvoda.class);
+
+			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			jaxbMarshaller.marshal(analitika, file);
+
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+
+		show("edit");
+	}
+	
+	public static void importUplatnice(){
+		
+	}
+	
+	
 }

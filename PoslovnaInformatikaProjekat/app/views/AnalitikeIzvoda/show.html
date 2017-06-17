@@ -1,68 +1,257 @@
-#{extends 'standardForm.html' /}
-#{set title:'Transakcije' /}
+#{extends 'standardForm.html' /} #{set title:'Transakcije' /}
 
 <script>
+	function sync(item) {
+		var id = item.find(".id").html();
+		var duznik = item.find(".duznik").html();
+		var svrhaPlacanja = item.find(".svrhaPlacanja").html();
+		var racunDuznika = item.find(".racunDuznika").html();
+		var modelZaduzenja = item.find(".modelZaduzenja").html();
+		var pozviNaBrZaduzenja = item.find(".pozviNaBrZaduzenja").html();
+		var poverilac = item.find(".poverilac").html();
+		var racunPoverioca = item.find(".racunPoverioca").html();
+		var modelOdobrenja = item.find(".modelOdobrenja").html();
+		var pozivNaBrOdobrenja = item.find(".pozivNaBrOdobrenja").html();
+		var hitno = item.find(".hitno").html();
+		var valuta = item.find(".valuta").html();
+		var mestoPrijema = item.find(".mestoPrijema").html();
+		var vrstaPlacanja = item.find(".vrstaPlacanja").html();
+		var iznos = item.find(".iznos").html();
+		$("#analitika_id").val(id);
+		$("#analitikaIzvoda_duznik").val(duznik);
+		$("#analitikaIzvoda_svrhaPlacanja").val(svrhaPlacanja);
+		$("#analitikaIzvoda_racunDuznika").val(racunDuznika);
+		$("#analitikaIzvoda_modelZaduzenja").val(modelZaduzenja);
+		$("#analitikaIzvoda_pozivNaBrZaduzenja").val(pozviNaBrZaduzenja);
+		$("#analitikaIzvoda_poverilac").val(poverilac);
+		$("#analitikaIzvoda_racunPoverioca").val(racunPoverioca);
+		$("#analitikaIzvoda_modelOdobrenja").val(modelOdobrenja);
+		$("#analitikaIzvoda_pozivNaBrOdobrenja").val(pozivNaBrOdobrenja);
+		$("#analitikaIzvoda_hitno").val(hitno);
+		$("#analitikaIzvoda_valuta_id").val(valuta);
+		$("#analitikaIzvoda_mestoPrijema_id").val(mestoPrijema);
+		$("#analitikaIzvoda_vrstaPlacanja_id").val(vrstaPlacanja);
+		$("#analitikaIzvoda_iznos").val(iznos);
+	}
 
-function remove(id){
-	$(location).attr('href','/AnalitikeIzvoda/remove?id='+id);
-}
-
+	function remove(id) {
+		$(location).attr('href', '/AnalitikeIzvoda/remove?id=' + id);
+	}
 </script>
 
 <div>
-<ul>
-  <li><a href="@{Application.index()}" id = "search"><img src="@{'/public/images/home.png'}"/></a></li>
-  <li><a href="#" id = "search"><img src="@{'/public/images/search.gif'}"/></a></li>
-  <li><a href="#" id = "refresh"><img src="@{'/public/images/refresh.gif'}"/></a></li>
-  <li><a href="#" id = "pickup"><img src="@{'/public/images/zoom-pickup.gif'}"/></a></li>
-  <li><a href="#" id = "help"><img src="@{'/public/images/help.gif'}"/></a></li>
-  <li><a id = "first"><img src="@{'/public/images/first.gif'}"/></a></li>
-  <li><a id = "prev"><img src="@{'/public/images/prev.gif'}"/></a></li>
-  <li><a id = "next"><img src="@{'/public/images/next.gif'}"/></a></li>
-  <li><a id = "last"><img src="@{'/public/images/last.gif'}"/></a></li>
-  <li><a href="#" id = "add"><img src="@{'/public/images/add.gif'}"/></a></li>
-  <li><a href="#" id = "remove"><img src="@{'/public/images/remove.gif'}"/></a></li>
-  <li><a href="#" id = "nextform"><img src="@{'/public/images/nextform.gif'}"/></a></li>
-</ul>
+	<ul>
+		<li><a href="@{Application.index()}" id="search"><img
+				src="@{'/public/images/home.png'}" /></a></li>
+		<li><a href="#" id="search"><img
+				src="@{'/public/images/search.gif'}" /></a></li>
+		<li><a href="#" id="refresh"><img
+				src="@{'/public/images/refresh.gif'}" /></a></li>
+		<li><a href="#" id="pickup"><img
+				src="@{'/public/images/zoom-pickup.gif'}" /></a></li>
+		<li><a href="#" id="help"><img
+				src="@{'/public/images/help.gif'}" /></a></li>
+		<li><a id="first"><img src="@{'/public/images/first.gif'}" /></a></li>
+		<li><a id="prev"><img src="@{'/public/images/prev.gif'}" /></a></li>
+		<li><a id="next"><img src="@{'/public/images/next.gif'}" /></a></li>
+		<li><a id="last"><img src="@{'/public/images/last.gif'}" /></a></li>
+		<li><a href="#" id="add"><img
+				src="@{'/public/images/add.gif'}" /></a></li>
+		<li><a href="#" id="remove"><img
+				src="@{'/public/images/remove.gif'}" /></a></li>
+		<li><a href="#" id="nextform"><img
+				src="@{'/public/images/nextform.gif'}" /></a></li>
+	</ul>
 </div>
 
-<div class = "container-fluid">
+<div class="container-fluid">
 	<h1>Transakcije</h1>
 
 	<table class="table table-bordered">
-	<tr class = "header"> 
-	   <th>Duznik</th>
-	   <th>Svrha Placanja</th>
-	   <th>Racun Duznika</th>
-	   <th>Model Zaduzenja</th>
-	   <th>Poziv na broj Zaduzenja</th>
-	   <th>Poverilac</th>
-	   <th>Racun Poverioca</th>
-	   <th>Model Odobrenja</th>
-	   <th>Poziv na broj Odobrenja</th>
-	   <th>Hitno</th>
-	   <th>Valuta</th>
-	   <th>Mesto Prijema</th>
-	   <th>Vrsta Placanja</th>
-	   <th>IZNOS</th>
-	</tr>
-	#{list items:analitikeIzvoda, as:'ai'}
-	<tr>
-		<td class = "duznik">${ai.duznik}</td>
-		<td class = "svrhaPlacanja">${ai.svrhaPlacanja}</td>
-		<td class = "racunDuznika">${ai.racunDuznika}</td>
-		<td class = "modelZaduzenja">${ai.modelZaduzenja}</td>
-		<td class = "pozviNaBrZaduzenja">${ai.pozivNaBrZaduzenja}</td>
-		<td class = "poverilac">${ai.poverilac}</td>
-		<td class = "racunPoverioca">${ai.racunPoverioca}</td>
-		<td class = "modelOdobrenja">${ai.modelOdobrenja}</td>
-		<td class = "pozivNaBrOdobrenja">${ai.pozivNaBrOdobrenja}</td>
-		<td class = "hitno">${ai.hitno}</td>
-		<td class = "valuta">${ai.valuta.naziv} ${ai.valuta.oznaka}</td>
-		<td class = "mestoPrijema">${ai.mestoPrijema.naziv}</td>
-		<td class = "vrstaPlacanja">${ai.vrstaPlacanja.naziv}</td>
-		<td class = "iznos">${ai.iznos}</td>
-	</tr>
-	#{/list}
+		<tr class="header">
+			<th>Duznik</th>
+			<th>Svrha Placanja</th>
+			<th>Racun Duznika</th>
+			<th>Model Zaduzenja</th>
+			<th>Poziv na broj Zaduzenja</th>
+			<th>Poverilac</th>
+			<th>Racun Poverioca</th>
+			<th>Model Odobrenja</th>
+			<th>Poziv na broj Odobrenja</th>
+			<th>Hitno</th>
+			<th>Valuta</th>
+			<th>Mesto Prijema</th>
+			<th>Vrsta Placanja</th>
+			<th>IZNOS</th>
+		</tr>
+		#{list items:analitikeIzvoda, as:'ai'}
+		<tr>
+			<td class="duznik">${ai.duznik}</td>
+			<td class="svrhaPlacanja">${ai.svrhaPlacanja}</td>
+			<td class="racunDuznika">${ai.racunDuznika}</td>
+			<td class="modelZaduzenja">${ai.modelZaduzenja}</td>
+			<td class="pozviNaBrZaduzenja">${ai.pozivNaBrZaduzenja}</td>
+			<td class="poverilac">${ai.poverilac}</td>
+			<td class="racunPoverioca">${ai.racunPoverioca}</td>
+			<td class="modelOdobrenja">${ai.modelOdobrenja}</td>
+			<td class="pozivNaBrOdobrenja">${ai.pozivNaBrOdobrenja}</td>
+			<td class="hitno">${ai.hitno}</td>
+			<td class="valuta">${ai.valuta.naziv} ${ai.valuta.oznaka}</td>
+			<td class="mestoPrijema">${ai.mestoPrijema.naziv}</td>
+			<td class="vrstaPlacanja">${ai.vrstaPlacanja.naziv}</td>
+			<td class="iznos">${ai.iznos}</td>
+		</tr>
+		#{/list}
 	</table>
+	<form action="@{AnalitikeIzvoda.exportUplatnice(ai.id)}" method="post"
+		class="form-horizontal">
+
+		<div class="form-group">
+			#{field 'analitikaIzvoda.id'} <input type="hidden"
+				name="${field.name}" id="analitikaIzvoda_id" /> #{/} #{field
+			'analitikaIzvoda.duznik'} <label for="${field.id}"
+				class="col-sm-3 control-label">Duznik</label>
+			<div class="col-sm-9">
+				<input type="text" name="${field.name}" id="analitikaIzvoda_duznik"
+					class="form-control" />
+			</div>
+			#{/}
+		</div>
+		<div class="form-group">
+			#{field 'analitikaIzvoda.svrhaPlacanja'} <label for="${field.id}"
+				class="col-sm-3 control-label">Svrha Placanja</label>
+			<div class="col-sm-9">
+				<input type="text" name="${field.name}"
+					id="analitikaIzvoda_svrhaPlacanja" class="form-control" />
+			</div>
+			#{/}
+		</div>
+		<div class="form-group">
+			#{field 'analitikaIzvoda.racunDuznika'} <label for="${field.id}"
+				class="col-sm-3 control-label">Racun Duznika</label>
+			<div class="col-sm-9">
+				<input type="text" name="${field.name}"
+					id="analitikaIzvoda_racunDuznika" class="form-control" />
+			</div>
+			#{/}
+		</div>
+		<div class="form-group">
+			#{field 'analitikaIzvoda.modelZaduzenja'} <label for="${field.id}"
+				class="col-sm-3 control-label">Model Zaduzenja</label>
+			<div class="col-sm-9">
+				<input type="text" name="${field.name}"
+					id="analitikaIzvoda_modelZaduzenja" class="form-control" />
+			</div>
+			#{/}
+		</div>
+		<div class="form-group">
+			#{field 'analitikaIzvoda.pozivNaBrZaduzenja'} <label
+				for="${field.id}" class="col-sm-3 control-label">Poziv na
+				broj Zaduzenja</label>
+			<div class="col-sm-9">
+				<input type="text" name="${field.name}"
+					id="analitikaIzvoda_pozivNaBrZaduzenja" class="form-control" />
+			</div>
+			#{/}
+		</div>
+		<div class="form-group">
+			#{field 'analitikaIzvoda.poverilac'} <label for="${field.id}"
+				class="col-sm-3 control-label">Poverilac</label>
+			<div class="col-sm-9">
+				<input type="text" name="${field.name}"
+					id="analitikaIzvoda_poverilac" class="form-control" />
+			</div>
+			#{/}
+		</div>
+		<div class="form-group">
+			#{field 'analitikaIzvoda.racunPoverioca'} <label for="${field.id}"
+				class="col-sm-3 control-label">Racun Poverioca</label>
+			<div class="col-sm-9">
+				<input type="text" name="${field.name}"
+					id="analitikaIzvoda_racunPoverioca" class="form-control" />
+			</div>
+			#{/}
+		</div>
+		<div class="form-group">
+			#{field 'analitikaIzvoda.modelOdobrenja'} <label for="${field.id}"
+				class="col-sm-3 control-label">Model Odobrenja</label>
+			<div class="col-sm-9">
+				<input type="text" name="${field.name}"
+					id="analitikaIzvoda_modelOdobrenja" class="form-control" />
+			</div>
+			#{/}
+		</div>
+		<div class="form-group">
+			#{field 'analitikaIzvoda.pozivNaBrOdobrenja'} <label
+				for="${field.id}" class="col-sm-3 control-label">Poziv na
+				broj Odobrenja</label>
+			<div class="col-sm-9">
+				<input type="text" name="${field.name}"
+					id="analitikaIzvoda_pozivNaBrOdobrenja" class="form-control" />
+			</div>
+			#{/}
+		</div>
+		<div class="form-group">
+			#{field 'analitikaIzvoda.hitno'} <label for="${field.id}"
+				class="col-sm-3 control-label">Hitno</label>
+			<div class="col-sm-9">
+				<input type="checkbox" name="${field.name}"
+					id="analitikaIzvoda_hitno" />
+			</div>
+			#{/}
+		</div>
+		<div class="form-group">
+			#{field 'analitikaIzvoda.valuta.id'} <label
+				for="analitikaIzvoda_valuta_id" class="col-sm-3 control-label">Valuta</label>
+			<div class="col-sm-7">
+				<select name="${field.name}" id="analitikaIzvoda_valuta_id"
+					class="form-control"> #{list items:valute, as:'valuta'}
+					<option value="${valuta.id}">${valuta.naziv}
+						(${valuta.oznaka})</option> #{/list}
+				</select>
+			</div>
+			#{/}
+		</div>
+		<div class="form-group">
+			#{field 'analitikaIzvoda.mestoPrijema.id'} <label
+				for="analitikaIzvoda_mestoPrijema_id" class="col-sm-3 control-label">Mesto
+				Prijema</label>
+			<div class="col-sm-7">
+				<select name="${field.name}" id="analitikaIzvoda_mestoPrijema_id"
+					class="form-control"> #{list items:naseljenaMesta,
+					as:'nMesto'}
+					<option value="${nMesto.id}">${nMesto.naziv}
+						(${nMesto.oznaka})</option> #{/list}
+				</select>
+			</div>
+			#{/}
+		</div>
+		<div class="form-group">
+			#{field 'analitikaIzvoda.vrstaPlacanja.id'} <label
+				for="analitikaIzvoda_vrstaPlacanja_id"
+				class="col-sm-3 control-label">Vrsta Placanja</label>
+			<div class="col-sm-7">
+				<select name="${field.name}" id="analitikaIzvoda_vrstaPlacanja_id"
+					class="form-control"> #{list items:vrstePlacanja,
+					as:'vrstaPlacanja'}
+					<option value="${vrstaPlacanja.id}">${vrstaPlacanja.naziv}</option>
+					#{/list}
+				</select>
+			</div>
+			#{/}
+		</div>
+		<div class="form-group">
+			#{field 'analitikaIzvoda.iznos'} <label for="${field.id}"
+				class="col-sm-3 control-label">IZNOS</label>
+			<div class="col-sm-9">
+				<input type="text" name="${field.name}" id="analitikaIzvoda_iznos"
+					class="form-control" />
+			</div>
+			#{/}
+		</div>
+		<div class="modal-footer">
+			<input type="submit" value="Export" class="btn btn-default btn-sm" />
+			<a href = "@{AnalitikeIzvoda.importUplatnice()}" class="btn btn-info btn-xs">Import</a>
+		</div>
+	</form>
 </div>

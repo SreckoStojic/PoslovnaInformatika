@@ -28,7 +28,7 @@ public class RacuniPravnihLica extends Controller{
 	public static void create(RacunPravnihLica racun){
 		
 		racun.save();
-		KlijentiFizickaLica.show("edit");
+		KlijentiPravnaLica.show("edit");
 	}
 	
 	public static void edit(RacunPravnihLica racun){

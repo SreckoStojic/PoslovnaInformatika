@@ -9,6 +9,7 @@ import javax.xml.bind.Marshaller;
 
 import models.Drzava;
 import models.KlijentFizickoLice;
+import models.KlijentPravnoLice;
 import models.NaseljenoMesto;
 import play.mvc.Controller;
 
@@ -58,4 +59,22 @@ public class KlijentiFizickaLica extends Controller {
 		renderTemplate("KlijentiFizickaLica/show.html", klijenti);
 	}
 
+	public static void exportKl(Long id) {
+		KlijentFizickoLice klijentFL = KlijentFizickoLice.findById(id);
+		try {
+
+			File file = new File("D:\\" + klijentFL.ime + "-" + klijentFL.prezime + ".xml");
+			JAXBContext jaxbContext = null;
+			jaxbContext = JAXBContext.newInstance(KlijentFizickoLice.class);
+
+			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			jaxbMarshaller.marshal(klijentFL, file);
+
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+
+		show("edit");
+	}
 }
