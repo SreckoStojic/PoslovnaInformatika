@@ -138,11 +138,11 @@ public class AnalitikeIzvoda extends Controller{
 		renderTemplate("AnalitikeIzvoda/nalogModal.html", racuni, kursneListe, vrstePlacanja, naseljenaMesta, valute);
 	}
 	
-	public static void exportUplatnice(Long id){
-		AnalitikaIzvoda analitika = AnalitikaIzvoda.findById(id);
+	public static void exportUplatnice(AnalitikaIzvoda analitikaIzvoda){
+		AnalitikaIzvoda analitika = AnalitikaIzvoda.findById(analitikaIzvoda.id);
 		try {
 			System.out.println(analitika.duznik);
-			File file = new File("D:\\uplatnica" + id + ".xml");
+			File file = new File("C:\\Users\\Srecko\\Desktop\\xml\\" + analitika.id + ".xml");
 			JAXBContext jaxbContext = null;
 			jaxbContext = JAXBContext.newInstance(AnalitikaIzvoda.class);
 

@@ -28,12 +28,12 @@ public class ExportIzvodaKlijenta extends Controller {
 			if (KlijentFizickoLice.findById(id) != null) {
 				jaxbContext = JAXBContext.newInstance(KlijentFizickoLice.class);
 				klijentFL = KlijentFizickoLice.findById(id);
-				file = new File("D:\\" + klijentFL.ime + "-" + klijentFL.prezime + ".xml");
+				file = new File("C:\\Users\\Srecko\\Desktop\\xml\\" + klijentFL.ime + "-" + klijentFL.prezime + ".xml");
 			} else if (KlijentPravnoLice.findById(id) != null) {
 				jaxbContext = JAXBContext.newInstance(KlijentPravnoLice.class);
 
 				klijentPL = KlijentPravnoLice.findById(id);
-				file = new File("D:\\" + klijentPL.naziv +  ".xml");
+				file = new File("C:\\Users\\Srecko\\Desktop\\xml\\" + klijentPL.naziv +  ".xml");
 			}
 
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
