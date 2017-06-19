@@ -1,8 +1,14 @@
 #{extends 'standardForm.html' /} #{set title:'Transakcije' /}
 
 <script>
+
+	function importUplatnice(filename){
+		var filename = $("#file").val();
+		$(location).attr('href','/AnalitikeIzvoda/importUplatnice?file='+filename);
+	}
+
 	function sync(item) {
-		var id = item.find(".ai_id").html();
+		var id = item.find(".id").html();
 		var duznik = item.find(".duznik").html();
 		var svrhaPlacanja = item.find(".svrhaPlacanja").html();
 		var racunDuznika = item.find(".racunDuznika").html();
@@ -92,7 +98,7 @@
 			<td class="mestoPrijema">${ai.mestoPrijema.naziv}</td>
 			<td class="vrstaPlacanja">${ai.vrstaPlacanja.naziv}</td>
 			<td class="iznos">${ai.iznos}</td>
-			<td style = "visibility: hidden; max-width: 0px" class = "ai_id">${ai.id}</td>
+			<td style = "visibility: hidden; max-width: 0px" class = "id">${ai.id}</td>
 			<td style = "visibility: hidden; max-width: 0px" class = "valuta_id">${ai.valuta.id}</td>
 			<td style = "visibility: hidden; max-width: 0px" class = "mestoPrijema_id">${ai.mestoPrijema.id}</td>
 			<td style = "visibility: hidden; max-width: 0px" class = "vrstaPlacanja_id">${ai.vrstaPlacanja.id}</td>
@@ -229,9 +235,11 @@
 			</div>
 			#{/}
 		</div>
+		
+    	<input type="file" id="file" name="file" />
 		<div class="modal-footer">
 			<input type="submit" value="Export" class="btn btn-success btn-sm" />
-			<a href = "@{AnalitikeIzvoda.importUplatnice()}" class="btn btn-info btn-sm">Import</a>
+			<a href = "#" class="btn btn-info btn-sm" id="importButton" onclick="importUplatnice()">Import</a>
 		</div>
 	</form>
 </div>
