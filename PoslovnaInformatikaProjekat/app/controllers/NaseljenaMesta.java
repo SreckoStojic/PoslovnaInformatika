@@ -20,26 +20,41 @@ public class NaseljenaMesta extends Controller{
 	
 	
 	public static void create(NaseljenoMesto nMesto){
-		nMesto.setDrzava(Drzava.findById(nMesto.drzava.id));
-		nMesto.save();
+		try {
+			nMesto.setDrzava(Drzava.findById(nMesto.drzava.id));
+			nMesto.save();
+		}
+		catch(NullPointerException e) {
+			error("Drzava ne postoji.");
+		}
 		
 		show("edit");
 	}
 	
 	public static void edit(NaseljenoMesto nMesto){
-		NaseljenoMesto nm = NaseljenoMesto.findById(nMesto.id);
-		nm.setOznaka(nMesto.oznaka);
-		nm.setNaziv(nMesto.naziv);
-		nm.setPostanskiBroj(nMesto.postanskiBroj);
-		nm.setDrzava(nMesto.drzava);
-		nm.save();
+		try {
+			NaseljenoMesto nm = NaseljenoMesto.findById(nMesto.id);
+			nm.setOznaka(nMesto.oznaka);
+			nm.setNaziv(nMesto.naziv);
+			nm.setPostanskiBroj(nMesto.postanskiBroj);
+			nm.setDrzava(nMesto.drzava);
+			nm.save();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Naseljeno mesto.");
+		}
 		show("edit");
 		
 	}
 	
 	public static void remove(Long id){
-		NaseljenoMesto nm = NaseljenoMesto.findById(id);
-		nm.delete();
+		try {
+			NaseljenoMesto nm = NaseljenoMesto.findById(id);
+			nm.delete();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Naseljeno mesto.");
+		}
 		
 	
 		show("edit");

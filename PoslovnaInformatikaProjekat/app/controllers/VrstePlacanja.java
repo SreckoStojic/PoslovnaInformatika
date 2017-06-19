@@ -24,17 +24,27 @@ public class VrstePlacanja extends Controller{
 	}
 	
 	public static void edit(VrstaPlacanja vrstaPlacanja){
-		VrstaPlacanja vp = VrstaPlacanja.findById(vrstaPlacanja.id);
-		vp.setNaziv(vrstaPlacanja.naziv);
+		try {
+			VrstaPlacanja vp = VrstaPlacanja.findById(vrstaPlacanja.id);
+			vp.setNaziv(vrstaPlacanja.naziv);
+			vp.save();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Vrstu placanja.");
+		}
 		
-		vp.save();
 		show("edit");
 		
 	}
 	
 	public static void remove(Long id){
-		VrstaPlacanja vp = VrstaPlacanja.findById(id);
-		vp.delete();
+		try {
+			VrstaPlacanja vp = VrstaPlacanja.findById(id);
+			vp.delete();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Vrstu placanja.");
+		}
 		
 	
 		show("edit");

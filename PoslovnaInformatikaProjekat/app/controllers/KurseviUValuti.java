@@ -24,29 +24,56 @@ public class KurseviUValuti extends Controller{
 	
 	public static void create(KursUValuti kurs){
 		
-		kurs.setOsnovnaValuta(Valuta.findById(kurs.osnovnaValuta.id));
-		kurs.setPremaValuti(Valuta.findById(kurs.premaValuti.id));
-		kurs.setKursnaLista(KursnaLista.findById(kurs.kursnaLista.id));
+		try {
+			kurs.setKursnaLista(KursnaLista.findById(kurs.kursnaLista.id));
+		}
+		catch(NullPointerException e) {
+			error("Kursne liste ne postoje.");
+		}
+		try {
+			kurs.setOsnovnaValuta(Valuta.findById(kurs.osnovnaValuta.id));
+		}
+		catch(NullPointerException e) {
+			error("Osnovna valuta ne postoji.");
+		}
+		try {
+			kurs.setPremaValuti(Valuta.findById(kurs.premaValuti.id));
+		}
+		catch(NullPointerException e) {
+			error("Valute ne postoje.");
+		}
+		
 		kurs.save();
 		
 		show("add");
 	}
 	
 	public static void edit(KursUValuti kurs){
-		KursUValuti k = KursUValuti.findById(kurs.id);
-		k.setKupovni(kurs.kupovni);
-		k.setProdajni(kurs.prodajni);
-		k.setOsnovnaValuta(kurs.osnovnaValuta);
-		k.setPremaValuti(kurs.premaValuti);
-		k.izracunajSrednjiKurs();
-		k.save();
+		try {
+			KursUValuti k = KursUValuti.findById(kurs.id);
+			k.setKupovni(kurs.kupovni);
+			k.setProdajni(kurs.prodajni);
+			k.setOsnovnaValuta(kurs.osnovnaValuta);
+			k.setPremaValuti(kurs.premaValuti);
+			k.izracunajSrednjiKurs();
+			k.save();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali kursnu listu.");
+		}
+		
 		show("edit");
 		
 	}
 	
 	public static void remove(Long id){
-		KursUValuti k = KursUValuti.findById(id);
-		k.delete();
+		try {
+			KursUValuti k = KursUValuti.findById(id);
+			k.delete();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Kurs u valuti.");
+		}
 		
 	
 		show("edit");
@@ -58,5 +85,6 @@ public class KurseviUValuti extends Controller{
 		
 		renderTemplate("KurseviUValuti/show.html", kursevi, "edit" );
 	}
+	
 
 }

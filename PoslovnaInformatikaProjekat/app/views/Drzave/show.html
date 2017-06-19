@@ -79,7 +79,7 @@ function nextForm(id){
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="form-wrapper row">
-				<form action = "${action}" method="post" class="form-horizontal">
+				<form action = "${action}" method="post" class="form-horizontal" onsubmit= "return validate(this);">
 					#{field 'drzava.id'}
 						<input type = "hidden" name = "${field.name}" id = "drzava_id"/>
 					#{/}
@@ -88,6 +88,7 @@ function nextForm(id){
 						<label for = "${field.id}" class="col-sm-3 control-label">Oznaka</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "drzava_oznaka" class="form-control"/>
+							<p id="error1"></p>
 						</div>
 					#{/}
 					</div>
@@ -96,6 +97,7 @@ function nextForm(id){
 						<label for = "${field.id}" class="col-sm-3 control-label">Naziv</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "drzava_naziv" class="form-control"/>
+							<p id="error2"></p>
 						</div>
 					#{/}
 					</div>
@@ -111,5 +113,34 @@ function nextForm(id){
 	</div>
 </div>
 
-
+<!-- Validacija -->
+<script type="text/javascript">
+	$(function validate() {
+    	var errors = "";
+	
+		var element = document.getElementById("drzava_oznaka").value;
+		if(element.value == "") {
+			errors = "Polje Oznaka ne sme biti prazno.";
+			document.getElementById( "error1" ).innerHTML = errors;
+					return false;
+		}
+		else if(element !== parseInt(element.value, 10)) {
+			errors = "Polje Oznaka mora biti ceo broj.";
+			document.getElementById( "error1" ).innerHTML = errors;
+					return false;
+		}
+		
+		var element = document.getElementById("drzava_naziv").value;
+		if(element.length > 30) {
+			errors = "Polje Naziv ne sme imati vise od 30 karaktera.";
+			document.getElementById( "error2" ).innerHTML = errors;
+					return false;
+		}
+		
+		else {
+			return true
+		}
+    			
+    });
+</script>
 

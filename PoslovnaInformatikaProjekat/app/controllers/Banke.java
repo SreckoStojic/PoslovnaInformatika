@@ -24,24 +24,34 @@ public class Banke extends Controller{
 	}
 	
 	public static void edit(Banka banka){
-		Banka b = Banka.findById(banka.id);
-		b.setSifra(banka.sifra);
-		b.setPib(banka.pib);
-		b.setNaziv(banka.naziv);
-		b.setAdresa(banka.adresa);
-		b.setEmail(banka.email);
-		b.setWeb(banka.web);
-		b.setTelefon(banka.telefon);
-		b.setFax(banka.fax);
-		b.setBanka(banka.banka);
-		b.save();
+		try {
+			Banka b = Banka.findById(banka.id);
+			b.setSifra(banka.sifra);
+			b.setPib(banka.pib);
+			b.setNaziv(banka.naziv);
+			b.setAdresa(banka.adresa);
+			b.setEmail(banka.email);
+			b.setWeb(banka.web);
+			b.setTelefon(banka.telefon);
+			b.setFax(banka.fax);
+			b.setBanka(banka.banka);
+			b.save();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Banku.");
+		}
 		show("edit");
 		
 	}
 	
 	public static void remove(Long id){
-		Banka b = Banka.findById(id);
-		b.delete();
+		try {
+			Banka b = Banka.findById(id);
+			b.delete();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Banku");
+		}
 		
 	
 		show("edit");

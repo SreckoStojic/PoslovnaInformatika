@@ -36,9 +36,24 @@ public class AnalitikeIzvoda extends Controller {
 	}
 
 	public static void create(AnalitikaIzvoda analitikaIzvoda) {
-		analitikaIzvoda.setValuta(Valuta.findById(analitikaIzvoda.valuta.id));
-		analitikaIzvoda.setVrstaPlacanja(VrstaPlacanja.findById(analitikaIzvoda.vrstaPlacanja.id));
-		analitikaIzvoda.setMestoPrijema(NaseljenoMesto.findById(analitikaIzvoda.mestoPrijema.id));
+		try {
+			analitikaIzvoda.setValuta(Valuta.findById(analitikaIzvoda.valuta.id));
+		}
+		catch(NullPointerException e) {
+			error("Valuta ne postoji.");
+		}
+		try {
+			analitikaIzvoda.setVrstaPlacanja(VrstaPlacanja.findById(analitikaIzvoda.vrstaPlacanja.id));
+		}
+		catch(NullPointerException e) {
+			error("Vrsta placanja ne postoji.");
+		}
+		try {
+			analitikaIzvoda.setMestoPrijema(NaseljenoMesto.findById(analitikaIzvoda.mestoPrijema.id));
+		}
+		catch(NullPointerException e) {
+			error("Mesto prijema ne postoji.");
+		}
 		analitikaIzvoda.setDatumValute(new Date());
 		analitikaIzvoda.setDatumPrijema(new Date());
 		RacunPravnihLica racunPoverilac = RacunPravnihLica.pronadjiBrojRacuna(analitikaIzvoda.racunPoverioca);
@@ -180,8 +195,9 @@ public class AnalitikeIzvoda extends Controller {
 	}
 
 	public static void importUplatnice(String file) throws JAXBException {
-		String fileName = file.substring(12, file.length());
-		System.out.println(fileName);
+		try {
+			String fileName = file.substring(12, file.length());
+			System.out.println(fileName);
 		JAXBContext jaxbContext = JAXBContext.newInstance(AnalitikaIzvoda.class);
 		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 		AnalitikaIzvoda analitikaIzvoda = (AnalitikaIzvoda) jaxbUnmarshaller
@@ -190,6 +206,10 @@ public class AnalitikeIzvoda extends Controller {
 		if (AnalitikaIzvoda.findById(analitikaIzvoda.id) == null) {
 			analitikaIzvoda.id = null;
 			analitikaIzvoda.save();
+		}
+		}
+		catch(StringIndexOutOfBoundsException e) {
+			error("Niste selektovali Uplatnicu za Import.");
 		}
 		show("edit");
 	}

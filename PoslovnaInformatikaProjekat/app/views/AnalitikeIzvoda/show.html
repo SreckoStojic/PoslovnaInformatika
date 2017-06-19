@@ -105,7 +105,7 @@
 		</tr>
 		#{/list}
 	</table>
-	<form action="@{AnalitikeIzvoda.exportUplatnice()}" method="post" class="form-horizontal">
+	<form action="@{AnalitikeIzvoda.exportUplatnice()}" method="post" class="form-horizontal" onsubmit="return validate();">
 		
 		<div class="form-group">
 			#{field 'analitikaIzvoda.id'} 
@@ -114,6 +114,7 @@
 			<label for="${field.id}" class="col-sm-3 control-label">Duznik</label>
 			<div class="col-sm-9">
 				<input type="text" name="${field.name}" id="analitikaIzvoda_duznik" class="form-control" />
+				<p id="error1"></p>
 			</div>
 			#{/}
 		</div>
@@ -122,6 +123,7 @@
 			<label for="${field.id}" class="col-sm-3 control-label">Svrha Placanja</label>
 			<div class="col-sm-9">
 				<input type="text" name="${field.name}" id="analitikaIzvoda_svrhaPlacanja" class="form-control" />
+				<p id="error2"></p>
 			</div>
 			#{/}
 		</div>
@@ -130,6 +132,7 @@
 			<label for="${field.id}" class="col-sm-3 control-label">Racun Duznika</label>
 			<div class="col-sm-9">
 				<input type="text" name="${field.name}" id="analitikaIzvoda_racunDuznika" class="form-control" />
+				<p id="error3"></p>
 			</div>
 			#{/}
 		</div>
@@ -138,6 +141,7 @@
 			<label for="${field.id}" class="col-sm-3 control-label">Model Zaduzenja</label>
 			<div class="col-sm-9">
 				<input type="text" name="${field.name}" id="analitikaIzvoda_modelZaduzenja" class="form-control" />
+				<p id="error4"></p>
 			</div>
 			#{/}
 		</div>
@@ -146,6 +150,7 @@
 			<label for="${field.id}" class="col-sm-3 control-label">Poziv na broj Zaduzenja</label>
 			<div class="col-sm-9">
 				<input type="text" name="${field.name}" id="analitikaIzvoda_pozivNaBrZaduzenja" class="form-control" />
+				<p id="error5"></p>
 			</div>
 			#{/}
 		</div>
@@ -154,6 +159,7 @@
 			<label for="${field.id}" class="col-sm-3 control-label">Poverilac</label>
 			<div class="col-sm-9">
 				<input type="text" name="${field.name}" id="analitikaIzvoda_poverilac" class="form-control" />
+				<p id="error6"></p>
 			</div>
 			#{/}
 		</div>
@@ -162,6 +168,7 @@
 			<label for="${field.id}" class="col-sm-3 control-label">Racun Poverioca</label>
 			<div class="col-sm-9">
 				<input type="text" name="${field.name}" id="analitikaIzvoda_racunPoverioca" class="form-control" />
+				<p id="error7"></p>
 			</div>
 			#{/}
 		</div>
@@ -170,6 +177,7 @@
 			<label for="${field.id}" class="col-sm-3 control-label">Model Odobrenja</label>
 			<div class="col-sm-9">
 				<input type="text" name="${field.name}" id="analitikaIzvoda_modelOdobrenja" class="form-control" />
+				<p id="error8"></p>
 			</div>
 			#{/}
 		</div>
@@ -178,6 +186,7 @@
 			<label for="${field.id}" class="col-sm-3 control-label">Poziv na broj Odobrenja</label>
 			<div class="col-sm-9">
 				<input type="text" name="${field.name}" id="analitikaIzvoda_pozivNaBrOdobrenja" class="form-control" />
+				<p id="error9"></p>
 			</div>
 			#{/}
 		</div>
@@ -232,6 +241,7 @@
 			<label for="${field.id}" class="col-sm-3 control-label">IZNOS</label>
 			<div class="col-sm-9">
 				<input type="text" name="${field.name}" id="analitikaIzvoda_iznos" class="form-control" />
+				<p id="error10"></p>
 			</div>
 			#{/}
 		</div>
@@ -243,3 +253,125 @@
 		</div>
 	</form>
 </div>
+
+<!-- Validacija -->
+<script type="text/javascript">
+	$(function validate() {
+		var errors = "";
+		
+		var element = document.getElementById("analitikaIzvoda_duznik");
+		if(element.value == "") {
+			errors = "Polje Dužnik ne sme biti prazno.";
+			document.getElementById( "error1" ).innerHTML = errors;
+			return false;
+		}
+		
+		var element = document.getElementById("analitikaIzvoda_svrhaPlacanja");
+		if(element.value == "") {
+			errors = "Polje Svrha plaćanja ne sme biti prazno.";
+			document.getElementById( "error2" ).innerHTML = errors;
+			return false;
+		}
+		
+		var element = document.getElementById("analitikaIzvoda_racunDuznika");
+		if(element.value.length > 18) {
+			errors = "Polje Račun dužnika ne sme imati više od 18 cifara.";
+			document.getElementById( "error3" ).innerHTML = errors;
+			return false;
+		}
+		
+		var element = document.getElementById("analitikaIzvoda_modelZaduzenja");
+		If(isNan(element.value)) {
+			errors = "Polje Model zaduženja mora biti ceo broj.";
+			document.getElementById( "error4" ).innerHTML = errors;
+			return false;
+		} else {
+			if(element.value !== parseInt(element.value, 10)) {
+				errors = "Polje Model zaduženja mora biti ceo broj.";
+				document.getElementById( "error4" ).innerHTML = errors;
+				return false;
+		}
+		
+		var element = document.getElementById("analitikaIzvoda_pozivNaBrZaduzenja");
+		if(element.value.length > 20) {
+			errors = "Polje Poziv na broj zaduženja ne sme imati više od 20 cifara.";
+			document.getElementById( "error5" ).innerHTML = errors;
+			return false;
+		}
+		
+		var element = document.getElementById("analitikaIzvoda_poverilac");
+		if(element.value == "") {
+			errors = "Polje Poverilac ne sme biti prazno.";
+			document.getElementById( "error6" ).innerHTML = errors;
+			return false;
+		}
+		
+		var element = document.getElementById("analitikaIzvoda_racunPoverioca");
+		if(element.value.length > 20) {
+			errors = "Polje Račun poverioca ne sme imati više od 20 cifara.";
+			document.getElementById( "error7" ).innerHTML = errors;
+			return false;
+		}
+		
+		var element = document.getElementById("analitikaIzvoda_modelOdobrenja");
+		If(isNan(element.value)) {
+			errors = "Polje Model odobrenja mora biti ceo broj.";
+			document.getElementById( "error8" ).innerHTML = errors;
+			return false;
+		} else {
+			if(element.value !== parseInt(element.value, 10)) {
+				errors = "Polje Model odobrenja mora biti ceo broj.";
+				document.getElementById( "error8" ).innerHTML = errors;
+				return false;
+			}
+		}
+		
+		var element = document.getElementById("analitikaIzvoda_pozivNaBrOdobrenja");
+		if(element.value.length > 20) {
+			errors = "Polje Poziv na broj odobrenja ne sme imati više od 20 cifara.";
+			document.getElementById( "error9" ).innerHTML = errors;
+			return false;
+		}
+		
+		var element = document.getElementById("analitikaIzvoda_iznos");
+		if(element.value == "") {
+			errors = "Polje Iznos ne sme biti prazno.";
+			document.getElementById( "error10" ).innerHTML = errors;
+			return false;
+		}
+		else if(isNan(element.value)) {
+			errors = "Polje Iznos mora biti broj.";
+			document.getElementById( "error10" ).innerHTML = errors;
+			return false;
+		}
+		else if(element.value.length > 19) {
+			errors = "Polje Iznos ne sme imati vise od 18 cifara. Format zapisa je xxxxxxxxxxxxxxxx.xx .";
+			document.getElementById( "error10" ).innerHTML = errors;
+			return false;
+		}
+		else if(element.value.toString().contains(".")) {
+			str=element.value.toString().slice(0,3);
+			if(str >16) {
+				errors += "\nPolje Iznos ne sme imati vise od 18 cifara. Format zapisa je xxxxxxxxxxxxxxxx.xx .";
+				document.getElementById( "error10" ).innerHTML = errors;
+			return false;
+			}
+			str=element.value.toString().slice(element.value.toString().length-2,0);
+			if(str > 2) {
+				errors += "\nPolje Iznos ne sme imati vise od 18 cifara. Format zapisa je xxxxxxxxxxxxxxxx.xx .";
+				document.getElementById( "error10" ).innerHTML = errors;
+			return false;	
+			}				
+		}
+		else {
+			errors += "\nPolje Iznos ne sme imati vise od 18 cifara. Format zapisa je xxxxxxxxxxxxxxxx.xx .";
+			document.getElementById( "error10" ).innerHTML = errors;
+			return false;
+		}
+		
+		
+		else {
+			return true
+		}
+	});
+</script>

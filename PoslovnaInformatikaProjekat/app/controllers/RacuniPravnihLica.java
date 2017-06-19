@@ -32,20 +32,30 @@ public class RacuniPravnihLica extends Controller{
 	}
 	
 	public static void edit(RacunPravnihLica racun){
-		RacunPravnihLica r = RacunPravnihLica.findById(racun.id);
-		r.setBrojRacuna(racun.brojRacuna);
-		r.setVazeci(racun.vazeci);
-		r.setBanka(racun.banka);
-		r.setKlijent(racun.klijent);
-		r.setValuta(racun.valuta);
-		r.save();
+		try {
+			RacunPravnihLica r = RacunPravnihLica.findById(racun.id);
+			r.setBrojRacuna(racun.brojRacuna);
+			r.setVazeci(racun.vazeci);
+			r.setBanka(racun.banka);
+			r.setKlijent(racun.klijent);
+			r.setValuta(racun.valuta);
+			r.save();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Racun pravnog lica.");
+		}
 		show("edit");
 		
 	}
 	
 	public static void remove(Long id){
-		RacunPravnihLica r = RacunPravnihLica.findById(id);
-		r.delete();
+		try {
+			RacunPravnihLica r = RacunPravnihLica.findById(id);
+			r.delete();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Racun pravnog lica.");
+		}
 		
 	
 		show("edit");

@@ -24,24 +24,39 @@ public class KursneListe extends Controller{
 	
 	public static void create(KursnaLista kursnaLista){
 		kursnaLista.setDatum(new Date());
-		kursnaLista.setBanka(Banka.findById(kursnaLista.banka.id));
+		try {
+			kursnaLista.setBanka(Banka.findById(kursnaLista.banka.id));
+		}
+		catch(NullPointerException e) {
+			error("Banka ne postoji.");
+		}
 		kursnaLista.save();
 		
 		show("add");
 	}
 	
 	public static void edit(KursnaLista kursnaLista){
-		KursnaLista kl = KursnaLista.findById(kursnaLista.id);
-		kl.setPrimenjujeSeOd(kursnaLista.primenjujeSeOd);
-		kl.setValuteUListi(kursnaLista.valuteUListi);
-		kl.save();
+		try {
+			KursnaLista kl = KursnaLista.findById(kursnaLista.id);
+			kl.setPrimenjujeSeOd(kursnaLista.primenjujeSeOd);
+			kl.setValuteUListi(kursnaLista.valuteUListi);
+			kl.save();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Kursnu listu.");
+		}
 		show("edit");
 		
 	}
 	
 	public static void remove(Long id){
-		KursnaLista kl = KursnaLista.findById(id);
-		kl.delete();
+		try {
+			KursnaLista kl = KursnaLista.findById(id);
+			kl.delete();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Kursnu listu.");
+		}
 		
 	
 		show("edit");

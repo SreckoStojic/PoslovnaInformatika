@@ -1,6 +1,8 @@
 #{extends 'standardForm.html' /}
 #{set title:'Banke' /}
 
+
+
 <script>
 
 function remove(id){
@@ -101,7 +103,7 @@ function sync(item){
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="form-wrapper row">
-				<form action = "${action}" method="post" class="form-horizontal">
+				<form action = "${action}" method="post" class="form-horizontal" id="bankaForm" onsubmit = "return validate(this);">
 					#{field 'banka.id'}
 					<input type = "hidden" name = "${field.name}" id = "banka_id"/>
 					#{/}
@@ -110,6 +112,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Sifra</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "banka_sifra" class="form-control"/>
+							<p id="error1"></p>
 						</div>
 					#{/}
 					</div>
@@ -118,6 +121,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Pib</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "banka_pib" class="form-control"/>
+							<p id="error2"></p>
 						</div>
 					#{/}
 					</div>
@@ -126,6 +130,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Naziv</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "banka_naziv" class="form-control"/>
+							<p id="error3"></p>
 						</div>
 					#{/}
 					</div>
@@ -134,6 +139,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Adresa</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "banka_adresa" class="form-control"/>
+							<p id="error4"></p>
 						</div>
 					#{/}
 					</div>
@@ -142,6 +148,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Email</label>
 						<div class="col-sm-9">
 							<input type = "email" name = "${field.name}" id = "banka_email" class="form-control"/>
+							<p id="error5"></p>
 						</div>
 					#{/}
 					</div>
@@ -150,6 +157,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Web</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "banka_web" class="form-control"/>
+							<p id="error6"></p>
 						</div>
 					#{/}
 					</div>
@@ -158,6 +166,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Telefon</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "banka_telefon" class="form-control"/>
+							<p id="error7"></p>
 						</div>
 					#{/}
 					</div>
@@ -166,6 +175,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Faks</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "banka_fax" class="form-control"/>
+							<p id="error8"></p>
 						</div>
 					#{/}
 					</div>
@@ -179,11 +189,12 @@ function sync(item){
 					</div>
 					<div class="form-group">
 						<div id = "formActions" class="col-sm-offset-3 col-sm-9">
-							<input type = "submit" value = "Potvrda" class="btn btn-default"/>
+							<input type = "submit" value = "Potvrda" class="btn btn-default" />
 							<a href = "#">Rollback</a>
 						</div>
 					</div>
 				</form>
+				<p id="error_para" ></p>
 			</div>
 		</div>
 	</div>
@@ -217,4 +228,93 @@ function sync(item){
     </div>
   </div>
 </div>
+
+
+<!-- Validacija -->
+<script type="text/javascript">
+	$(function validate(bankaForm) {
+    			var errors = "";
+    			
+    			var element = document.getElementById("banka_sifra");
+				if(element.value == "") {
+					errors = "Polje Sifra ne sme biti prazno.";
+					document.getElementById( "error1" ).innerHTML = errors;
+					return false;
+				}
+				else if(element.length > 3) {
+					errors = "Polje Sifra ne sme biti duze od tri karaktera.";
+					document.getElementById( "error1" ).innerHTML = errors;
+					return false;
+				}
+				
+				var element = document.getElementById("banka_pib").value;
+				if(element == "") {
+					errors = "Polje Pib ne sme biti prazno.";
+					document.getElementById( "error2" ).innerHTML = errors;
+					return false;
+				}
+				else if(element.length > 10) {
+					errors = "Polje Pib ne sme biti duze od deset karaktera.";
+					document.getElementById( "error2" ).innerHTML = errors;
+					return false;
+				}
+				
+				var element = document.getElementById("banka_naziv").value;
+				if(element == "") {
+					errors = "Polje Naziv ne sme biti prazno."
+					document.getElementById( "error3" ).innerHTML = errors;
+					return false;
+				}
+				else if(element.length > 120) {
+					errors = "Polje Naziv ne sme biti duze od 120 karaktera.";
+					document.getElementById( "error3" ).innerHTML = errors;
+					return false;
+				}
+				
+				var element = document.getElementById("banka_adresa").value;
+				if(element == "") {
+					errors = "Polje Adresa ne sme biti prazno.";
+					document.getElementById( "error4" ).innerHTML = errors;
+					return false;
+				}
+				else if(element.length > 120) {
+					errors = "Polje Adresa ne sme biti duze od 120 karaktera.";
+					document.getElementById( "error4" ).innerHTML = errors;
+					return false;
+				}
+				
+				var element = document.getElementById("banka_email").value;
+				if(element.length > 128) {
+					errors = "Polje Email ne sme biti duze od 128 karaktera.";
+					document.getElementById( "error5" ).innerHTML = errors;
+					return false;
+				}
+				
+				var element = document.getElementById("banka_web").value;
+				if(element.length > 128) {
+					errors = "Polje Web ne sme biti duze od 128 karaktera.";
+					document.getElementById( "error6" ).innerHTML = errors;
+					return false;
+				}
+				
+				var element = document.getElementById("banka_telefon").value;
+				if(element.length > 20) {
+					errors = "Polje Telefon ne sme biti duze od 20 karaktera.";
+					document.getElementById( "error7" ).innerHTML = errors;
+					return false;
+				}
+				
+				var element = document.getElementById("banka_fax").value;
+				if(element.length > 20) {
+					errors = "Polje Fax ne sme biti duze od 20 karaktera.";
+					document.getElementById( "error8" ).innerHTML = errors;
+					return false;
+				}
+				else {
+					return true;
+				}
+    			
+    		});
+</script>
+
 

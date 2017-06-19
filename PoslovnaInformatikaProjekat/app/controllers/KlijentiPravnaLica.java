@@ -34,18 +34,28 @@ public class KlijentiPravnaLica extends Controller {
 	}
 
 	public static void edit(KlijentPravnoLice klijentPL) {
-		KlijentPravnoLice k = KlijentPravnoLice.findById(klijentPL.id);
-		k.setNaziv(klijentPL.naziv);
-		k.setAdresa(klijentPL.adresa);
-		k.setNaseljenoMesto(klijentPL.naseljenoMesto);
-		k.save();
+		try {
+			KlijentPravnoLice k = KlijentPravnoLice.findById(klijentPL.id);
+			k.setNaziv(klijentPL.naziv);
+			k.setAdresa(klijentPL.adresa);
+			k.setNaseljenoMesto(klijentPL.naseljenoMesto);
+			k.save();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Klijenta.");
+		}
 		show("edit");
 
 	}
 
 	public static void remove(Long id) {
-		KlijentPravnoLice k = KlijentPravnoLice.findById(id);
-		k.delete();
+		try {
+			KlijentPravnoLice k = KlijentPravnoLice.findById(id);
+			k.delete();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Klijenta.");
+		}
 
 		show("edit");
 

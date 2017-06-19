@@ -33,19 +33,29 @@ public class KlijentiFizickaLica extends Controller {
 	}
 
 	public static void edit(KlijentFizickoLice klijent) {
-		KlijentFizickoLice k = KlijentFizickoLice.findById(klijent.id);
-		k.setIme(klijent.ime);
-		k.setPrezime(klijent.prezime);
-		k.setNaseljenoMesto(klijent.naseljenoMesto);
-		k.setAdresa(klijent.adresa);
-		k.save();
+		try {
+			KlijentFizickoLice k = KlijentFizickoLice.findById(klijent.id);
+			k.setIme(klijent.ime);
+			k.setPrezime(klijent.prezime);
+			k.setNaseljenoMesto(klijent.naseljenoMesto);
+			k.setAdresa(klijent.adresa);
+			k.save();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Klijenta.");
+		}
 		show("edit");
 
 	}
 
 	public static void remove(Long id) {
-		KlijentFizickoLice k = KlijentFizickoLice.findById(id);
-		k.delete();
+		try {
+			KlijentFizickoLice k = KlijentFizickoLice.findById(id);
+			k.delete();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Klijenta.");
+		}
 
 		show("edit");
 

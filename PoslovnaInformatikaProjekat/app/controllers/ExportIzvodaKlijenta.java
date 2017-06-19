@@ -17,8 +17,13 @@ import play.mvc.Controller;
 public class ExportIzvodaKlijenta extends Controller {
 
 	public static void exportKL(Long id) {
-
-		Klijent klijent = Klijent.findById(id);
+		
+		try {
+			Klijent klijent = Klijent.findById(id);
+		}
+		catch(IllegalArgumentException e) {
+			error("Klijent ne postoji.");
+		}
 		try {
 
 			File file = null;

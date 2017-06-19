@@ -21,26 +21,41 @@ public class Valute extends Controller{
 	
 	
 	public static void create(Valuta valuta){
+		try {
+			valuta.setDrzava(Drzava.findById(valuta.drzava.id));
+		}
+		catch(NullPointerException e) {
+			error("Drzava ne postoji.");
+		}
 		valuta.save();
-		
 		show("add");
 	}
 	
 	public static void edit(Valuta valuta){
-		Valuta v = Valuta.findById(valuta.id);
-		v.setOznaka(valuta.oznaka);
-		v.setZvanicnaSifra(valuta.zvanicnaSifra);
-		v.setDomicilna(valuta.domicilna);
-		v.setNaziv(valuta.naziv);
-		v.setDrzava(valuta.drzava);
-		v.save();
+		try {
+			Valuta v = Valuta.findById(valuta.id);
+			v.setOznaka(valuta.oznaka);
+			v.setZvanicnaSifra(valuta.zvanicnaSifra);
+			v.setDomicilna(valuta.domicilna);
+			v.setNaziv(valuta.naziv);
+			v.setDrzava(valuta.drzava);
+			v.save();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Valutu.");
+		}
 		show("edit");
 		
 	}
 	
 	public static void remove(Long id){
-		Valuta v = Valuta.findById(id);
-		v.delete();
+		try {
+			Valuta v = Valuta.findById(id);
+			v.delete();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Valutu.");
+		}
 		
 	
 		show("edit");

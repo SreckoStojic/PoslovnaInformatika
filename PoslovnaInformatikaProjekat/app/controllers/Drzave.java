@@ -25,18 +25,28 @@ public class Drzave extends Controller{
 	}
 	
 	public static void edit(Drzava drzava){
-		Drzava d = Drzava.findById(drzava.id);
-		d.setNaziv(drzava.naziv);
-		d.setOznaka(drzava.oznaka);
-		
-		d.save();
+		try {
+			Drzava d = Drzava.findById(drzava.id);
+			d.setNaziv(drzava.naziv);
+			d.setOznaka(drzava.oznaka);
+			
+			d.save();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Drzavu.");
+		}
 		show("edit");
 		
 	}
 	
 	public static void remove(Long id){
-		Drzava d = Drzava.findById(id);
-		d.delete();
+		try {
+			Drzava d = Drzava.findById(id);
+			d.delete();
+		}
+		catch(IllegalArgumentException e) {
+			error("Niste odabrali Drzavu.");
+		}
 		
 	
 		show("edit");
