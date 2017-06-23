@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9b743c19-3c4a-4001-a8bb-2b7c2d021fa1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idBanke" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+     Banka."id" AS Banka_id,
+     Banka."banka" AS Banka_banka,
+     Banka."naziv" AS Banka_naziv,
+     RacunPravnihLica."id" AS RacunPravnihLica_id,
+     RacunPravnihLica."brojRacuna" AS RacunPravnihLica_brojRacuna,
+     Klijent."DTYPE" AS Klijent_DTYPE,
+     Klijent."ime" AS Klijent_ime,
+     Klijent."prezime" AS Klijent_prezime,
+     Klijent."naziv" AS Klijent_naziv,
+     DnevnoStanjeRacuna."novoStanje" AS DnevnoStanjeRacuna_novoStanje,
+     Banka."pib" AS Banka_pib,
+     Banka."sifra" AS Banka_sifra,
+     Banka."adresa" AS Banka_adresa
+FROM
+     "dbo"."Banka" Banka INNER JOIN "dbo"."RacunPravnihLica" RacunPravnihLica ON Banka."id" = RacunPravnihLica."banka_id"
+     INNER JOIN "dbo"."Klijent" Klijent ON RacunPravnihLica."klijent_id" = Klijent."id"
+     INNER JOIN "dbo"."DnevnoStanjeRacuna" DnevnoStanjeRacuna ON RacunPravnihLica."id" = DnevnoStanjeRacuna."racun_id"
+WHERE
+     Banka_id = $P{idBanke}]]>
+	</queryString>
+	<field name="Banka_id" class="java.lang.Long"/>
+	<field name="Banka_banka" class="java.lang.Boolean"/>
+	<field name="Banka_naziv" class="java.lang.String"/>
+	<field name="RacunPravnihLica_id" class="java.lang.Long"/>
+	<field name="RacunPravnihLica_brojRacuna" class="java.lang.String"/>
+	<field name="Klijent_DTYPE" class="java.lang.String"/>
+	<field name="Klijent_ime" class="java.lang.String"/>
+	<field name="Klijent_prezime" class="java.lang.String"/>
+	<field name="Klijent_naziv" class="java.lang.String"/>
+	<field name="DnevnoStanjeRacuna_novoStanje" class="java.math.BigDecimal"/>
+	<field name="Banka_pib" class="java.lang.String"/>
+	<field name="Banka_sifra" class="java.lang.String"/>
+	<field name="Banka_adresa" class="java.lang.String"/>
+	<variable name="ukupno" class="java.lang.Float" incrementType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{DnevnoStanjeRacuna_novoStanje}.plus()]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="DnevnoStanjeRacuna_novoStanje_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{DnevnoStanjeRacuna_novoStanje}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="177" splitType="Stretch">
+			<textField pattern="yyyy/MM/dd">
+				<reportElement x="36" y="0" width="100" height="20" uuid="99d54ee8-32db-4cbd-9d83-c113cdd79edd"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="d9fca429-ee4f-499a-8cd3-d3aa501e17e5"/>
+				<text><![CDATA[Datum:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="125" y="20" width="307" height="20" uuid="8097d860-5e7d-4710-9580-601583f74093"/>
+				<textElement textAlignment="Justified">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Izveštaj - Spisak računa sa stanjem za banku]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="229" y="40" width="97" height="20" uuid="bc0fb37e-9e47-496e-9d19-e38add21e356"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Banka_naziv}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="157" width="100" height="20" uuid="b770d8f7-58af-495a-a111-45f28526c6b2"/>
+				<text><![CDATA[Broj računa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="157" width="100" height="20" uuid="048c50b3-9d72-48af-87c5-93292b137555"/>
+				<text><![CDATA[Stanje]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="536" y="0" width="19" height="20" uuid="5daf781b-9b9c-47f8-8b43-9de5160a2649"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="129" y="157" width="100" height="20" uuid="32e9e412-32ce-4b81-aded-708d0984f94a"/>
+				<text><![CDATA[Ime]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="229" y="157" width="100" height="20" uuid="7e32f586-fafd-4731-bb95-b5079e1c808a"/>
+				<text><![CDATA[Prezime]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="157" width="100" height="20" uuid="e8b61ade-fc00-42fd-a15e-8cd11172e13e"/>
+				<text><![CDATA[Naziv]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="426" y="0" width="100" height="20" uuid="62e90351-5a75-493b-9da2-777244d041ba"/>
+				<textFieldExpression><![CDATA[$F{DnevnoStanjeRacuna_novoStanje}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="29" y="0" width="100" height="20" uuid="4df84020-024b-4e01-83a6-743be3bbea3f"/>
+				<textFieldExpression><![CDATA[$F{RacunPravnihLica_brojRacuna}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="129" y="0" width="100" height="20" uuid="d64906a8-46fb-4150-b6dd-b17d5877e422"/>
+				<textFieldExpression><![CDATA[$F{Klijent_ime}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="226" y="0" width="100" height="20" uuid="76964ed3-62ea-4c39-b89b-6c3a6b325656"/>
+				<textFieldExpression><![CDATA[$F{Klijent_prezime}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="326" y="0" width="100" height="20" uuid="b858327d-d229-4fbc-bee5-1c1f4a1ef667"/>
+				<textFieldExpression><![CDATA[$F{Klijent_naziv}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="50">
+			<textField>
+				<reportElement x="426" y="12" width="100" height="20" uuid="0214243c-f81f-4517-b575-c3341c4823f2"/>
+				<textFieldExpression><![CDATA[$V{DnevnoStanjeRacuna_novoStanje_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="326" y="12" width="100" height="20" uuid="73ce8d2b-8544-4b6e-8014-3b824bee30a5"/>
+				<text><![CDATA[Ukupno]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

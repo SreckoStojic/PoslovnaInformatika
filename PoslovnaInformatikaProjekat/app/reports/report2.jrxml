@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2feb2eac-2299-463c-b233-6522c3d1e80c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="brRacuna" class="java.util.ArrayList">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="from" class="java.util.Date"/>
+	<parameter name="untill" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT
+     AnalitikaIzvoda."id" AS AnalitikaIzvoda_id,
+     AnalitikaIzvoda."datumPrijema" AS AnalitikaIzvoda_datumPrijema,
+     AnalitikaIzvoda."datumValute" AS AnalitikaIzvoda_datumValute,
+     AnalitikaIzvoda."duznik" AS AnalitikaIzvoda_duznik,
+     AnalitikaIzvoda."hitno" AS AnalitikaIzvoda_hitno,
+     AnalitikaIzvoda."iznos" AS AnalitikaIzvoda_iznos,
+     AnalitikaIzvoda."modelOdobrenja" AS AnalitikaIzvoda_modelOdobrenja,
+     AnalitikaIzvoda."modelZaduzenja" AS AnalitikaIzvoda_modelZaduzenja,
+     AnalitikaIzvoda."poverilac" AS AnalitikaIzvoda_poverilac,
+     AnalitikaIzvoda."pozivNaBrOdobrenja" AS AnalitikaIzvoda_pozivNaBrOdobrenja,
+     AnalitikaIzvoda."pozivNaBrZaduzenja" AS AnalitikaIzvoda_pozivNaBrZaduzenja,
+     AnalitikaIzvoda."racunDuznika" AS AnalitikaIzvoda_racunDuznika,
+     AnalitikaIzvoda."racunPoverioca" AS AnalitikaIzvoda_racunPoverioca,
+     AnalitikaIzvoda."status" AS AnalitikaIzvoda_status,
+     AnalitikaIzvoda."svrhaPlacanja" AS AnalitikaIzvoda_svrhaPlacanja,
+     AnalitikaIzvoda."tipGreske" AS AnalitikaIzvoda_tipGreske,
+     AnalitikaIzvoda."mestoPrijema_id" AS AnalitikaIzvoda_mestoPrijema_id,
+     AnalitikaIzvoda."stanjeRacuna_id" AS AnalitikaIzvoda_stanjeRacuna_id,
+     AnalitikaIzvoda."valuta_id" AS AnalitikaIzvoda_valuta_id,
+     AnalitikaIzvoda."vrstaPlacanja_id" AS AnalitikaIzvoda_vrstaPlacanja_id,
+     DnevnoStanjeRacuna."id" AS DnevnoStanjeRacuna_id,
+     DnevnoStanjeRacuna."datumPrometa" AS DnevnoStanjeRacuna_datumPrometa,
+     DnevnoStanjeRacuna."novoStanje" AS DnevnoStanjeRacuna_novoStanje,
+     DnevnoStanjeRacuna."prethodnoStanje" AS DnevnoStanjeRacuna_prethodnoStanje,
+     DnevnoStanjeRacuna."prometNaTeret" AS DnevnoStanjeRacuna_prometNaTeret,
+     DnevnoStanjeRacuna."prometUKorist" AS DnevnoStanjeRacuna_prometUKorist,
+     DnevnoStanjeRacuna."racun_id" AS DnevnoStanjeRacuna_racun_id
+FROM
+     "dbo"."DnevnoStanjeRacuna" DnevnoStanjeRacuna INNER JOIN "dbo"."AnalitikaIzvoda" AnalitikaIzvoda ON DnevnoStanjeRacuna."id" = AnalitikaIzvoda."stanjeRacuna_id"
+WHERE
+     ($X{ IN ,racunDuznika,brRacuna}
+     or $X{ IN ,racunPoverioca,brRacuna}) ]]>
+	</queryString>
+	<field name="AnalitikaIzvoda_id" class="java.lang.Long"/>
+	<field name="AnalitikaIzvoda_datumPrijema" class="java.lang.String"/>
+	<field name="AnalitikaIzvoda_datumValute" class="java.lang.String"/>
+	<field name="AnalitikaIzvoda_duznik" class="java.lang.String"/>
+	<field name="AnalitikaIzvoda_hitno" class="java.lang.Boolean"/>
+	<field name="AnalitikaIzvoda_iznos" class="java.math.BigDecimal"/>
+	<field name="AnalitikaIzvoda_modelOdobrenja" class="java.lang.Integer"/>
+	<field name="AnalitikaIzvoda_modelZaduzenja" class="java.lang.Integer"/>
+	<field name="AnalitikaIzvoda_poverilac" class="java.lang.String"/>
+	<field name="AnalitikaIzvoda_pozivNaBrOdobrenja" class="java.lang.String"/>
+	<field name="AnalitikaIzvoda_pozivNaBrZaduzenja" class="java.lang.String"/>
+	<field name="AnalitikaIzvoda_racunDuznika" class="java.lang.String"/>
+	<field name="AnalitikaIzvoda_racunPoverioca" class="java.lang.String"/>
+	<field name="AnalitikaIzvoda_status" class="java.lang.String"/>
+	<field name="AnalitikaIzvoda_svrhaPlacanja" class="java.lang.String"/>
+	<field name="AnalitikaIzvoda_tipGreske" class="java.lang.Object"/>
+	<field name="AnalitikaIzvoda_mestoPrijema_id" class="java.lang.Long"/>
+	<field name="AnalitikaIzvoda_stanjeRacuna_id" class="java.lang.Long"/>
+	<field name="AnalitikaIzvoda_valuta_id" class="java.lang.Long"/>
+	<field name="AnalitikaIzvoda_vrstaPlacanja_id" class="java.lang.Long"/>
+	<field name="DnevnoStanjeRacuna_id" class="java.lang.Long"/>
+	<field name="DnevnoStanjeRacuna_datumPrometa" class="java.lang.String"/>
+	<field name="DnevnoStanjeRacuna_novoStanje" class="java.math.BigDecimal"/>
+	<field name="DnevnoStanjeRacuna_prethodnoStanje" class="java.math.BigDecimal"/>
+	<field name="DnevnoStanjeRacuna_prometNaTeret" class="java.math.BigDecimal"/>
+	<field name="DnevnoStanjeRacuna_prometUKorist" class="java.math.BigDecimal"/>
+	<field name="DnevnoStanjeRacuna_racun_id" class="java.lang.Long"/>
+	<variable name="variable1" class="java.lang.String"/>
+	<pageHeader>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement x="237" y="0" width="328" height="29" uuid="30b488db-f6fe-4d93-ae90-f9684bcc2996"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Izvod racuna klijenta za period]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="29" width="100" height="20" uuid="d365981b-60cd-4932-a2c9-7a832f269acb"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{from}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="29" width="100" height="20" uuid="e17fbf03-6b24-4a86-9e6f-72ce8e4df156"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{untill}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="adc0b540-3d7e-47e5-8181-7242ff328c0a"/>
+				<text><![CDATA[Datum valute]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="600" y="0" width="100" height="20" uuid="b9c7c2f4-2a03-4cae-ba8c-da86ec3fdf2f"/>
+				<text><![CDATA[Sa racuna]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="700" y="0" width="100" height="20" uuid="e3b1a44f-a0b9-49d8-b839-f55abfd076c7"/>
+				<text><![CDATA[Na racun]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="0" width="80" height="20" uuid="107c3e27-cf3c-47ed-b917-c6d34845e85a"/>
+				<text><![CDATA[Isplata]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="80" height="20" uuid="7371a018-ed3e-43a8-bc03-7aee13af2233"/>
+				<text><![CDATA[Uplata]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="0" width="80" height="20" uuid="2ffafe7a-21c7-48ef-957e-14eb980d66f4"/>
+				<text><![CDATA[Stanje]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="efd44d0a-58d1-48b0-93d5-ca13581935f0"/>
+				<text><![CDATA[Datum prometa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="520" y="0" width="80" height="20" uuid="260aeb45-5fe6-495a-bea6-b4b2c2c4a3be"/>
+				<text><![CDATA[Poverilac]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="0" width="80" height="20" uuid="d50f148c-9d29-46cc-aa5a-76fd3ec7d4f7"/>
+				<text><![CDATA[Duznik]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="c1c0a97f-b96e-4fbe-bd70-6f55c63b4924"/>
+				<textFieldExpression><![CDATA[$F{AnalitikaIzvoda_datumValute}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="5d6d025c-5d14-4069-95d2-0edb42506a9c"/>
+				<textFieldExpression><![CDATA[$F{AnalitikaIzvoda_datumPrijema}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="600" y="0" width="100" height="20" uuid="02759aaa-3142-47c1-89e6-290f84ad32d5"/>
+				<textFieldExpression><![CDATA[$F{AnalitikaIzvoda_racunDuznika}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="700" y="0" width="100" height="20" uuid="94ab1c31-6cba-418c-ac0f-f38e4d5468f7"/>
+				<textFieldExpression><![CDATA[$F{AnalitikaIzvoda_racunPoverioca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="80" height="20" uuid="7f4cb29f-3797-4083-978a-3af87e1f2e12"/>
+				<textFieldExpression><![CDATA[$F{DnevnoStanjeRacuna_prometNaTeret}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="80" height="20" uuid="7116fdda-cfb7-4ad1-a711-9f4775031d0a"/>
+				<textFieldExpression><![CDATA[$F{DnevnoStanjeRacuna_prometUKorist}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="0" width="80" height="20" uuid="18e8f017-f4f4-44b3-8120-811f400418b9"/>
+				<textFieldExpression><![CDATA[$F{DnevnoStanjeRacuna_novoStanje}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="520" y="0" width="80" height="20" uuid="d303d360-43c1-4c28-a3b9-aafa21988e5a"/>
+				<textFieldExpression><![CDATA[$F{AnalitikaIzvoda_poverilac}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="0" width="80" height="20" uuid="1cab6266-ad27-426a-971b-f20e48898110"/>
+				<textFieldExpression><![CDATA[$F{AnalitikaIzvoda_duznik}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

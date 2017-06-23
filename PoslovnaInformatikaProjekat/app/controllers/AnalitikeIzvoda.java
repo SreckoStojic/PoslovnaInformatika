@@ -59,6 +59,7 @@ public class AnalitikeIzvoda extends Controller {
 		RacunPravnihLica racunPoverilac = RacunPravnihLica.pronadjiBrojRacuna(analitikaIzvoda.racunPoverioca);
 		DnevnoStanjeRacuna dnevnoStanjeRacunaPoverilac = DnevnoStanjeRacuna
 				.pronadjiDnevnoStanjeRacunaNaOsnovuIDRacuna(racunPoverilac.id);
+		analitikaIzvoda.setStanjeRacuna(dnevnoStanjeRacunaPoverilac); 
 		RacunPravnihLica racunDuznik = RacunPravnihLica.pronadjiBrojRacuna(analitikaIzvoda.racunDuznika);
 		if (racunPoverilac.vazeci == false) {
 			error("Racun poverioca je nevazeci.");
@@ -73,7 +74,7 @@ public class AnalitikeIzvoda extends Controller {
 			if (!analitikaIzvoda.racunDuznika.equals("")) {
 				DnevnoStanjeRacuna dnevnoStanjeRacunaDuznik = DnevnoStanjeRacuna
 						.pronadjiDnevnoStanjeRacunaNaOsnovuIDRacuna(racunDuznik.id);
-
+				
 				BigDecimal kursUKorist = BigDecimal.valueOf(1);
 				BigDecimal kursNaTeret = BigDecimal.valueOf(1);
 				if (racunPoverilac.valuta.id.equals(racunDuznik.valuta.id)
