@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import models.Banka;
 import models.KursnaLista;
 import models.Valuta;
@@ -30,7 +32,12 @@ public class KursneListe extends Controller{
 		catch(NullPointerException e) {
 			error("Banka ne postoji.");
 		}
-		kursnaLista.save();
+		try {
+			kursnaLista.save();
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
+		}
 		
 		show("add");
 	}

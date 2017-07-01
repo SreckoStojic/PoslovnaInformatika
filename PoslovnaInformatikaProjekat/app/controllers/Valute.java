@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import models.Drzava;
 import models.KursUValuti;
 import models.Valuta;
@@ -27,7 +29,12 @@ public class Valute extends Controller{
 		catch(NullPointerException e) {
 			error("Drzava ne postoji.");
 		}
-		valuta.save();
+		try {
+			valuta.save();
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
+		}
 		show("add");
 	}
 	
@@ -43,6 +50,9 @@ public class Valute extends Controller{
 		}
 		catch(IllegalArgumentException e) {
 			error("Niste odabrali Valutu.");
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
 		}
 		show("edit");
 		

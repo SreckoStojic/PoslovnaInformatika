@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import models.Drzava;
 import models.KursUValuti;
 import models.KursnaLista;
@@ -42,8 +44,12 @@ public class KurseviUValuti extends Controller{
 		catch(NullPointerException e) {
 			error("Valute ne postoje.");
 		}
-		
-		kurs.save();
+		try {
+			kurs.save();
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
+		}
 		
 		show("add");
 	}
@@ -60,6 +66,9 @@ public class KurseviUValuti extends Controller{
 		}
 		catch(IllegalArgumentException e) {
 			error("Niste odabrali kursnu listu.");
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
 		}
 		
 		show("edit");

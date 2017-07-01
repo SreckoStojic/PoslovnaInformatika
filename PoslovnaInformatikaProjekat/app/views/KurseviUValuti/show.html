@@ -100,7 +100,7 @@ function sync(item){
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="form-wrapper row">
-				<form action = "${action}" method="post" class="form-horizontal">
+				<form action = "${action}" method="post" class="form-horizontal" onsubmit= "return validate();">
 					#{field 'kurs.id'}
 						<input type = "hidden" name = "${field.name}" id = "kurs_id"/>
 					#{/}
@@ -151,6 +151,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Kupovni</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "kurs_kupovni" class="form-control"/>
+							<p id="error1"></p>
 						</div>
 					#{/}
 					</div>
@@ -159,6 +160,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Prodajni</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "kurs_prodajni" class="form-control"/>
+							<p id="error2"></p>
 						</div>
 					#{/}
 					</div>
@@ -236,3 +238,38 @@ function sync(item){
    </div>
 </div>
 
+<!-- Validacija -->
+<script type="text/javascript">
+	$(function validate() {
+    	var errors = "";
+	
+		var element = document.getElementById("kurs_kupovni");
+		if(element.value == "") {
+			errors = "Polje Kupovni ne sme biti prazno.";
+			document.getElementById( "error1" ).innerHTML = errors;
+					return false;
+		}
+		else if(isNan(element.value)) {
+			errors = "Polje Kupovni mora biti broj. Format zapisa je xxxxx.xxxx";
+			document.getElementById( "error1" ).innerHTML = errors;
+					return false;
+		}
+		
+		var element = document.getElementById("kurs_prodajni");
+		if(element.value == "") {
+			errors = "Polje Kupovni ne sme biti prazno.";
+			document.getElementById( "error2" ).innerHTML = errors;
+					return false;
+		}
+		else if(isNan(element.value)) {
+			errors = "Polje Kupovni mora biti broj. Format zapisa je xxxxx.xxxx";
+			document.getElementById( "error2" ).innerHTML = errors;
+					return false;
+		}
+		
+		else {
+			return true
+		}
+    			
+    });
+</script>

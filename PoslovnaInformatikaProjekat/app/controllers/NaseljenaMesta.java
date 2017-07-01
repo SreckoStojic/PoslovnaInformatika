@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import models.Drzava;
 import models.NaseljenoMesto;
 import play.mvc.Controller;
@@ -27,6 +29,9 @@ public class NaseljenaMesta extends Controller{
 		catch(NullPointerException e) {
 			error("Drzava ne postoji.");
 		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
+		}
 		
 		show("edit");
 	}
@@ -42,6 +47,9 @@ public class NaseljenaMesta extends Controller{
 		}
 		catch(IllegalArgumentException e) {
 			error("Niste odabrali Naseljeno mesto.");
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
 		}
 		show("edit");
 		

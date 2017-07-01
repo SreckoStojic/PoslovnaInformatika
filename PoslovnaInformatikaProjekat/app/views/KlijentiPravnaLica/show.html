@@ -92,7 +92,7 @@ function sync(item){
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="form-wrapper row">
-				<form action = "${action}" method="post" class="form-horizontal">
+				<form action = "${action}" method="post" class="form-horizontal" onsubmit= "return validate();">
 					#{field 'klijentPL.id'}
 						<input type = "hidden" name = "${field.name}" id = "klijentPL_id"/>
 					#{/}
@@ -101,6 +101,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Naziv</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "klijentPL_naziv" class="form-control"/>
+							<p id="error1"></p>
 						</div>
 					#{/}
 					</div>
@@ -109,6 +110,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Adresa</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "klijentPL_adresa" class="form-control"/>
+							<p id="error2"></p>
 						</div>
 					#{/}
 					</div>
@@ -181,3 +183,29 @@ function sync(item){
   </div>
 </div>
 
+<!-- Validacija -->
+<script type="text/javascript">
+	$(function validate() {
+    	var errors = "";
+	
+		var element = document.getElementById("klijentPL_naziv");
+		if(element.value.length > 3o) {
+			errors = "Polje Naziv ne sme imati vise od 30 karaktera.";
+			document.getElementById( "error1" ).innerHTML = errors;
+					return false;
+		}
+		
+		var element = document.getElementById("klijentPL_adresa").value;
+		if(element.length > 30) {
+			errors = "Polje Adresa ne sme imati vise od 30 karaktera.";
+			document.getElementById( "error2" ).innerHTML = errors;
+					return false;
+		}
+		
+		
+		else {
+			return true
+		}
+    			
+    });
+</script>

@@ -2,9 +2,13 @@ package controllers;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import models.Drzava;
 import models.NaseljenoMesto;
 import play.mvc.Controller;
+import play.data.validation.*;
+import play.data.validation.Error;
 
 public class Drzave extends Controller{
 	
@@ -18,8 +22,12 @@ public class Drzave extends Controller{
 	}
 	
 	public static void create(Drzava drzava){
-		
-		drzava.save();
+		try {
+			drzava.save();
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
+		}
 		
 		show("edit");
 	}
@@ -34,6 +42,9 @@ public class Drzave extends Controller{
 		}
 		catch(IllegalArgumentException e) {
 			error("Niste odabrali Drzavu.");
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
 		}
 		show("edit");
 		

@@ -86,7 +86,7 @@ function sync(item){
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="form-wrapper row">
-				<form action = "${action}" method="post" class="form-horizontal">
+				<form action = "${action}" method="post" class="form-horizontal" onsubmit= "return validate(this);">
 					#{field 'nMesto.id'}
 						<input type = "hidden" name = "${field.name}" id = "nMesto_id"/>
 					#{/}
@@ -95,6 +95,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Oznaka</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "nMesto_oznaka" class="form-control"/>
+							<p id="error1"></p>
 						</div>
 					#{/}
 					</div>
@@ -103,6 +104,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Naziv</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "nMesto_naziv" class="form-control"/>
+							<p id="error2"></p>
 						</div>
 					#{/}
 					</div>
@@ -111,6 +113,7 @@ function sync(item){
 						<label for = "${field.id}" class="col-sm-3 control-label">Postanski Broj</label>
 						<div class="col-sm-9">
 							<input type = "text" name = "${field.name}" id = "nMesto_postanskiBroj" class="form-control"/>
+							<p id="error3"></p>
 						</div>
 					#{/}
 					</div>
@@ -170,3 +173,50 @@ function sync(item){
   </div>
 </div>
 
+<!-- Validacija -->
+<script type="text/javascript">
+	$(function validate() {
+    	var errors = "";
+	
+		var element = document.getElementById("nMesto_oznaka");
+		if(element.value == "") {
+			errors = "Polje Oznaka ne sme biti prazno.";
+			document.getElementById( "error1" ).innerHTML = errors;
+					return false;
+		}
+		else if(element.value.length > 2)) {
+			errors = "Polje Oznaka ne sme imati vise od 2 karaktera.";
+			document.getElementById( "error1" ).innerHTML = errors;
+					return false;
+		}
+		
+		var element = document.getElementById("nMesto_naziv");
+		if(element.value.length > 60) {
+			errors = "Polje Naziv ne sme imati vise od 60 karaktera.";
+			document.getElementById( "error2" ).innerHTML = errors;
+					return false;
+		}
+		else if(element.value = "") {
+			errors = "Polje Naziv ne sme biti prazno.";
+			document.getElementById( "error2" ).innerHTML = errors;
+					return false;
+		}
+		
+		var element = document.getElementById("nMesto_postanskiBroj");
+		if(element.value == "") {
+			errors = "Polje Postanski Broj ne sme biti prazno.";
+			document.getElementById( "error3" ).innerHTML = errors;
+					return false;
+		}
+		else if(element.value.length > 12)) {
+			errors = "Polje Postanski Broj ne sme imati vise od 12 karaktera.";
+			document.getElementById( "error3" ).innerHTML = errors;
+					return false;
+		}
+		
+		else {
+			return true
+		}
+    			
+    });
+</script>

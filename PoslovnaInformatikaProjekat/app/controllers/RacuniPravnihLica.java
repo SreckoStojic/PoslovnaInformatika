@@ -3,6 +3,8 @@ package controllers;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import models.Banka;
 import models.DnevnoStanjeRacuna;
 import models.Klijent;
@@ -26,8 +28,12 @@ public class RacuniPravnihLica extends Controller{
 	}
 	
 	public static void create(RacunPravnihLica racun){
-		
-		racun.save();
+		try {
+			racun.save();
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
+		}
 		KlijentiPravnaLica.show("edit");
 	}
 	
@@ -43,6 +49,9 @@ public class RacuniPravnihLica extends Controller{
 		}
 		catch(IllegalArgumentException e) {
 			error("Niste odabrali Racun pravnog lica.");
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
 		}
 		show("edit");
 		

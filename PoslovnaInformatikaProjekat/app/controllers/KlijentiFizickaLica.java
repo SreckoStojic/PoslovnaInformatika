@@ -3,6 +3,7 @@ package controllers;
 import java.io.File;
 import java.util.List;
 
+import javax.persistence.PersistenceException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -26,8 +27,12 @@ public class KlijentiFizickaLica extends Controller {
 	}
 
 	public static void create(KlijentFizickoLice klijent) {
-
-		klijent.save();
+		try {
+			klijent.save();
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
+		}
 
 		show("edit");
 	}
@@ -43,6 +48,9 @@ public class KlijentiFizickaLica extends Controller {
 		}
 		catch(IllegalArgumentException e) {
 			error("Niste odabrali Klijenta.");
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
 		}
 		show("edit");
 

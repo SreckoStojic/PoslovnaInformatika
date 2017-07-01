@@ -12,14 +12,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import play.db.jpa.Model;
+import play.data.validation.*;
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "Drzava")
 @Entity
 public class Drzava extends Model {
 
+	@Required
+	@Max(3)
 	@Column(nullable = false, length = 3)
 	public String oznaka;
+	@Required
+	@Max(40)
 	@Column(nullable = false, length = 40)
 	public String naziv;
 	@OneToMany(mappedBy = "drzava")

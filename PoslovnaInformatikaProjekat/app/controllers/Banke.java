@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import models.Banka;
 import play.mvc.Controller;
 
@@ -17,8 +19,12 @@ public class Banke extends Controller{
 	}
 	
 	public static void create(Banka banka){
-		
-		banka.save();
+		try {
+			banka.save();
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
+		}
 		
 		show("add");
 	}
@@ -39,6 +45,9 @@ public class Banke extends Controller{
 		}
 		catch(IllegalArgumentException e) {
 			error("Niste odabrali Banku.");
+		}
+		catch(PersistenceException e) {
+			error("Niste uneli validne podatke.");
 		}
 		show("edit");
 		

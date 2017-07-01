@@ -75,6 +75,8 @@ function nextForm(id){
     #{/else}
   #{/set}
   
+  
+  
 <div class = "container-fluid">
 	<div class="panel panel-default">
 		<div class="panel-body">
@@ -118,14 +120,14 @@ function nextForm(id){
 	$(function validate() {
     	var errors = "";
 	
-		var element = document.getElementById("drzava_oznaka").value;
+		var element = document.getElementById("drzava_oznaka");
 		if(element.value == "") {
 			errors = "Polje Oznaka ne sme biti prazno.";
 			document.getElementById( "error1" ).innerHTML = errors;
 					return false;
 		}
-		else if(element !== parseInt(element.value, 10)) {
-			errors = "Polje Oznaka mora biti ceo broj.";
+		else if(element.value.length > 3) {
+			errors = "Polje Oznaka ne sme imati vise od 3 karaktera.";
 			document.getElementById( "error1" ).innerHTML = errors;
 					return false;
 		}
